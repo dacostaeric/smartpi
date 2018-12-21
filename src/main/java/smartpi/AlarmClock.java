@@ -1,6 +1,7 @@
 package smartpi;
 
 import java.time.LocalTime;
+import java.util.concurrent.TimeUnit;
 
 public class AlarmClock {
   public String alarmHour;
@@ -41,16 +42,21 @@ public class AlarmClock {
       System.out.println("Work on your fucking project!");
       return true;
     } else {
-      //System.out.println("Current time: " + currentTime);
+      System.out.println("Current time: " + currentTime);
       return false;
     }
   }
 
   public static void main(String[] args) {
-    AlarmClock alarm = new AlarmClock("22","14","00");
+    AlarmClock alarm = new AlarmClock("08","16","00");
     System.out.println("Your alarm was set to: " + alarm.getAlarmTime());
     boolean ringed = false;
     while(!ringed) {
+      try {
+        TimeUnit.SECONDS.sleep(1);
+      } catch (InterruptedException ex) {
+        System.out.println("Won't happen.");
+      }
       ringed = alarm.checkAlarm();
     }
     System.out.println("You're done now.");
