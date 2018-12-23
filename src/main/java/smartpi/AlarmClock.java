@@ -48,7 +48,7 @@ public class AlarmClock {
   }
 
   public static void main(String[] args) {
-    AlarmClock alarm = new AlarmClock("08","16","00");
+    AlarmClock alarm = new AlarmClock("11","20","00");
     System.out.println("Your alarm was set to: " + alarm.getAlarmTime());
     boolean ringed = false;
     while(!ringed) {
