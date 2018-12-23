@@ -28,7 +28,7 @@ public class CheckingMails {
 
 
             Message[] messages = emailFolder.getMessages();
-            System.out.println("You have " + messages.length + "messages.");
+            System.out.println("You have " + messages.length + " messages.");
 
             for (int i = 0, n = messages.length; i < n; i++) {
                 Message message = messages[i];
