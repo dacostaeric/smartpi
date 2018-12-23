@@ -54,7 +54,6 @@ public class CheckingMails {
         String host = "imap.gmail.com";
         String username = "smartestpi@gmail.com";
         String password = "amazingproject";
-
         check(host, username, password);
 
     }
