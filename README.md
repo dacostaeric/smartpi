@@ -1,1 +1,3 @@
 # smartpi
+
+The smartest pie.
