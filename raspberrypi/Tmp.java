@@ -8,7 +8,7 @@ public class Tmp {
 	static float humidity = 0;
 	static float temperature = 0;
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception{
 		Runtime runtime = Runtime.getRuntime();
 		Process process = runtime.exec("python3 /home/pi/Desktop/dht11.py");
 		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
