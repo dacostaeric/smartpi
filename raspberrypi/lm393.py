@@ -9,5 +9,5 @@ while(True):
         print("on")
     else:
         print("off")
-##    print(GPIO.input(pin))
+#    print(GPIO.input(pin))
 
