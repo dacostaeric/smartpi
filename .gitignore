@@ -33,3 +33,5 @@ gradle-app.setting
 **/build/
 #!gradle-wrapper.jar
 #.gradletasknamecache
+gradlew
+gradlew.bat
