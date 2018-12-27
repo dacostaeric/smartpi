@@ -25,3 +25,11 @@ hs_err_pid*
 #intellij
 *.iml
 /.idea
+
+#gradle
+.gradle
+/build/
+gradle-app.setting
+**/build/
+#!gradle-wrapper.jar
+#.gradletasknamecache
