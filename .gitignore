@@ -22,16 +22,21 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 
-#intellij
+# intellij
 *.iml
-/.idea
+.idea/
 
-#gradle
-.gradle
-/build/
+# gradle
+.gradle/
+gradle/
+build/
 gradle-app.setting
 **/build/
 #!gradle-wrapper.jar
 #.gradletasknamecache
 gradlew
 gradlew.bat
+
+# react
+smartpi-react/node_modules/
+smartpi-react/README.md
