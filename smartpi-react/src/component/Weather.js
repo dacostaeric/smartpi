@@ -2,12 +2,16 @@ import React from "react"
 import styled from "styled-components"
 import theme from "../theme"
 
+import weatherIconImage from "../graphics/icon_partly-cloudy.png"
+
 const WeatherIcon = styled.img`
 height: ${theme.weather.iconHeight};
+float: left;
 `;
 
 const WeatherTemperature = styled.div`
 font-size: ${theme.weather.temperatureSize};
+font-style: italic;
 `;
 
 const WeatherText = styled.div`
@@ -15,21 +19,28 @@ font-size: ${theme.weather.weatherTextSize};
 `;
 
 const SensorText = styled.div`
-font-size: ${theme.weather.weatherTextSize};
+float: left;
+font-size: ${theme.weather.sensorTextSize};
+margin-top: ${theme.tilePadding};
+`;
+
+const WeatherTextWrapper = styled.div`
+float: left;
+margin-left: ${theme.tilePadding}
 `;
 
 const Weather = (props) => {
   return (<div>
     <div>
-      <WeatherIcon/>
-      <div>
+      <WeatherIcon src={weatherIconImage}/>
+      <WeatherTextWrapper>
         <WeatherTemperature>
           {props.temperature ? props.temperature : "-"}&#8451;
         </WeatherTemperature>
         <WeatherText>
           {props.text ? props.text : "-"}
         </WeatherText>
-      </div>
+      </WeatherTextWrapper>
     </div>
     <SensorText>
       {(props.sensor.temperature ? props.sensor.temperature + "\u2103" : "")

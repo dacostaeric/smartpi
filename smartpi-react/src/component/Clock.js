@@ -4,7 +4,7 @@ import theme from "../theme"
 
 const StyledClock = styled.div`
 font-family: ${theme.fontFamily}, sans-serif;
-font-size: 50px;
+font-size: ${theme.time.clockSize};
 `;
 
 const Clock = (props) => {

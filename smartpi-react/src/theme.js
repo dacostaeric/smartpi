@@ -4,12 +4,16 @@ const theme = {
   bottomRowHeight: "60%",
   smallWidth: "34%",
   largeWidth: "66%",
-  tilePadding: "12px",
+  tilePadding: "15px",
+  time: {
+    clockSize: "60px",
+  },
   weather: {
-    iconHeight: "60px",
-    temperatureSize: "40px",
+    iconHeight: "100px",
+    temperatureSize: "60px",
     weatherTextSize: "20px",
-    sensorTextSize: "18px",
+    sensorTextSize: "15px",
+    sensorTextMargin: "10px"
   }
 };
 
