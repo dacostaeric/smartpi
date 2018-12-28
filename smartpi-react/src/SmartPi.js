@@ -5,6 +5,7 @@ import TopBar from "./component/TopBar"
 import BottomBar from "./component/BottomBar"
 import JustifySmall from "./component/JustifySmall"
 import JustifyLarge from "./component/JustifyLarge"
+import Tile from "./component/Tile"
 import Time from "./component/Time";
 import Weather from "./component/Weather";
 
@@ -22,11 +23,15 @@ export default class SmartPi extends React.Component {
     return (<Container>
       <TopBar>
         <JustifySmall>
-          <Time/>
+          <Tile>
+            <Time/>
+          </Tile>
         </JustifySmall>
         <JustifyLarge>
-          <Weather temperature={14} text={"cloudy"}
-                   sensor={{temperature: 24, humidity: 81}}/>
+          <Tile>
+            <Weather temperature={14} text={"cloudy"}
+                     sensor={{temperature: 24, humidity: 81}}/>
+          </Tile>
         </JustifyLarge>
       </TopBar>
       <BottomBar>
