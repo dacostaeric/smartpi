@@ -19,7 +19,7 @@ font-size: ${theme.weather.weatherTextSize};
 `;
 
 const SensorText = styled.div`
-float: left;
+float: right;
 font-size: ${theme.weather.sensorTextSize};
 margin-top: ${theme.tilePadding};
 `;
@@ -34,12 +34,12 @@ const Weather = (props) => {
     <div>
       <WeatherIcon src={weatherIconImage}/>
       <WeatherTextWrapper>
-        <WeatherTemperature>
-          {props.temperature ? props.temperature : "-"}&#8451;
-        </WeatherTemperature>
         <WeatherText>
           {props.text ? props.text : "-"}
         </WeatherText>
+        <WeatherTemperature>
+          {props.temperature ? props.temperature : "-"}&#8451;
+        </WeatherTemperature>
       </WeatherTextWrapper>
     </div>
     <SensorText>
