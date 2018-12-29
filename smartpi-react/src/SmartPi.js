@@ -8,6 +8,7 @@ import JustifyLarge from "./component/JustifyLarge"
 import Tile from "./component/Tile"
 import Time from "./component/Time";
 import Weather from "./component/Weather";
+import MockupUnderlay from "./component/MockupUnderlay"
 
 const Container = styled.div`
 position: fixed
@@ -21,6 +22,7 @@ export default class SmartPi extends React.Component {
 
   render() {
     return (<Container>
+      <MockupUnderlay/>
       <TopBar>
         <JustifySmall>
           <Tile>
