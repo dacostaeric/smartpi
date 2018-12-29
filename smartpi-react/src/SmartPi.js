@@ -9,6 +9,7 @@ import Tile from "./component/Tile"
 import Time from "./component/Time";
 import Weather from "./component/Weather";
 import MockupUnderlay from "./component/MockupUnderlay"
+import ShoppingList from "./component/ShoppingList";
 
 const Container = styled.div`
 position: fixed
@@ -34,8 +35,12 @@ export default class SmartPi extends React.Component {
             <Weather temperature={14} text={"cloudy"}
                      sensor={{temperature: 24, humidity: 81}}/>
           </Tile>
+          <Tile>
+            <ShoppingList list={["item1", "item2", "item3", "item4", "item5"]}/>
+          </Tile>
         </JustifyLarge>
       </TopBar>
+      <hr/>
       <BottomBar>
       </BottomBar>
     </Container>)
