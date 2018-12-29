@@ -1,7 +1,9 @@
 package smartpi;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Properties;
-
+import java.util.Scanner;
 import javax.mail.Folder;
 import javax.mail.Message;
 import javax.mail.Session;
@@ -50,10 +52,22 @@ public class CheckingMails {
     }
 
     public static void main(String[] args) {
-
+        String[] credentials = new String[2];
+        int i = 0;
+        try {
+            Scanner scanner = new Scanner(new File("credentials.txt"));
+            while (scanner.hasNext()) {
+                String[] tokens = scanner.nextLine().split(" ");
+                credentials[i++] = tokens[tokens.length - 1];
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        //System.out.println(credentials[0]);
+        //System.out.println(credentials[1]);
         String host = "imap.gmail.com";
-        String username = "smartestpi@gmail.com";
-        String password = "amazingproject";
+        String username = credentials[0];
+        String password = credentials[1];
 
         check(host, username, password);
 
