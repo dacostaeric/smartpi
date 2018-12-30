@@ -10,13 +10,14 @@ import Time from "./component/Time";
 import Weather from "./component/Weather";
 import MockupUnderlay from "./component/MockupUnderlay"
 import ShoppingList from "./component/ShoppingList";
+import HorizontalDivider from "./component/HorizontalDivider";
 
 const Container = styled.div`
-position: fixed
+box-sizing: border-box;
+position: fixed;
 padding: 20px;
 height: 100vh;
 width: 100vw;
-box-sizing: border-box:
 `;
 
 export default class SmartPi extends React.Component {
@@ -40,7 +41,7 @@ export default class SmartPi extends React.Component {
           </Tile>
         </JustifyLarge>
       </TopBar>
-      <hr/>
+      <HorizontalDivider/>
       <BottomBar>
       </BottomBar>
     </Container>)
