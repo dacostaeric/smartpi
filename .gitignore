@@ -36,7 +36,3 @@ gradle-app.setting
 #.gradletasknamecache
 gradlew
 gradlew.bat
-
-# react
-smartpi-react/node_modules/
-smartpi-react/README.md
