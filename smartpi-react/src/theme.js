@@ -1,4 +1,4 @@
-const scale = 1.2;
+const scale = 1.1;
 const unit = "vw";
 
 const size = {
