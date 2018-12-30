@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components"
 
+import theme from "./theme"
+
 import TopBar from "./component/TopBar"
 import BottomBar from "./component/BottomBar"
 import JustifySmall from "./component/JustifySmall"
@@ -17,7 +19,7 @@ import Email from "./component/Email";
 const Container = styled.div`
 box-sizing: border-box;
 position: fixed;
-padding: 20px;
+padding: ${theme.containerPadding};
 height: 100vh;
 width: 100vw;
 background-color: white;

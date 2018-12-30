@@ -21,12 +21,11 @@ font-size: ${theme.weather.weatherTextSize};
 const SensorText = styled.div`
 float: right;
 font-size: ${theme.weather.sensorTextSize};
-margin-top: ${theme.tilePadding};
 `;
 
 const WeatherTextWrapper = styled.div`
 float: left;
-margin-left: ${theme.tilePadding}
+margin-left: ${theme.weather.margin}
 `;
 
 const Weather = (props) => {
