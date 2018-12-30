@@ -11,6 +11,8 @@ import Weather from "./component/Weather";
 import MockupUnderlay from "./component/MockupUnderlay"
 import ShoppingList from "./component/ShoppingList";
 import HorizontalDivider from "./component/HorizontalDivider";
+import Calendar from "./component/Calendar";
+import Email from "./component/Email";
 
 const Container = styled.div`
 box-sizing: border-box;
@@ -18,6 +20,8 @@ position: fixed;
 padding: 20px;
 height: 100vh;
 width: 100vw;
+background-color: white;
+filter: invert(0%);
 `;
 
 export default class SmartPi extends React.Component {
@@ -43,6 +47,16 @@ export default class SmartPi extends React.Component {
       </TopBar>
       <HorizontalDivider/>
       <BottomBar>
+        <JustifySmall>
+          <Tile>
+            <Calendar events={[{date: "date1", title: "event1"}, {date: "date2", title: "event2"}]}/>
+          </Tile>
+        </JustifySmall>
+        <JustifyLarge>
+          <Tile>
+            <Email email={[{sender: "sender1", subject: "subject1"}, {sender: "sender2", subject: "subject2"}, {sender: "sender3", subject: "subject3"}]}/>
+          </Tile>
+        </JustifyLarge>
       </BottomBar>
     </Container>)
   }
