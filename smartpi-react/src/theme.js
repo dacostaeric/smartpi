@@ -1,4 +1,4 @@
-const scale = 1;
+const scale = 1.1;
 const unit = "vw";
 
 const theme = {
