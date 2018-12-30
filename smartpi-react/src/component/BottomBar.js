@@ -3,7 +3,9 @@ import styled from "styled-components"
 import theme from "../theme"
 
 const BottomBar = styled.div`
-height: ${theme.bottomRowHeight};
+display: flex;
+width: 100%;
+float: left;
 `;
 
 export default BottomBar
