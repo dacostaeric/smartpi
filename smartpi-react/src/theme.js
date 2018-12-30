@@ -1,5 +1,12 @@
-const scale = 1.1;
+const scale = 1.2;
 const unit = "vw";
+
+const size = {
+  large: scale * 7 + unit,
+  sub: scale * 3 + unit,
+  medium: scale * 2 + unit,
+  small: scale * 1.5 + unit
+};
 
 const theme = {
   fontFamily: "Segoe UI",
@@ -8,11 +15,6 @@ const theme = {
   smallWidth: scale * 34 + unit,
   largeWidth: scale * 66 + unit,
   tilePadding: scale * 1 + unit + " " + scale * 2 + unit,
-  size: {
-    large: scale * 7 + unit,
-    sub: scale * 3 + unit,
-    small: scale * 1.5 + unit
-  },
   time: {
     dateTextSize: scale * 2 + unit,
     clockSize: scale * 7 + unit,
@@ -21,19 +23,27 @@ const theme = {
   },
   weather: {
     iconHeight: scale * 10 + unit,
-    temperatureSize: scale * 7 + unit,
-    weatherTextSize: scale * 2 + unit,
-    sensorTextSize: scale * 1.5 + unit,
+    temperatureSize: size.large,
+    weatherTextSize: size.sub,
+    sensorTextSize: size.small,
     sensorTextMargin: scale * 0 + unit
   },
   shopping: {
     marginLeft: scale * 2 + unit,
     size: {
-      heading: scale * 2 + unit,
-      item: scale * 1.5 + unit
+      heading: size.medium,
+      item: size.small
     },
     headingMargin: scale * .5 + unit,
     itemMargin: scale * .15 + unit
+  },
+  calendar: {
+    size: {
+      heading: size.medium,
+      event: size.small
+    },
+    headingMargin: scale * .5 + unit,
+    eventMargin: scale * .15 + unit
   }
 };
 
