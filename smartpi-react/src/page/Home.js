@@ -6,7 +6,6 @@ import BottomBar from "../component/BottomBar"
 import JustifySmall from "../component/JustifySmall"
 import JustifyLarge from "../component/JustifyLarge"
 import Tile from "../component/Tile"
-import LinkUntint from "../component/LinkUntint"
 import Time from "../component/Time";
 import Weather from "../component/Weather";
 import MockupUnderlay from "../component/MockupUnderlay"
@@ -26,19 +25,15 @@ const Home = (props) => {
       </JustifySmall>
       <JustifyLarge>
         <Link to={"/weather"}>
-          <LinkUntint>
-            <Tile>
-              <Weather weather={props.weather} sensor={props.sensor}/>
-            </Tile>
-          </LinkUntint>
+          <Tile>
+            <Weather weather={props.weather} sensor={props.sensor}/>
+          </Tile>
         </Link>
         <Link to={"/shopping"}>
-          <LinkUntint>
-            <Tile>
-              <ShoppingList
-                  list={props.shop}/>
-            </Tile>
-          </LinkUntint>
+          <Tile>
+            <ShoppingList
+                list={props.shop}/>
+          </Tile>
         </Link>
       </JustifyLarge>
     </TopBar>
@@ -46,20 +41,16 @@ const Home = (props) => {
     <BottomBar>
       <JustifySmall>
         <Link to={"/calendar"}>
-          <LinkUntint>
-            <Tile>
-              <Events calendar={props.calendar}/>
-            </Tile>
-          </LinkUntint>
+          <Tile>
+            <Events calendar={props.calendar}/>
+          </Tile>
         </Link>
       </JustifySmall>
       <JustifyLarge>
         <Link to={"/messages"}>
-          <LinkUntint>
-            <Tile>
-              <Messages email={props.email}/>
-            </Tile>
-          </LinkUntint>
+          <Tile>
+            <Messages email={props.email}/>
+          </Tile>
         </Link>
       </JustifyLarge>
     </BottomBar>

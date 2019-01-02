@@ -6,12 +6,7 @@ import theme from "../theme"
 const Tile = styled.div`
 float: left;
 padding: 0 ${theme.tilePadding};
-:not(:first-child) {
-  margin-left: ${theme.tilePadding};
-}
-:not(:last-child) {
-  margin-right: ${theme.tilePadding};
-}
+color: black;
 `;
 
 export default Tile
