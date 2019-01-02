@@ -1,4 +1,4 @@
-const scale = 1.1;
+const scale = 1.2;
 const unit = "vw";
 
 const size = {
@@ -12,8 +12,8 @@ const theme = {
   fontFamily: "Segoe UI",
   topRowHeight: scale * 40 + unit,
   bottomRowHeight: scale * 60 + unit,
-  smallWidth: scale * 34 + unit,
-  largeWidth: scale * 66 + unit,
+  smallWidth: scale * 40 + unit,
+  largeWidth: scale * 60 + unit,
   containerPadding: scale * 3 + unit,
   tilePadding: scale * 2 + unit,
   time: {
