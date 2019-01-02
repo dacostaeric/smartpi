@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.util.HashMap;
 import java.util.Map;
+import javax.mail.Message;
 import org.mortbay.util.ajax.JSON;
 
 /**
@@ -36,8 +37,7 @@ public class ReactInterface {
   }
 
   /**
-<<<<<<< HEAD
-   * Writes provided sensor data to the sensor json file.
+   * <<<<<<< HEAD Writes provided sensor data to the sensor json file.
    *
    * Creates a map, populates it and encodes it to json format.
    *
@@ -130,6 +130,19 @@ public class ReactInterface {
   @SafeVarargs
   public static boolean writeEmail(Map<String, String>... email) {
     return write(JSON.toString(email), BASE_FILE_PATH + "/email.json");
+  }
+
+  public static boolean writeEmail(Message[] messages) {
+    Map<String, String>[] maps = new HashMap[messages.length];
+    for (int i = 0; i < messages.length; i++) {
+      try {
+        maps[i] = makeEmail(messages[i].getFrom()[0].toString(), messages[i].getSubject(),
+            messages[i].getContent().toString());
+      } catch (Exception e) {
+        System.out.println("Couldn't save message: " + e.getMessage());
+      }
+    }
+    return writeEmail(maps);
   }
 
   /**
