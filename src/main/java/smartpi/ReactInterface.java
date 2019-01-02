@@ -37,7 +37,7 @@ public class ReactInterface {
   }
 
   /**
-   * <<<<<<< HEAD Writes provided sensor data to the sensor json file.
+   * Writes provided sensor data to the sensor json file.
    *
    * Creates a map, populates it and encodes it to json format.
    *
@@ -47,11 +47,13 @@ public class ReactInterface {
    * @return whether writing the file was successful or not
    */
   public static boolean writeSensorData(double temperature, double humidity, boolean lightsOn) {
-    Map<String, Object> map = new HashMap<>();
-    map.put("temperature", temperature);
-    map.put("humidity", humidity);
-    map.put("light", lightsOn);
-    return write(JSON.toString(map), BASE_FILE_PATH + "/sensor.json");
+    Map<String, Double> environmentMap = new HashMap<>();
+    environmentMap.put("temperature", temperature);
+    environmentMap.put("humidity", humidity);
+    Map<String, Boolean> lightMap = new HashMap<>();
+    lightMap.put("lights", lightsOn);
+    return write(JSON.toString(environmentMap), BASE_FILE_PATH + "/sensor.json")
+        && write(JSON.toString(lightMap), BASE_FILE_PATH + "/lights.json");
   }
 
   /**
@@ -181,7 +183,7 @@ public class ReactInterface {
   // writes dummy files with arbitrary data for testing and exits 1 on failure
   public static void main(String[] args) {
     boolean success = writeSensorData(25, 80, true)
-        && writeEvents(makeEvent("title1", "date1"),
+        && writeCalendar(makeEvent("title1", "date1"),
         makeEvent("title2", "date2"),
         makeEvent("title3", "date3"))
         && writeEmail(makeEmail("sender1", "subject1", "content1"),
