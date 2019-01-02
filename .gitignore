@@ -43,3 +43,7 @@ smartpi-react/README.md
 
 # tokens
 tokens/StoredCredential
+
+# node
+server/*
+!server/server.js

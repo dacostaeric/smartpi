@@ -1,13 +1,13 @@
 import React from "react"
 import styled from "styled-components"
-import alarmIcon from "../graphics/icon_alarm-clock.png"
+import alarmIcon from "../graphics/alarm_clock.svg"
 
 const Icon = styled.img`
 height: 2vw;
 float: left;
 clear: none;
 margin-right: 5px;
-opacity: .3;
+opacity: .8;
 `;
 
 const Alarm = (props) => {

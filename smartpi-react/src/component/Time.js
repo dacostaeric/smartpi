@@ -7,10 +7,10 @@ import Alarm from "./Alarm"
 class Time extends React.Component {
 
   dateFormat = new Intl.DateTimeFormat("en-GB",
-      {weekday: "long", month: "long", day: "numeric"});
+      {weekday: "long", month: "long", day: "numeric", formatMatcher: "basic"});
 
   timeFormat = new Intl.DateTimeFormat("en-GB",
-      {hour: "numeric", minute: "2-digit", hour12: true});
+      {hour: "numeric", minute: "2-digit", timeZone: "Europe/Zurich", hour12: true});
 
   state = {
     date: new Date(0),
@@ -45,7 +45,8 @@ class Time extends React.Component {
   }
 
   formatDate(dateObject) {
-    return this.dateFormat.format(dateObject)
+    let split = this.dateFormat.format(dateObject).split(" ");
+    return (split[0] + ", " + split[2] + " " + split[1]).toLowerCase()
   }
 
   formatTime(dateObject) {

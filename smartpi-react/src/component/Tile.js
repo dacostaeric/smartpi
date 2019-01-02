@@ -1,11 +1,12 @@
 import React from "react"
 import styled from "styled-components"
+
 import theme from "../theme"
 
-const BottomBar = styled.div`
-display: flex;
-width: 100%;
+const Tile = styled.div`
 float: left;
+padding: 0 ${theme.tilePadding};
+color: black;
 `;
 
-export default BottomBar
+export default Tile
