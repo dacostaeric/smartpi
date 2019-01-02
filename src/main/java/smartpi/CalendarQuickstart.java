@@ -21,7 +21,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.security.GeneralSecurityException;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CalendarQuickstart {
   private static final String APPLICATION_NAME = "Google Calendar API Java Quickstart";
@@ -72,19 +74,21 @@ public class CalendarQuickstart {
         .setSingleEvents(true)
         .execute();
     List<Event> items = events.getItems();
+    Map<String, String>[] maps = new HashMap[items.size()];
     if (items.isEmpty()) {
       System.out.println("No upcoming events found.");
     } else {
       System.out.println("Upcoming events");
-      for (Event event : items) {
-        DateTime start = event.getStart().getDateTime();
+      for (int i=0; i<items.size(); i++) {
+        DateTime start = items.get(i).getStart().getDateTime();
         if (start == null) {
-          start = event.getStart().getDate();
+          start = items.get(i).getStart().getDate();
         }
-        System.out.printf("%s (%s)\n", event.getSummary(), start);
+        System.out.printf("%s (%s)\n", items.get(i).getSummary(), start);
 
-        ReactInterface.makeEvent(event.getSummary(), start.toString());
+        maps[i] = ReactInterface.makeEvent(items.get(i).getSummary(), start.toString());
       }
     }
+    ReactInterface.writeCalendar(maps);
   }
 }
