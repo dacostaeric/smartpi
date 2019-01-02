@@ -40,3 +40,6 @@ gradlew.bat
 # react
 smartpi-react/node_modules/
 smartpi-react/README.md
+
+# tokens
+tokens/StoredCredential
