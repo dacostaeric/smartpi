@@ -1,20 +1,19 @@
 import React from "react";
 import styled from "styled-components"
+import {BrowserRouter, Route, Switch} from "react-router-dom"
 
 import theme from "./theme"
 
-import TopBar from "./component/TopBar"
-import BottomBar from "./component/BottomBar"
-import JustifySmall from "./component/JustifySmall"
-import JustifyLarge from "./component/JustifyLarge"
-import Tile from "./component/Tile"
-import Time from "./component/Time";
-import Weather from "./component/Weather";
-import MockupUnderlay from "./component/MockupUnderlay"
-import ShoppingList from "./component/ShoppingList";
-import HorizontalDivider from "./component/HorizontalDivider";
-import Calendar from "./component/Calendar";
-import Email from "./component/Email";
+import Home from "./page/Home"
+import Weather from "./page/Weather";
+import Shop from "./page/Shop";
+import Calendar from "./page/Calendar"
+import Email from "./page/Email"
+import APIKey from "./OpenWeatherMapAPIKey";
+
+const DYNAMIC_FETCH_PORT = 3001;
+const DATA_FETCH_INTERVAL_MS = 3600000;
+const WEATHER_FETCH_INTERVAL_MS = 600000;
 
 const Container = styled.div`
 box-sizing: border-box;
@@ -23,43 +22,136 @@ padding: ${theme.containerPadding};
 height: 100vh;
 width: 100vw;
 background-color: white;
-filter: invert(0%);
+filter: invert(100%);
 `;
 
 export default class SmartPi extends React.Component {
 
+  state = {
+    weather: {
+      "coord": {"lon": 7.57, "lat": 47.56},
+      "weather": [{
+        "id": 800,
+        "main": "Clear",
+        "description": "clear sky",
+        "icon": "01n"
+      }],
+      "base": "stations",
+      "main": {
+        "temp": 277.51,
+        "pressure": 1035,
+        "humidity": 86,
+        "temp_min": 276.15,
+        "temp_max": 278.15
+      },
+      "visibility": 10000,
+      "wind": {"speed": 1.5, "deg": 160},
+      "clouds": {"all": 0},
+      "dt": 1546186800,
+      "sys": {
+        "type": 1,
+        "id": 6585,
+        "message": 0.0319,
+        "country": "CH",
+        "sunrise": 1546154263,
+        "sunset": 1546184850
+      },
+      "id": 2661604,
+      "name": "Basel",
+      "cod": 200
+    },
+    sensor: undefined,
+    shop: undefined,
+    calendar: undefined,
+    email: undefined
+  };
+
+  fetchLocalData(uri, handler) {
+    fetch(uri, {
+      method: "POST",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }).then(response => {
+      if (response.ok) {
+        return response.json();
+      }
+      throw new Error("Response was not ok");
+    }).then(json => {
+      handler(json);
+      return json;
+    }).catch((error) => {
+      console.log("Error fetching data (" + uri + "):", error)
+    })
+  }
+
+  setAllLocalState() {
+    this.fetchLocalData("http://localhost:" + DYNAMIC_FETCH_PORT
+        + "/api/sensor.json",
+        sensor => this.setState({sensor}));
+    this.fetchLocalData("http://localhost:" + DYNAMIC_FETCH_PORT
+        + "/api/calendar.json",
+        calendar => this.setState({calendar}));
+    this.fetchLocalData("http://localhost:" + DYNAMIC_FETCH_PORT
+        + "/api/email.json",
+        email => this.setState({email}));
+    this.fetchLocalData("http://localhost:" + DYNAMIC_FETCH_PORT
+        + "/api/shop.json",
+        shop => this.setState({shop}))
+  }
+
+  fetchWeatherDataSetState() {
+    fetch("http://api.openweathermap.org/data/2.5/weather?id=2661604&APPID="
+        + APIKey, {
+      method: "POST"
+    }).then(response => {
+      if (response.ok) {
+        return response.json();
+      }
+      throw new Error("Response was not ok");
+    }).then(json => {
+      this.setState({weather: json});
+      return json;
+    }).catch((error) => {
+      console.log("Error fetching weather data ("
+          + "http://api.openweathermap.org/data/2.5/weather?id=2661604&APPID="
+          + APIKey + "):", error)
+    })
+  }
+
+  componentDidMount() {
+    this.setAllLocalState();
+    setInterval(() => this.setAllLocalState(), DATA_FETCH_INTERVAL_MS);
+    if (false) {
+      this.fetchWeatherDataSetState();
+      setInterval(() => this.fetchWeatherDataSetState(),
+          WEATHER_FETCH_INTERVAL_MS)
+    }
+  }
+
   render() {
     return (<Container>
-      <MockupUnderlay/>
-      <TopBar>
-        <JustifySmall>
-          <Tile>
-            <Time/>
-          </Tile>
-        </JustifySmall>
-        <JustifyLarge>
-          <Tile>
-            <Weather temperature={14} text={"cloudy"}
-                     sensor={{temperature: 24, humidity: 81}}/>
-          </Tile>
-          <Tile>
-            <ShoppingList list={["item1", "item2", "item3", "item4", "item5"]}/>
-          </Tile>
-        </JustifyLarge>
-      </TopBar>
-      <HorizontalDivider/>
-      <BottomBar>
-        <JustifySmall>
-          <Tile>
-            <Calendar events={[{date: "date1", title: "event1"}, {date: "date2", title: "event2"}]}/>
-          </Tile>
-        </JustifySmall>
-        <JustifyLarge>
-          <Tile>
-            <Email email={[{sender: "sender1", subject: "subject1"}, {sender: "sender2", subject: "subject2"}, {sender: "sender3", subject: "subject3"}]}/>
-          </Tile>
-        </JustifyLarge>
-      </BottomBar>
+      <BrowserRouter>
+        <Switch>
+          <Route exact path={"/"} render={(props) =>
+              <Home {...props}
+                    data={{
+                      sensor: this.state.sensor,
+                      calendar: this.state.calendar,
+                      email: this.state.email
+                    }}
+                    weather={this.state.weather}
+                    sensor={this.state.sensor}
+                    calendar={this.state.calendar}
+                    email={this.state.email}
+                    shop={this.state.shop}/>}/>
+          <Route path={"/weather"} component={Weather}/>
+          <Route path={"/shopping"} component={Shop}/>
+          <Route path={"/calendar"} component={Calendar}/>
+          <Route path={"/messages"} component={Email}/>
+        </Switch>
+      </BrowserRouter>
     </Container>)
   }
 }

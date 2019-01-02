@@ -21,9 +21,9 @@ margin-bottom: ${theme.shopping.itemMargin};
 const ShoppingList = (props) => {
   return (<List>
     <Heading>shop</Heading>
-    {
-      props.list.map((item, index) => (<Item key={index}>{item}</Item>))
-    }
+    {props.list
+        ? props.list.map((item, index) => (<Item key={index}>{item}</Item>))
+        : "-"}
   </List>)
 };
 

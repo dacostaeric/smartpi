@@ -14,11 +14,14 @@ font-size: ${theme.calendar.size.event};
 margin-bottom: ${theme.calendar.eventMargin};
 `;
 
-const Calendar = (props) => {
+const Events = (props) => {
   return (<div>
     <Heading>today</Heading>
-    {props.events.map((event, index) => (<Event key={index}>{event.date} - {event.title}</Event>))}
+    {props.calendar
+        ? props.calendar.map((event, index) => (
+            <Event key={index}>{event.date} - {event.title}</Event>))
+        : "-"}
   </div>)
 };
 
-export default Calendar
+export default Events
