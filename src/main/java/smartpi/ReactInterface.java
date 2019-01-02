@@ -17,6 +17,8 @@ public class ReactInterface {
   public static final String BASE_FILE_PATH = "server/api";
 
   /**
+   * This method does not address light sensor data.
+   *
    * Writes provided sensor data to the sensor json file.
    *
    * Creates a map, populates it and encodes it to json format.
@@ -34,6 +36,7 @@ public class ReactInterface {
   }
 
   /**
+<<<<<<< HEAD
    * Writes provided sensor data to the sensor json file.
    *
    * Creates a map, populates it and encodes it to json format.
@@ -69,7 +72,9 @@ public class ReactInterface {
   }
 
   /**
-   * Writes the provided events to the events json file.
+   * This method's name is too ambiguous. Use writeCalendar instead.
+   *
+   * Writes the provided events to the calendar json file.
    *
    * Accepts a variable number of arguments.
    *
@@ -77,7 +82,21 @@ public class ReactInterface {
    * @return whether writing the file was successful or not
    */
   @SafeVarargs
+  @Deprecated
   public static boolean writeEvents(Map<String, String>... events) {
+    return write(JSON.toString(events), BASE_FILE_PATH + "/calendar.json");
+  }
+
+  /**
+   * Writes the provided events to the calendar json file.
+   *
+   * Accepts a variable number of arguments.
+   *
+   * @param events the events to be written
+   * @return whether writing the file was successful or not
+   */
+  @SafeVarargs
+  public static boolean writeCalendar(Map<String, String>... events) {
     return write(JSON.toString(events), BASE_FILE_PATH + "/calendar.json");
   }
 

@@ -82,6 +82,8 @@ public class CalendarQuickstart {
           start = event.getStart().getDate();
         }
         System.out.printf("%s (%s)\n", event.getSummary(), start);
+
+        ReactInterface.makeEvent(event.getSummary(), start.toString());
       }
     }
   }
