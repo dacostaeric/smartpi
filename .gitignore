@@ -36,3 +36,7 @@ gradle-app.setting
 #.gradletasknamecache
 gradlew
 gradlew.bat
+
+# node
+server/*
+!server/server.js
