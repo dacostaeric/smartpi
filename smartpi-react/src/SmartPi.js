@@ -28,7 +28,7 @@ filter: invert(100%);
 export default class SmartPi extends React.Component {
 
   state = {
-    weather: {
+    /*weather: {
       "coord": {"lon": 7.57, "lat": 47.56},
       "weather": [{
         "id": 800,
@@ -59,7 +59,8 @@ export default class SmartPi extends React.Component {
       "id": 2661604,
       "name": "Basel",
       "cod": 200
-    },
+    },*/
+    weather: undefined,
     sensor: undefined,
     shop: undefined,
     calendar: undefined,
@@ -134,18 +135,10 @@ export default class SmartPi extends React.Component {
     return (<Container>
       <BrowserRouter>
         <Switch>
-          <Route exact path={"/"} render={(props) =>
-              <Home {...props}
-                    data={{
-                      sensor: this.state.sensor,
-                      calendar: this.state.calendar,
-                      email: this.state.email
-                    }}
-                    weather={this.state.weather}
-                    sensor={this.state.sensor}
-                    calendar={this.state.calendar}
-                    email={this.state.email}
-                    shop={this.state.shop}/>}/>
+          <Route exact path={"/"} render={props =>
+              <Home {...props} weather={this.state.weather}
+                    sensor={this.state.sensor} calendar={this.state.calendar}
+                    email={this.state.email} shop={this.state.shop}/>}/>
           <Route path={"/weather"} component={Weather}/>
           <Route path={"/shopping"} component={Shop}/>
           <Route path={"/calendar"} component={Calendar}/>
