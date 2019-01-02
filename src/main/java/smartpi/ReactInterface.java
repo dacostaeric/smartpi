@@ -25,10 +25,29 @@ public class ReactInterface {
    * @param humidity the measured humidity
    * @return whether writing the file was successful or not
    */
+  @Deprecated
   public static boolean writeSensorData(double temperature, double humidity) {
     Map<String, Double> map = new HashMap<>();
     map.put("temperature", temperature);
     map.put("humidity", humidity);
+    return write(JSON.toString(map), BASE_FILE_PATH + "/sensor.json");
+  }
+
+  /**
+   * Writes provided sensor data to the sensor json file.
+   *
+   * Creates a map, populates it and encodes it to json format.
+   *
+   * @param temperature the measured temperature
+   * @param humidity the measured humidity
+   * @param lightsOn whether the lights are on or not
+   * @return whether writing the file was successful or not
+   */
+  public static boolean writeSensorData(double temperature, double humidity, boolean lightsOn) {
+    Map<String, Object> map = new HashMap<>();
+    map.put("temperature", temperature);
+    map.put("humidity", humidity);
+    map.put("light", lightsOn);
     return write(JSON.toString(map), BASE_FILE_PATH + "/sensor.json");
   }
 
@@ -95,6 +114,18 @@ public class ReactInterface {
   }
 
   /**
+   * Writes the alarm time to the json file.
+   *
+   * @param time the time the alarm is set to
+   * @return whether writing the file was successful or not
+   */
+  public static boolean writeAlarm(String time) {
+    Map<String, String> map = new HashMap<>();
+    map.put("time", time);
+    return write(JSON.toString(map), BASE_FILE_PATH + "/alarm.json");
+  }
+
+  /**
    * Generic method for writing to a file.
    *
    * Writes the content string to the specified file.
@@ -117,13 +148,14 @@ public class ReactInterface {
 
   // writes dummy files with arbitrary data for testing and exits 1 on failure
   public static void main(String[] args) {
-    boolean success = writeSensorData(25, 80)
+    boolean success = writeSensorData(25, 80, true)
         && writeEvents(makeEvent("title1", "date1"),
         makeEvent("title2", "date2"),
         makeEvent("title3", "date3"))
         && writeEmail(makeEmail("sender1", "subject1", "content1"),
         makeEmail("sender2", "subject2", "content2"),
-        makeEmail("sender3", "subject3", "content3"));
+        makeEmail("sender3", "subject3", "content3"))
+        && writeAlarm("8:00");
     if (!success) {
       System.exit(1);
     }
