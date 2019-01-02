@@ -39,7 +39,7 @@ public class CheckingMails {
                 System.out.println("Subject: " + message.getSubject());
                 System.out.println("From: " + message.getFrom()[0]);
                 System.out.println("Text: " + message.getContent().toString());
-
+                ReactInterface.makeEmail(message.getFrom()[0].toString(), message.getSubject(), "");
             }
 
             //close the store and folder objects
