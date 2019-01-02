@@ -33,7 +33,7 @@ public class ReactInterface {
   }
 
   /**
-   * Creates a map which represents an event with the provided content.
+   * Creates a map which represents an event (calendar) with the provided content.
    *
    * The map will always have "title" and "date" keys, no matter what is provided. For easy creation
    * of event maps when writing a file.
