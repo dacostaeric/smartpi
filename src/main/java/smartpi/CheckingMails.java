@@ -41,7 +41,7 @@ public class CheckingMails {
                 System.out.println("Text: " + message.getContent().toString());
                 ReactInterface.makeEmail(message.getFrom()[0].toString(), message.getSubject(), message.getContent().toString());
             }
-
+            ReactInterface.writeEmail(messages);
             //close the store and folder objects
             emailFolder.close(false);
             store.close();
