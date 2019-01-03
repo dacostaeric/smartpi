@@ -12,7 +12,7 @@ import Email from "./page/Email"
 //import APIKey from "./OpenWeatherMapAPIKey";
 
 const DYNAMIC_FETCH_PORT = 3001;
-const DATA_FETCH_INTERVAL_MS = 10000;
+const DATA_FETCH_INTERVAL_MS = 360000;
 const WEATHER_FETCH_INTERVAL_MS = 900000;
 const WEATHER = false;
 
