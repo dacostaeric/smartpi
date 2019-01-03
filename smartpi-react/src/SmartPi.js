@@ -9,11 +9,12 @@ import Weather from "./page/Weather";
 import Shop from "./page/Shop";
 import Calendar from "./page/Calendar"
 import Email from "./page/Email"
-import APIKey from "./OpenWeatherMapAPIKey";
+//import APIKey from "./OpenWeatherMapAPIKey";
 
 const DYNAMIC_FETCH_PORT = 3001;
-const DATA_FETCH_INTERVAL_MS = 3600000;
-const WEATHER_FETCH_INTERVAL_MS = 600000;
+const DATA_FETCH_INTERVAL_MS = 10000;
+const WEATHER_FETCH_INTERVAL_MS = 900000;
+const WEATHER = false;
 
 const Container = styled.div`
 box-sizing: border-box;
@@ -102,9 +103,11 @@ export default class SmartPi extends React.Component {
         shop => this.setState({shop}))
   }
 
-  fetchWeatherDataSetState() {
-    fetch("http://api.openweathermap.org/data/2.5/weather?id=2661604&APPID="
-        + APIKey, {
+  fetchWeatherDataSetState(APIKey) {
+    const url =
+        "http://api.openweathermap.org/data/2.5/weather?id=2661604&APPID="
+        + APIKey;
+    fetch(url, {
       method: "POST"
     }).then(response => {
       if (response.ok) {
@@ -115,20 +118,25 @@ export default class SmartPi extends React.Component {
       this.setState({weather: json});
       return json;
     }).catch((error) => {
-      console.log("Error fetching weather data ("
-          + "http://api.openweathermap.org/data/2.5/weather?id=2661604&APPID="
-          + APIKey + "):", error)
+      console.log("Error fetching weather data (" + url + "):", error)
     })
+  }
+
+  componentWillMount() {
+    if (WEATHER) {
+      import("./OpenWeatherMapAPIKey").then(module => {
+        this.fetchWeatherDataSetState(module.default);
+        setInterval(() => this.fetchWeatherDataSetState(module.default),
+            WEATHER_FETCH_INTERVAL_MS)
+      }, error => {
+        console.log(error)
+      })
+    }
   }
 
   componentDidMount() {
     this.setAllLocalState();
     setInterval(() => this.setAllLocalState(), DATA_FETCH_INTERVAL_MS);
-    if (false) {
-      this.fetchWeatherDataSetState();
-      setInterval(() => this.fetchWeatherDataSetState(),
-          WEATHER_FETCH_INTERVAL_MS)
-    }
   }
 
   render() {
