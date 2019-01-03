@@ -2,8 +2,6 @@ import React from "react"
 import styled from "styled-components"
 import theme from "../theme"
 
-import APIKey from "../OpenWeatherMapAPIKey"
-
 import clear from "../graphics/weather/clear.svg"
 import partlyCloudy from "../graphics/weather/partly_cloudy.svg"
 import cloudCover from "../graphics/weather/cloud_cover.svg"
