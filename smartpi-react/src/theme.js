@@ -10,10 +10,10 @@ const size = {
 
 const theme = {
   fontFamily: "Segoe UI",
-  topRowHeight: scale * 40 + unit,
-  bottomRowHeight: scale * 60 + unit,
-  smallWidth: scale * 40 + unit,
-  largeWidth: scale * 60 + unit,
+  /*topRowHeight: scale * 50 + unit,
+  bottomRowHeight: scale * 50 + unit,*/
+  smallWidth: 45 + unit,
+  largeWidth: 55 + unit,
   containerPadding: scale * 3 + unit,
   tilePadding: scale * 2 + unit,
   time: {
