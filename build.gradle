@@ -3,10 +3,24 @@ plugins {
     id 'application'
 }
 
-mainClassName = 'CalendarQuickstart'
+//mainClassName = 'CalendarQuickstart'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 version = '1.0'
+
+jar {
+    //jar file name base name
+    baseName = "SmartPi"
+    //jar file name version
+    version = "0.0.1"
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+        // a) Adding dependencies to jar
+    }
+    manifest {
+        attributes 'Main-Class': 'smartpi.SmartPiMain' // b) Set main class
+    }
+}
 
 repositories {
     mavenCentral()
