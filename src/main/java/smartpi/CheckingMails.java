@@ -9,7 +9,7 @@ import javax.mail.Message;
 import javax.mail.Session;
 import javax.mail.Store;
 
-public class CheckingMails {
+public class CheckingMails implements Runnable{
 
     public static void check(String host, String user,
                              String password)
@@ -51,7 +51,7 @@ public class CheckingMails {
         }
     }
 
-    public static void main(String[] args) {
+    public void run() {
         String[] credentials = new String[2];
         int i = 0;
         try {

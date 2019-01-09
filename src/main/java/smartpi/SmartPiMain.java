@@ -3,6 +3,11 @@ package smartpi;
 public class SmartPiMain {
 
   public static void main(String[] args) {
-    System.out.println("is it running?");
+    Temperature temperature = new Temperature();
+    temperature.run();
+    CheckingMails checkingMails = new CheckingMails();
+    checkingMails.run();
+    CalendarQuickstart calendarQuickstart = new CalendarQuickstart();
+    calendarQuickstart.run();
   }
 }

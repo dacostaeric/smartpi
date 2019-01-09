@@ -25,7 +25,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CalendarQuickstart {
+public class CalendarQuickstart implements Runnable{
   private static final String APPLICATION_NAME = "Google Calendar API Java Quickstart";
   private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
   private static final String TOKENS_DIRECTORY_PATH = "tokens";
@@ -58,37 +58,42 @@ public class CalendarQuickstart {
     return new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");
   }
 
-  public static void main(String... args) throws IOException, GeneralSecurityException {
+  public void run(){
     // Build a new authorized API client service.
-    final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
-    Calendar service = new Calendar.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
-        .setApplicationName(APPLICATION_NAME)
-        .build();
+    try {
+      final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
+      Calendar service = new Calendar.Builder(HTTP_TRANSPORT, JSON_FACTORY,
+          getCredentials(HTTP_TRANSPORT))
+          .setApplicationName(APPLICATION_NAME)
+          .build();
 
-    // List the next 10 events from the primary calendar.
-    DateTime now = new DateTime(System.currentTimeMillis());
-    Events events = service.events().list("primary")
-        .setMaxResults(10)
-        .setTimeMin(now)
-        .setOrderBy("startTime")
-        .setSingleEvents(true)
-        .execute();
-    List<Event> items = events.getItems();
-    Map<String, String>[] maps = new HashMap[items.size()];
-    if (items.isEmpty()) {
-      System.out.println("No upcoming events found.");
-    } else {
-      System.out.println("Upcoming events");
-      for (int i=0; i<items.size(); i++) {
-        DateTime start = items.get(i).getStart().getDateTime();
-        if (start == null) {
-          start = items.get(i).getStart().getDate();
+      // List the next 10 events from the primary calendar.
+      DateTime now = new DateTime(System.currentTimeMillis());
+      Events events = service.events().list("primary")
+          .setMaxResults(10)
+          .setTimeMin(now)
+          .setOrderBy("startTime")
+          .setSingleEvents(true)
+          .execute();
+      List<Event> items = events.getItems();
+      Map<String, String>[] maps = new HashMap[items.size()];
+      if (items.isEmpty()) {
+        System.out.println("No upcoming events found.");
+      } else {
+        System.out.println("Upcoming events");
+        for (int i = 0; i < items.size(); i++) {
+          DateTime start = items.get(i).getStart().getDateTime();
+          if (start == null) {
+            start = items.get(i).getStart().getDate();
+          }
+          System.out.printf("%s (%s)\n", items.get(i).getSummary(), start);
+
+          maps[i] = ReactInterface.makeEvent(items.get(i).getSummary(), start.toString());
         }
-        System.out.printf("%s (%s)\n", items.get(i).getSummary(), start);
-
-        maps[i] = ReactInterface.makeEvent(items.get(i).getSummary(), start.toString());
       }
+      ReactInterface.writeCalendar(maps);
+    } catch (Exception e) {
+      e.getStackTrace();
     }
-    ReactInterface.writeCalendar(maps);
   }
 }
