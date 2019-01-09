@@ -8,6 +8,7 @@ public class Temperature {
     static String line;
     static float humidity = 0;
     static float temperature = 0;
+    static boolean lightOn = false;
 
     public static void main(String[] args) throws Exception{
       Runtime runtime = Runtime.getRuntime();
@@ -18,11 +19,14 @@ public class Temperature {
       String[] data = line.split(" ",2);
       temperature = Float.parseFloat(data[0]);
       humidity = Float.parseFloat(data[1]);
+      if (Integer.parseInt(data[2]) == 1) {
+        lightOn = true;
+      }
       bufferedReader.close();
       process.waitFor();
       System.out.println("Temperature is : " + temperature + " °C.");
       System.out.println("Humidity is :" + humidity + " %.");
 
-      ReactInterface.writeSensorData(temperature, humidity);
+      ReactInterface.writeSensorData(temperature, humidity, lightOn);
     }
 }
