@@ -2,6 +2,7 @@ import React from "react"
 import styled from "styled-components"
 
 import theme from "../theme"
+import settings from "../settings"
 
 const Heading = styled.div`
 font-size: ${theme.calendar.size.heading};
@@ -14,12 +15,18 @@ font-size: ${theme.calendar.size.event};
 margin-bottom: ${theme.calendar.eventMargin};
 `;
 
-const Events = (props) => {
+const timeFormat = new Intl.DateTimeFormat("en-GB",
+    {hour: settings.time.hour12 ? "numeric" : "2-digit", minute: "2-digit",
+      hour12: settings.time.hour12, timeZone: settings.time.timeZone});
+
+const Events = props => {
   return (<div>
     <Heading>today</Heading>
-    {props.calendar
-        ? props.calendar.map((event, index) => (
-            <Event key={index}>{event.date} - {event.title}</Event>))
+    {props.today
+        ? props.today.map((event, index) => (
+            <Event key={index}>
+              {timeFormat.format(event.date)} - {event.title}
+            </Event>))
         : "-"}
   </div>)
 };

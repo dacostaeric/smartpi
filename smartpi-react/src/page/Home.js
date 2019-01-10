@@ -42,7 +42,7 @@ const Home = (props) => {
       <JustifySmall>
         <Link to={"/calendar"}>
           <Tile>
-            <Events calendar={props.calendar}/>
+            <Events today={props.today}/>
           </Tile>
         </Link>
       </JustifySmall>

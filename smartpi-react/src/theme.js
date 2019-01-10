@@ -10,6 +10,7 @@ const size = {
 
 const theme = {
   fontFamily: "Segoe UI",
+  invert: true,
   /*topRowHeight: scale * 50 + unit,
   bottomRowHeight: scale * 50 + unit,*/
   smallWidth: 45 + unit,

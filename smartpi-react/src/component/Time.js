@@ -4,13 +4,16 @@ import SmartPiDate from "./SmartPiDate"
 import Clock from "./Clock"
 import Alarm from "./Alarm"
 
+import settings from "../settings"
+
 class Time extends React.Component {
 
   dateFormat = new Intl.DateTimeFormat("en-GB",
       {weekday: "long", month: "long", day: "numeric", formatMatcher: "basic"});
 
   timeFormat = new Intl.DateTimeFormat("en-GB",
-      {hour: "numeric", minute: "2-digit", timeZone: "Europe/Zurich", hour12: true});
+      {hour: settings.time.hour12 ? "numeric" : "2-digit", minute: "2-digit",
+        hour12: settings.time.hour12, timeZone: settings.time.timeZone});
 
   state = {
     date: new Date(0),

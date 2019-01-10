@@ -12,6 +12,7 @@ import Email from "./page/Email"
 //import APIKey from "./OpenWeatherMapAPIKey";
 
 const DYNAMIC_FETCH_PORT = 3001;
+const LOCAL_FETCH_BASE_URL = "http://localhost:" + DYNAMIC_FETCH_PORT + "/api";
 const DATA_FETCH_INTERVAL_MS = 360000;
 const WEATHER_FETCH_INTERVAL_MS = 900000;
 const WEATHER = false;
@@ -23,7 +24,7 @@ padding: ${theme.containerPadding};
 height: 100vh;
 width: 100vw;
 background-color: white;
-filter: invert(100%);
+${theme.invert ? "filter: invert(100%);" : ""}
 `;
 
 export default class SmartPi extends React.Component {
@@ -65,6 +66,7 @@ export default class SmartPi extends React.Component {
     sensor: undefined,
     shop: undefined,
     calendar: undefined,
+    today: undefined,
     email: undefined
   };
 
@@ -88,18 +90,28 @@ export default class SmartPi extends React.Component {
     })
   }
 
+  setCalendarStates(calendar) {
+    let today = [];
+    let now = new Date();
+    let todayDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    let tomorrowDate = new Date(todayDate + 86400000);
+    for(let event of calendar) {
+      event.date = new Date(event.date);
+      if(todayDate <= event.date && event.date < tomorrowDate) {
+        today.push(event)
+      }
+    }
+    this.setState({calendar, today})
+  }
+
   setAllLocalState() {
-    this.fetchLocalData("http://localhost:" + DYNAMIC_FETCH_PORT
-        + "/api/sensor.json",
+    this.fetchLocalData(LOCAL_FETCH_BASE_URL + "/sensor.json",
         sensor => this.setState({sensor}));
-    this.fetchLocalData("http://localhost:" + DYNAMIC_FETCH_PORT
-        + "/api/calendar.json",
-        calendar => this.setState({calendar}));
-    this.fetchLocalData("http://localhost:" + DYNAMIC_FETCH_PORT
-        + "/api/email.json",
+    this.fetchLocalData(LOCAL_FETCH_BASE_URL + "/calendar.json",
+        calendar => this.setCalendarStates(calendar));
+    this.fetchLocalData(LOCAL_FETCH_BASE_URL + "/email.json",
         email => this.setState({email}));
-    this.fetchLocalData("http://localhost:" + DYNAMIC_FETCH_PORT
-        + "/api/shop.json",
+    this.fetchLocalData(LOCAL_FETCH_BASE_URL + "/shop.json",
         shop => this.setState({shop}))
   }
 
@@ -145,7 +157,7 @@ export default class SmartPi extends React.Component {
         <Switch>
           <Route exact path={"/"} render={props =>
               <Home {...props} weather={this.state.weather}
-                    sensor={this.state.sensor} calendar={this.state.calendar}
+                    sensor={this.state.sensor} today={this.state.today}
                     email={this.state.email} shop={this.state.shop}/>}/>
           <Route path={"/weather"} component={Weather}/>
           <Route path={"/shopping"} component={Shop}/>
