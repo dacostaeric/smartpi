@@ -71,5 +71,10 @@ public class CheckingMails implements Runnable{
 
         check(host, username, password);
 
+        try {
+            Thread.sleep(SmartPiMain.FREQUENCY_MAIL_MS);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

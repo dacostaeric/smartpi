@@ -38,7 +38,7 @@ public class Temperature implements Runnable {
         try {
           Thread.sleep(SmartPiMain.FREQUENCY_TEMPERATURE_MS);
         } catch (Exception e) {
-
+          e.printStackTrace();
         }
       }
     }

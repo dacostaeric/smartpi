@@ -93,7 +93,12 @@ public class CalendarQuickstart implements Runnable{
       }
       ReactInterface.writeCalendar(maps);
     } catch (Exception e) {
-      e.getStackTrace();
+      e.printStackTrace();
+    }
+    try {
+      Thread.sleep(SmartPiMain.FREQUENCY_CALENDAR_MS);
+    } catch (Exception e) {
+      e.printStackTrace();
     }
   }
 }
