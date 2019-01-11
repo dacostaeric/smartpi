@@ -111,7 +111,7 @@ export default class SmartPi extends React.Component {
     this.fetchLocalData(LOCAL_FETCH_BASE_URL + "/sensor.json",
         sensor => this.setState({sensor}));
     this.fetchLocalData(LOCAL_FETCH_BASE_URL + "/shop.json",
-        shop => this.setState({shop}))
+        shop => this.setState({shop}));
     this.fetchLocalData(LOCAL_FETCH_BASE_URL + "/calendar.json",
         calendar => this.setCalendarStates(calendar));
     this.fetchLocalData(LOCAL_FETCH_BASE_URL + "/email.json",
