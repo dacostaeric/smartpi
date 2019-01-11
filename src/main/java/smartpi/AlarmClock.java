@@ -1,5 +1,6 @@
 package smartpi;
 
+import java.io.IOException;
 import java.time.LocalTime;
 import java.util.concurrent.TimeUnit;
 
@@ -7,11 +8,13 @@ public class AlarmClock {
   public String alarmHour;
   public String alarmMinute;
   public String alarmSecond;
+  public boolean isRinging;
 
-  public AlarmClock(String alarmHour, String alarmMinute, String alarmSecond) {
+  public AlarmClock(String alarmHour, String alarmMinute, String alarmSecond, boolean isRinging) {
     this.alarmHour = alarmHour;
     this.alarmMinute = alarmMinute;
     this.alarmSecond = alarmSecond;
+    this.isRinging = isRinging;
   }
 
   public String getAlarmTime() {
@@ -36,10 +39,35 @@ public class AlarmClock {
         + second;
   }
 
+  public void setRingingTrue() {
+    ReactInterface.turnAlarmOn();
+    this.isRinging = true;
+    System.out.println("Ring");
+  }
+
+  public boolean checkIfTurnedOff() {
+    boolean alarmStatus = true;
+    try {
+      alarmStatus = ReactInterface.alarmStatus();
+    } catch (IOException e) {
+      e.getStackTrace();
+    }
+    if (this.isRinging && !alarmStatus) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   public boolean checkAlarm() {
     String currentTime = getCurrentTime();
     if (alarmHour.equals(currentTime.substring(0, 2)) && alarmMinute.equals(currentTime.substring(3, 5)) && alarmSecond.equals(currentTime.substring(6))) {
-      System.out.println("Work on your fucking project!");
+      setRingingTrue();
+      while (!checkIfTurnedOff()) {
+        if (checkIfTurnedOff()) {
+          System.out.println("You turned it off.");
+        }
+      }
       return true;
     } else {
       System.out.println("Current time: " + currentTime);
@@ -48,7 +76,7 @@ public class AlarmClock {
   }
 
   public static void main(String[] args) {
-    AlarmClock alarm = new AlarmClock("11","20","00");
+    AlarmClock alarm = new AlarmClock("11","10","00", false);
     System.out.println("Your alarm was set to: " + alarm.getAlarmTime());
     boolean ringed = false;
     while(!ringed) {
