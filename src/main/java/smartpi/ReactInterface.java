@@ -5,6 +5,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import javax.mail.Message;
@@ -164,6 +165,13 @@ public class ReactInterface {
 
   public static boolean turnAlarmOn() {
     return write("{\"ringing\":true}", BASE_FILE_PATH + "/alarm_turn_off.json");
+  }
+
+  public static boolean alarmStatus() throws IOException {
+      BufferedReader reader = new BufferedReader(
+          new FileReader(new File(BASE_FILE_PATH + "/alarm")));
+      String line = reader.readLine();
+      return line.contains("true");
   }
 
   /**
