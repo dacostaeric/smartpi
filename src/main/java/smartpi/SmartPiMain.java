@@ -2,9 +2,10 @@ package smartpi;
 
 public class SmartPiMain {
 
+  public static final int FREQUENCY_TEMPERATURE_MS = 5000;
+
   public static void main(String[] args) {
-    Temperature temperature = new Temperature();
-    temperature.run();
+    new Thread(new Temperature()).start();
     CheckingMails checkingMails = new CheckingMails();
     checkingMails.run();
     CalendarQuickstart calendarQuickstart = new CalendarQuickstart();

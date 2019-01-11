@@ -12,27 +12,34 @@ public class Temperature implements Runnable {
     static boolean lightOn = false;
 
     public void run() {
-      try {
-        Runtime runtime = Runtime.getRuntime();
-        Process process = runtime.exec("python3 /home/pi/Desktop/dht11.py");
-        BufferedReader bufferedReader = new BufferedReader(
-            new InputStreamReader(process.getInputStream()));
-        line = bufferedReader.readLine();
-      // System.out.println(line);
-      String[] data = line.split(" ",2);
-      temperature = Float.parseFloat(data[0]);
-      humidity = Float.parseFloat(data[1]);
-      if (Integer.parseInt(data[2]) == 1) {
-        lightOn = true;
-      }
-      bufferedReader.close();
-      process.waitFor();
-      System.out.println("Temperature is : " + temperature + " °C.");
-      System.out.println("Humidity is :" + humidity + " %.");
-      } catch (Exception e) {
-        e.getStackTrace();
-      }
+      while(true) {
+        try {
+          Runtime runtime = Runtime.getRuntime();
+          Process process = runtime.exec("python3 /home/pi/Desktop/dht11.py");
+          BufferedReader bufferedReader = new BufferedReader(
+              new InputStreamReader(process.getInputStream()));
+          line = bufferedReader.readLine();
+          // System.out.println(line);
+          String[] data = line.split(" ", 2);
+          temperature = Float.parseFloat(data[0]);
+          humidity = Float.parseFloat(data[1]);
+          if (Integer.parseInt(data[2]) == 1) {
+            lightOn = true;
+          }
+          bufferedReader.close();
+          process.waitFor();
+          System.out.println("Temperature is : " + temperature + " °C.");
+          System.out.println("Humidity is :" + humidity + " %.");
+        } catch (Exception e) {
+          e.getStackTrace();
+        }
 
-      ReactInterface.writeSensorData(temperature, humidity, lightOn);
+        ReactInterface.writeSensorData(temperature, humidity, lightOn);
+        try {
+          Thread.sleep(SmartPiMain.FREQUENCY_TEMPERATURE_MS);
+        } catch (Exception e) {
+
+        }
+      }
     }
 }
