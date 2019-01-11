@@ -1,7 +1,9 @@
 package smartpi;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.HashMap;
 import java.util.Map;
@@ -153,10 +155,15 @@ public class ReactInterface {
    * @param time the time the alarm is set to
    * @return whether writing the file was successful or not
    */
+  @Deprecated
   public static boolean writeAlarm(String time) {
     Map<String, String> map = new HashMap<>();
     map.put("time", time);
     return write(JSON.toString(map), BASE_FILE_PATH + "/alarm.json");
+  }
+
+  public static boolean turnAlarmOn() {
+    return write("{\"ringing\":true}", "api/alarm_turn_off.json");
   }
 
   /**
