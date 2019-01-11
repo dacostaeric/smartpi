@@ -60,7 +60,9 @@ class Time extends React.Component {
     return (<div>
       <SmartPiDate date={this.state.formattedDate}/>
       <Clock time={this.state.formattedTime}/>
-      <Alarm time={this.props.alarmTime ? this.props.alarmTime : "-:-"}/>
+      <Alarm time={this.props.alarm
+          ? this.props.alarm.hour + ":" + this.props.alarm.minute
+          : "-:-"}/>
     </div>)
   }
 }

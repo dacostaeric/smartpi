@@ -62,6 +62,7 @@ export default class SmartPi extends React.Component {
       "name": "Basel",
       "cod": 200
     },*/
+    alarm: undefined,
     weather: undefined,
     sensor: undefined,
     shop: undefined,
@@ -105,14 +106,16 @@ export default class SmartPi extends React.Component {
   }
 
   setAllLocalState() {
+    this.fetchLocalData(LOCAL_FETCH_BASE_URL + "/alarm.json",
+        alarm => this.setState({alarm}));
     this.fetchLocalData(LOCAL_FETCH_BASE_URL + "/sensor.json",
         sensor => this.setState({sensor}));
+    this.fetchLocalData(LOCAL_FETCH_BASE_URL + "/shop.json",
+        shop => this.setState({shop}))
     this.fetchLocalData(LOCAL_FETCH_BASE_URL + "/calendar.json",
         calendar => this.setCalendarStates(calendar));
     this.fetchLocalData(LOCAL_FETCH_BASE_URL + "/email.json",
         email => this.setState({email}));
-    this.fetchLocalData(LOCAL_FETCH_BASE_URL + "/shop.json",
-        shop => this.setState({shop}))
   }
 
   fetchWeatherDataSetState(APIKey) {
@@ -156,7 +159,8 @@ export default class SmartPi extends React.Component {
       <BrowserRouter>
         <Switch>
           <Route exact path={"/"} render={props =>
-              <Home {...props} weather={this.state.weather}
+              <Home {...props} alarm={this.state.alarm}
+                    weather={this.state.weather}
                     sensor={this.state.sensor} today={this.state.today}
                     email={this.state.email} shop={this.state.shop}/>}/>
           <Route path={"/weather"} component={Weather}/>

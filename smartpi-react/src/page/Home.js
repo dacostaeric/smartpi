@@ -20,7 +20,7 @@ const Home = (props) => {
     <TopBar>
       <JustifySmall>
         <Tile>
-          <Time/>
+          <Time alarm={props.alarm}/>
         </Tile>
       </JustifySmall>
       <JustifyLarge>
