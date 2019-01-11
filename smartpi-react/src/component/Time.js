@@ -12,8 +12,10 @@ class Time extends React.Component {
       {weekday: "long", month: "long", day: "numeric", formatMatcher: "basic"});
 
   timeFormat = new Intl.DateTimeFormat("en-GB",
-      {hour: settings.time.hour12 ? "numeric" : "2-digit", minute: "2-digit",
-        hour12: settings.time.hour12, timeZone: settings.time.timeZone});
+      {
+        hour: settings.time.hour12 ? "numeric" : "2-digit", minute: "2-digit",
+        hour12: settings.time.hour12, timeZone: settings.time.timeZone
+      });
 
   state = {
     date: new Date(0),
@@ -56,12 +58,16 @@ class Time extends React.Component {
     return this.timeFormat.format(dateObject)
   }
 
+  formatAlarmTime(hour, minute) {
+    return this.formatTime(new Date(1970, 1, 1, hour - 1, minute));
+  }
+
   render() {
     return (<div>
       <SmartPiDate date={this.state.formattedDate}/>
       <Clock time={this.state.formattedTime}/>
       <Alarm time={this.props.alarm
-          ? this.props.alarm.hour + ":" + this.props.alarm.minute
+          ? this.formatAlarmTime(this.props.alarm.hour, this.props.alarm.minute)
           : "-:-"}/>
     </div>)
   }
