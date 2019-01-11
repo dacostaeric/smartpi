@@ -95,7 +95,7 @@ export default class SmartPi extends React.Component {
     let today = [];
     let now = new Date();
     let todayDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    let tomorrowDate = new Date(todayDate + 86400000);
+    let tomorrowDate = new Date(todayDate.getTime() + 86400000);
     for(let event of calendar) {
       event.date = new Date(event.date);
       if(todayDate <= event.date && event.date < tomorrowDate) {
@@ -136,8 +136,10 @@ export default class SmartPi extends React.Component {
       console.log("Error fetching weather data (" + url + "):", error)
     })
   }
-
-  componentWillMount() {
+  
+  componentDidMount() {
+    this.setAllLocalState();
+    setInterval(() => this.setAllLocalState(), DATA_FETCH_INTERVAL_MS);
     if (WEATHER) {
       import("./OpenWeatherMapAPIKey").then(module => {
         this.fetchWeatherDataSetState(module.default);
@@ -147,11 +149,6 @@ export default class SmartPi extends React.Component {
         console.log(error)
       })
     }
-  }
-
-  componentDidMount() {
-    this.setAllLocalState();
-    setInterval(() => this.setAllLocalState(), DATA_FETCH_INTERVAL_MS);
   }
 
   render() {
