@@ -163,7 +163,7 @@ public class ReactInterface {
   }
 
   public static boolean turnAlarmOn() {
-    return write("{\"ringing\":true}", "api/alarm_turn_off.json");
+    return write("{\"ringing\":true}", BASE_FILE_PATH + "/alarm_turn_off.json");
   }
 
   /**
