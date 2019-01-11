@@ -51,9 +51,12 @@ http.createServer((request, response) => {
             "{\"success\":false}\n");
         break;
       }
+
+    case "/api/alarm.json":
     case "/api/sensor.json":
-    case "/api/email.json":
+    case "/api/shop.json":
     case "/api/calendar.json":
+    case "/api/email.json":
       let fullPath = process.cwd() + requestedPath;
       filesystem.readFile(fullPath, (error, file) => {
         if (error) {
