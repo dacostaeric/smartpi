@@ -9,6 +9,7 @@ import rain from "../graphics/weather/rain.svg"
 import thunderstorm from "../graphics/weather/thunderstorm.svg"
 import snow from "../graphics/weather/snow.svg"
 import fog from "../graphics/weather/fog.svg"
+import none from "../graphics/weather/none.png"
 
 const getIcon = (code) => {
   switch (code) {
@@ -72,7 +73,7 @@ const getIcon = (code) => {
     default:
       //case 771:
       //case 781:
-      return fog;
+      return none;
   }
 };
 
