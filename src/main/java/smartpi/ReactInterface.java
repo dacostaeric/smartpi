@@ -169,7 +169,7 @@ public class ReactInterface {
 
   public static boolean alarmStatus() throws IOException {
       BufferedReader reader = new BufferedReader(
-          new FileReader(new File(BASE_FILE_PATH + "/alarm")));
+          new FileReader(new File(BASE_FILE_PATH + "/alarm_turn_off.json")));
       String line = reader.readLine();
       return line.contains("true");
   }
@@ -203,8 +203,12 @@ public class ReactInterface {
         makeEvent("title3", "date3"))
         && writeEmail(makeEmail("sender1", "subject1", "content1"),
         makeEmail("sender2", "subject2", "content2"),
-        makeEmail("sender3", "subject3", "content3"))
-        && writeAlarm("8:00");
+        makeEmail("sender3", "subject3", "content3"));
+    try {
+      System.out.println("alarm status: " + alarmStatus());
+    } catch (IOException e) {
+      System.exit(2);
+    }
     if (!success) {
       System.exit(1);
     }
