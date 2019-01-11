@@ -20,7 +20,7 @@ public class Temperature implements Runnable {
               new InputStreamReader(process.getInputStream()));
           line = bufferedReader.readLine();
           // System.out.println(line);
-          String[] data = line.split(" ", 2);
+          String[] data = line.split(" ");
           temperature = Float.parseFloat(data[0]);
           humidity = Float.parseFloat(data[1]);
           if (Integer.parseInt(data[2]) == 1) {
