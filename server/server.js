@@ -39,11 +39,12 @@ http.createServer((request, response) => {
         let query = url.parse(request.url).query;
         let decoded = decodeURIComponent(query);
         let json = JSON.parse(decoded);
-        if (json.hour === undefined || json.minute === undefined || !Number.isInteger(json.hour) || !Number.isInteger(json.minute)) {
+        if (json.hour === undefined || json.minute === undefined
+            || !Number.isInteger(json.hour) || !Number.isInteger(json.minute)) {
           throw new Error("hour or minute is not defined");
         }
         respond(response, {"Content-Type": "application/json"},
-            "{\"success\":" + writeFile("/api/alarm.json", decoded)
+            "{\"success\":" + writeFile("api/alarm.json", decoded)
             + ",\"json\":" + decoded + "}\n");
         break;
       } catch (error) {
