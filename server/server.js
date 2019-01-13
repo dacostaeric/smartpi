@@ -1,9 +1,14 @@
-let util = require("util"),
+const util = require("util"),
     http = require("http"),
     path = require("path"),
     url = require("url"),
     filesystem = require("fs"),
     port = 3001;
+
+const PATH_ALARM_SET = "/api/alarmset",
+    PATH_ALARM_OFF = "/api/alarmoff",
+    PATH_SHOPPING_LIST_SET = "";
+
 const respond = (response, options, content) => {
   response.writeHeader(200, options);
   response.write(content);
@@ -30,11 +35,8 @@ const writeFile = (filepath, content) => {
 };
 http.createServer((request, response) => {
   let requestedPath = url.parse(request.url).pathname;
-  if (requestedPath === "/") {
-    requestedPath = "/index.html";
-  }
   switch (requestedPath) {
-    case "/api/setalarm":
+    case PATH_ALARM_SET:
       try {
         let query = url.parse(request.url).query;
         let decoded = decodeURIComponent(query);
@@ -52,14 +54,23 @@ http.createServer((request, response) => {
             "{\"success\":false}\n");
         break;
       }
-
+    case PATH_ALARM_OFF:
+      try {
+        respond(response, {"Content-Type": "application/json"},
+            "{\"success\":" + writeFile("api/alarm_turn_off.json",
+            "{\"ringing\": false}") + "}");
+        break;
+      } catch (error) {
+        respond(response, {"Content-Type": "application/json"},
+            "{\"success\":false}\n");
+        break;
+      }
     case "/api/alarm.json":
     case "/api/sensor.json":
     case "/api/shop.json":
     case "/api/calendar.json":
     case "/api/email.json":
-      let fullPath = process.cwd() + requestedPath;
-      filesystem.readFile(fullPath, (error, file) => {
+      filesystem.readFile(process.cwd() + requestedPath, (error, file) => {
         if (error) {
           respondError(response, error);
         } else {
@@ -75,12 +86,20 @@ http.createServer((request, response) => {
       });
       break;
     case "/":
-    default:
       filesystem.readFile(process.cwd() + "/index.html", (error, file) => {
         if (error) {
           respondError(response, error);
         } else {
-          respondFile(response, {"Content-Type": "text/plain"}, file);
+          respondFile(response, {"Content-Type": "text/html"}, file);
+        }
+      });
+      break;
+    default:
+      filesystem.readFile(process.cwd() + requestedPath, (error, file) => {
+        if (error) {
+          respondError(response, error);
+        } else {
+          respondFile(response, {}, file);
         }
       });
   }
