@@ -1,0 +1,92 @@
+% !TEX TS-program = pdflatex
+% !TEX encoding = UTF-8 Unicode
+
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+
+\usepackage[T1]{fontenc}
+\usepackage[german]{babel}
+\selectlanguage{german}
+
+\usepackage{graphicx}
+
+\pagestyle{plain}
+
+\title{SmartPi}
+\author{Eric da Costa, Alessandro Pittori}
+\date{27. Januar 2019}
+
+\begin{document}
+\maketitle
+
+\tableofcontents
+\section{Inspiration}
+Die Idee eines Webserver basierten Smart Homes kam uns erstmals, als die Beispielprojekte vorgestellt wurden. Unter diesen war eine Wetterstation, auf die man über einen Webserver zugreifen konnte. Wir hatten beide schon zuvor Erfahrung mit Webdesign und Alessandro zudem /SYN/Erfahrung mit Webhosting, dem Raspberry Pi und der Kombination der beiden. Des weiteren hatte er einen Online Kurs des Hasso Platter Instituts /SRC/openhpi
+\cite{smartmirror}
+- hackerhouse smart mirror
+- webserver, "remote" access im netzwerk
+- tts, smart assistant-like
+
+\section{Technologien}
+- rpi, schon zuvor verwendet mit webserver
+- java, kennen uns am besten aus
+- python, auslesen der sensoren
+- javascript
+	moderne herangehensweise an webdesign und server
+	- react für frontend
+		- npm
+		- fetch api um daten zu beschaffen
+	- nodejs server für backend
+\subsection{APIs}
+- openweathermap
+- goolgle calendar
+- javax.mail imaps, smtp
+- marytts
+\subsection{Hardware}
+- 7in lcd von smart home kit
+- sensoren von smart home kit
+- lautsprecher von früher
+- rpi 2b
+- sperrholz + acryl
+
+\section{(Aufteilung)}
+nonig sicher wie relevant das isch aber sie wänn glaub dass genau gseit wird wer was gmacht het. sunst kame das au zu de technologie drzue due
+\subsection{Alessandro}
+- react
+- webserver
+- wetter
+- gui/ux
+- icons sophia
+
+\subsection{Eric}
+- java
+- python
+- email
+- wecker
+- kalender
+- sensoren
+- tts
+
+\section{Implementierung}
+\subsection{Architektur}
+
+\subsection{Wecker}
+
+\subsection{E-Mail}
+
+\subsection{Kalender}
+
+\subsection{React}
+
+\subsection{Webserver}
+
+\subsection{Gerhäuse und Zusammenbau}
+- blender sketch
+
+\section{Abschliessend}
+
+\bibliographystyle{plain}
+\bibliography{CAOS-Project-Report_SmartPi_Eric_da_Costa_Alessandro_Pittori}
+
+\end{document}

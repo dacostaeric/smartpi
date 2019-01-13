@@ -40,3 +40,8 @@ gradlew.bat
 # react
 smartpi-react/node_modules/
 smartpi-react/README.md
+
+# report
+**/report/*
+!**/*.tex
+!**/*.bib
