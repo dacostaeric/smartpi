@@ -22,7 +22,12 @@ const theme = {
     clockSize: scale * 7 + unit,
     clockMarginTop: scale * 2 + unit,
     clockMarginBottom: scale * .5 + unit,
-    alarmSize: scale * 1.5 + unit
+    alarm: {
+      iconSize: scale * 2 + unit,
+      textSize: scale * 1.5 + unit,
+      textMargin: scale * 1 + unit,
+
+    }
   },
   weather: {
     margin: scale * 1 + unit,
