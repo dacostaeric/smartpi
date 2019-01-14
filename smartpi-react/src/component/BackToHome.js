@@ -4,7 +4,7 @@ import styled from "styled-components"
 
 import theme from "../theme"
 
-import icon from "../graphics/return.png"
+import icon from "../graphics/return.svg"
 
 const Wrapper = styled.div`
 float: left;
