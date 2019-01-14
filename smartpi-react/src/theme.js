@@ -17,6 +17,7 @@ const theme = {
   largeWidth: 55 + unit,
   containerPadding: scale * 3 + unit,
   tilePadding: scale * 2 + unit,
+  dividerHeight: scale * .2 + unit,
   time: {
     dateTextSize: scale * 2 + unit,
     clockSize: scale * 7 + unit,
