@@ -1,22 +1,11 @@
 import React from "react"
-import styled from "styled-components"
 
-import theme from "../theme"
-
-const Heading = styled.div`
-font-size: ${theme.calendar.size.heading};
-margin-bottom: ${theme.calendar.headingMargin};
-font-style: italic;
-`;
-
-const Message = styled.div`
-font-size: ${theme.calendar.size.event};
-margin-bottom: ${theme.calendar.eventMargin};
-`;
+import ListHeading from "./ListHeading"
+import Message from "./ListItem"
 
 const Messages = (props) => {
   return (<div>
-    <Heading>messages</Heading>
+    <ListHeading>messages</ListHeading>
     {props.email
         ? props.email.map((email, index) => (
             <Message key={index}>{email.sender}: {email.subject}</Message>))

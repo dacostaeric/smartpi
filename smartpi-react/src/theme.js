@@ -18,6 +18,16 @@ const theme = {
   containerPadding: scale * 3 + unit,
   tilePadding: scale * 2 + unit,
   dividerHeight: scale * .2 + unit,
+  list: {
+    size: {
+      heading: size.medium + unit,
+      item: size.small + unit
+    },
+    margin: {
+      heading: scale * .5 + unit,
+      item: scale * .15 + unit
+    }
+  },
   time: {
     dateTextSize: scale * 2 + unit,
     clockSize: scale * 7 + unit,
@@ -39,13 +49,7 @@ const theme = {
     sensorTextMargin: scale * 0 + unit
   },
   shopping: {
-    marginLeft: scale * 2 + unit,
-    size: {
-      heading: size.medium + unit,
-      item: size.small + unit
-    },
-    headingMargin: scale * .5 + unit,
-    itemMargin: scale * .15 + unit
+    marginLeft: scale * 2 + unit
   },
   calendar: {
     size: {

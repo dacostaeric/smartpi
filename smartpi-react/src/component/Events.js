@@ -1,19 +1,9 @@
 import React from "react"
-import styled from "styled-components"
 
-import theme from "../theme"
+import ListHeading from "./ListHeading"
+import Event from "./ListItem"
+
 import settings from "../settings"
-
-const Heading = styled.div`
-font-size: ${theme.calendar.size.heading};
-margin-bottom: ${theme.calendar.headingMargin};
-font-style: italic;
-`;
-
-const Event = styled.div`
-font-size: ${theme.calendar.size.event};
-margin-bottom: ${theme.calendar.eventMargin};
-`;
 
 const timeFormat = new Intl.DateTimeFormat("en-GB",
     {hour: settings.time.hour12 ? "numeric" : "2-digit", minute: "2-digit",
@@ -21,7 +11,7 @@ const timeFormat = new Intl.DateTimeFormat("en-GB",
 
 const Events = props => {
   return (<div>
-    <Heading>today</Heading>
+    <ListHeading>today</ListHeading>
     {props.today
         ? props.today.map((event, index) => (
             <Event key={index}>
