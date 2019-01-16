@@ -13,20 +13,33 @@
 
 \pagestyle{plain}
 
-\title{SmartPi}
+\title{SmartPi\\ \begin{large} Computer Architecture and Operating Systems\\ Universität Basel\end{large}}
 \author{Eric da Costa, Alessandro Pittori}
 \date{27. Januar 2019}
 
 \begin{document}
 \maketitle
 
-\tableofcontents
+%\tableofcontents
 \section{Inspiration}
+automatisierung des heims, neubauten teilweise schon integriert
+smarthome integrierte produkte (glühbirnen, smart assistants) -> idee bekommen, was so dahintersteckt
 Die Idee eines Webserver basierten Smart Homes kam uns erstmals, als die Beispielprojekte vorgestellt wurden. Unter diesen war eine Wetterstation, auf die man über einen Webserver zugreifen konnte. Wir hatten beide schon zuvor Erfahrung mit Webdesign und Alessandro zudem /SYN/Erfahrung mit Webhosting, dem Raspberry Pi und der Kombination der beiden. Des weiteren hatte er einen Online Kurs des Hasso Platter Instituts /SRC/openhpi
 \cite{smartmirror}
+
+- am morgen aufstehen -> up to date mit termine email etc
+- ohne handy
+
 - hackerhouse smart mirror
 - webserver, "remote" access im netzwerk
 - tts, smart assistant-like
+
+questions to examine
+verbinden verschiedener technologien
+java <-> react
+java <-> python
+zentrale steuereinheit mit schnittstelle (server) im netzwerk verfügbar
+
 
 \section{Technologien}
 - rpi, schon zuvor verwendet mit webserver
@@ -38,6 +51,10 @@ Die Idee eines Webserver basierten Smart Homes kam uns erstmals, als die Beispie
 		- npm
 		- fetch api um daten zu beschaffen
 	- nodejs server für backend
+- http
+- google api
+- java mail
+
 \subsection{APIs}
 - openweathermap
 - goolgle calendar
@@ -50,8 +67,7 @@ Die Idee eines Webserver basierten Smart Homes kam uns erstmals, als die Beispie
 - rpi 2b
 - sperrholz + acryl
 
-\section{(Aufteilung)}
-nonig sicher wie relevant das isch aber sie wänn glaub dass genau gseit wird wer was gmacht het. sunst kame das au zu de technologie drzue due
+\section{Aufteilung}
 \subsection{Alessandro}
 - react
 - webserver
@@ -69,13 +85,21 @@ nonig sicher wie relevant das isch aber sie wänn glaub dass genau gseit wird we
 - tts
 
 \section{Implementierung}
-\subsection{Architektur}
+\subsection{Architektur} % ale
+- node server
+- react front end
+- makeshift database using json files
+- java und node server schreiben json
+- java im hintergrund für komplexere protokolle (email, calendar api)
+- python sensoren auslesen
 
 \subsection{Wecker}
 
 \subsection{E-Mail}
 
 \subsection{Kalender}
+
+\subsection{Sensoren}
 
 \subsection{React}
 
@@ -85,6 +109,8 @@ nonig sicher wie relevant das isch aber sie wänn glaub dass genau gseit wird we
 - blender sketch
 
 \section{Abschliessend}
+\subsection{Resultat}
+\subsection{Fazit}
 
 \bibliographystyle{plain}
 \bibliography{CAOS-Project-Report_SmartPi_Eric_da_Costa_Alessandro_Pittori}
