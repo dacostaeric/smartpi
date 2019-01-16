@@ -25,28 +25,33 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CalendarQuickstart implements Runnable{
+public class CalendarQuickstart extends SmartPiRunnable {
+
   private static final String APPLICATION_NAME = "Google Calendar API Java Quickstart";
   private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
   private static final String TOKENS_DIRECTORY_PATH = "tokens";
 
   /**
-   * Global instance of the scopes required by this quickstart.
-   * If modifying these scopes, delete your previously saved tokens/ folder.
+   * Global instance of the scopes required by this quickstart. If modifying these scopes, delete
+   * your previously saved tokens/ folder.
    */
-  private static final List<String> SCOPES = Collections.singletonList(CalendarScopes.CALENDAR_READONLY);
+  private static final List<String> SCOPES = Collections
+      .singletonList(CalendarScopes.CALENDAR_READONLY);
   private static final String CREDENTIALS_FILE_PATH = "/credentials.json";
 
   /**
    * Creates an authorized Credential object.
+   *
    * @param HTTP_TRANSPORT The network HTTP Transport.
    * @return An authorized Credential object.
    * @throws IOException If the credentials.json file cannot be found.
    */
-  private static Credential getCredentials(final NetHttpTransport HTTP_TRANSPORT) throws IOException {
+  private static Credential getCredentials(final NetHttpTransport HTTP_TRANSPORT)
+      throws IOException {
     // Load client secrets.
     InputStream in = CalendarQuickstart.class.getResourceAsStream(CREDENTIALS_FILE_PATH);
-    GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
+    GoogleClientSecrets clientSecrets = GoogleClientSecrets
+        .load(JSON_FACTORY, new InputStreamReader(in));
 
     // Build flow and trigger user authorization request.
     GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
@@ -58,8 +63,8 @@ public class CalendarQuickstart implements Runnable{
     return new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");
   }
 
-  public void run(){
-    // Build a new authorized API client service.
+  public void runOnce() {
+// Build a new authorized API client service.
     try {
       final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
       Calendar service = new Calendar.Builder(HTTP_TRANSPORT, JSON_FACTORY,
@@ -95,10 +100,16 @@ public class CalendarQuickstart implements Runnable{
     } catch (Exception e) {
       e.printStackTrace();
     }
-    try {
-      Thread.sleep(SmartPiMain.FREQUENCY_CALENDAR_MS);
-    } catch (Exception e) {
-      e.printStackTrace();
+  }
+
+  public void run() {
+    while (true) {
+      runOnce();
+      try {
+        Thread.sleep(SmartPiMain.FREQUENCY_CALENDAR_MS);
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
     }
   }
 }
