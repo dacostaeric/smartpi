@@ -163,15 +163,55 @@ public class ReactInterface {
     return write(JSON.toString(map), BASE_FILE_PATH + "/alarm.json");
   }
 
+  @Deprecated
   public static boolean turnAlarmOn() {
     return write("{\"ringing\":true}", BASE_FILE_PATH + "/alarm_turn_off.json");
   }
 
-  public static boolean alarmStatus() throws IOException {
+  /**
+   * This method's name is ambiguous. It has been replaced with isAlarmRinging().
+   *
+   * @return whether or not the alarm is ringing
+   * @throws IOException when a reading error occurs
+   */
+  @Deprecated
+  public static synchronized boolean alarmStatus() throws IOException {
       BufferedReader reader = new BufferedReader(
           new FileReader(new File(BASE_FILE_PATH + "/alarm_turn_off.json")));
       String line = reader.readLine();
       return line.contains("true");
+  }
+
+  /**
+   * Returns whether the alarm is currently ringing.
+   *
+   * @return whether or not the alarm is ringing
+   * @throws IOException when a file error occurs
+   * @throws NullPointerException when a reading error occurs
+   */
+  public static synchronized boolean isAlarmRinging() throws IOException, NullPointerException {
+    BufferedReader reader = new BufferedReader(
+        new FileReader(new File(BASE_FILE_PATH + "/alarm_turn_off.json")));
+    String line = reader.readLine();
+    return line.contains("true");
+  }
+
+  /**
+   * Returns whether the alarm should speak.
+   *
+   * @return whether or not the alarm should speak
+   * @throws IOException when a file error occurs
+   * @throws NullPointerException when a reading error occurs
+   */
+  public static synchronized boolean shouldAlarmSpeak() throws IOException, NullPointerException {
+    BufferedReader reader = new BufferedReader(
+        new FileReader(new File(BASE_FILE_PATH + "/alarm_speak.json")));
+    String line = reader.readLine();
+    return line.contains("true");
+  }
+
+  public static boolean turnSpeakOff() {
+    return write("{\"speak\": false}", BASE_FILE_PATH + "/alarm_speak.json");
   }
 
   /**
@@ -203,9 +243,10 @@ public class ReactInterface {
         makeEvent("title3", "date3"))
         && writeEmail(makeEmail("sender1", "subject1", "content1"),
         makeEmail("sender2", "subject2", "content2"),
-        makeEmail("sender3", "subject3", "content3"));
+        makeEmail("sender3", "subject3", "content3"))
+        && turnAlarmOn();
     try {
-      System.out.println("alarm status: " + alarmStatus());
+      System.out.println("alarm status: " + isAlarmRinging());
     } catch (IOException e) {
       System.exit(2);
     }
