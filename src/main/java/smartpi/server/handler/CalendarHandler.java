@@ -8,15 +8,15 @@ import smartpi.CalendarQuickstart;
 
 public class CalendarHandler extends SmartPiHandler implements HttpHandler {
 
-  CalendarQuickstart caledar;
+  CalendarQuickstart calendar;
 
   public CalendarHandler(CalendarQuickstart calendar) {
-    this.caledar = calendar;
+    this.calendar = calendar;
   }
 
   @Override
   public void handle(HttpExchange httpExchange) throws IOException {
-//    respondAPI(httpExchange, JSON.toString(new String[2]).getBytes());
+    respondAPI(httpExchange, JSON.toString(calendar.getEventsAsMap()).getBytes());
     respondAPI(httpExchange, "[{\"title\": \"Java Server Test\",\"date\": \"2019-01-17T18:00:00Z\"}]".getBytes());
   }
 }
