@@ -100,7 +100,8 @@ public class CalendarQuickstart {
     } catch (Exception e) {
       e.printStackTrace();
     }
-    return null;
+    Map<String, String>[] maps = new HashMap[0];
+    return maps;
   }
 
   @Deprecated

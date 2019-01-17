@@ -9,9 +9,9 @@ import javax.mail.Message;
 import javax.mail.Session;
 import javax.mail.Store;
 
-public class CheckingMails extends SmartPiRunnable {
+public class CheckingMails {
 
-  public static void check(String host, String user,
+  public static Message[] check(String host, String user,
       String password) {
     try {
 
@@ -40,17 +40,18 @@ public class CheckingMails extends SmartPiRunnable {
         ReactInterface.makeEmail(message.getFrom()[0].toString(), message.getSubject(),
             message.getContent().toString());
       }
-      ReactInterface.writeEmail(messages);
       //close the store and folder objects
       emailFolder.close(false);
       store.close();
-
+      return messages;
     } catch (Exception e) {
       e.printStackTrace();
     }
+    Message[] messages = new Message[0];
+    return messages;
   }
 
-  public void runOnce() {
+  public Message[] getMailsAsMap() {
     String[] credentials = new String[2];
     int i = 0;
     try {
@@ -68,12 +69,13 @@ public class CheckingMails extends SmartPiRunnable {
     String username = credentials[0];
     String password = credentials[1];
 
-    check(host, username, password);
+    return check(host, username, password);
   }
 
+  @Deprecated
   public void run() {
     while (true) {
-      runOnce();
+      //runOnce();
       try {
         Thread.sleep(SmartPiMain.FREQUENCY_MAIL_MS);
       } catch (Exception e) {

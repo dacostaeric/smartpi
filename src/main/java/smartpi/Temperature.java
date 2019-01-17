@@ -3,15 +3,16 @@ package smartpi;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Map;
 
-public class Temperature extends SmartPiRunnable {
+public class Temperature{
 
   static String line;
   static float humidity = 0;
   static float temperature = 0;
   static boolean lightOn = false;
 
-  public void runOnce() {
+  public Map<String, Object> getSensorData() {
     try {
       Runtime runtime = Runtime.getRuntime();
       Process process = runtime.exec("python3 /home/pi/Desktop/dht11.py");
@@ -32,13 +33,13 @@ public class Temperature extends SmartPiRunnable {
     } catch (Exception e) {
       e.getStackTrace();
     }
-
-    ReactInterface.writeSensorData(temperature, humidity, lightOn);
+    return ReactInterface.makeSensor(temperature, humidity, lightOn);
   }
 
+  @Deprecated
   public void run() {
     while (true) {
-      runOnce();
+      //runOnce();
       try {
         Thread.sleep(SmartPiMain.FREQUENCY_TEMPERATURE_MS);
       } catch (Exception e) {
