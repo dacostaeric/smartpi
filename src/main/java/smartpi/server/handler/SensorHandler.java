@@ -16,7 +16,6 @@ public class SensorHandler extends SmartPiHandler implements HttpHandler {
 
   @Override
   public void handle(HttpExchange httpExchange) throws IOException {
-//    respondAPI(httpExchange, JSON.toString(new String[2]).getBytes());
-    respondAPI(httpExchange, "{\"temperature\": 25,\"humidity\": 75,\"lights\": true}".getBytes());
+    respondAPI(httpExchange, JSON.toString(temperature.getSensorData()).getBytes());
   }
 }
