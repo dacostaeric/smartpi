@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.security.GeneralSecurityException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -63,8 +64,9 @@ public class CalendarQuickstart {
     return new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");
   }
 
-  public Map<String, String>[] getEventsAsMap() {
+  public ArrayList<Map<String, String>> getEventAsArrayList() {
 // Build a new authorized API client service.
+    ArrayList<Map<String,String>> list = new ArrayList<>();
     try {
       final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
       Calendar service = new Calendar.Builder(HTTP_TRANSPORT, JSON_FACTORY,
@@ -81,7 +83,7 @@ public class CalendarQuickstart {
           .setSingleEvents(true)
           .execute();
       List<Event> items = events.getItems();
-      Map<String, String>[] maps = new HashMap[items.size()];
+      //Map<String, String>[] maps = new HashMap[items.size()];
       if (items.isEmpty()) {
         System.out.println("No upcoming events found.");
       } else {
@@ -93,15 +95,15 @@ public class CalendarQuickstart {
           }
           System.out.printf("%s (%s)\n", items.get(i).getSummary(), start);
 
-          maps[i] = ReactInterface.makeEvent(items.get(i).getSummary(), start.toString());
+          list.add(ReactInterface.makeEvent(items.get(i).getSummary(), start.toString()));
         }
       }
-      return maps;
+      //return maps;
     } catch (Exception e) {
       e.printStackTrace();
     }
-    Map<String, String>[] maps = new HashMap[0];
-    return maps;
+    //Map<String, String>[] maps = new HashMap[0];
+    return list;
   }
 
   @Deprecated
