@@ -16,6 +16,6 @@ public class CalendarHandler extends SmartPiHandler implements HttpHandler {
 
   @Override
   public void handle(HttpExchange httpExchange) throws IOException {
-    respondAPI(httpExchange, JSON.toString(calendar.getEventsAsMap()).getBytes());
+    respondAPI(httpExchange, JSON.toString(calendar.getEventsAsArrayList()).getBytes());
   }
 }

@@ -2,6 +2,7 @@ package smartpi;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -13,8 +14,9 @@ import javax.mail.Store;
 
 public class CheckingMails {
 
-  public static Map<String, String>[] check(String host, String user,
+  public static ArrayList<Map<String, String>> check(String host, String user,
       String password) {
+    ArrayList<Map<String,String>> list = new ArrayList<>();
     try {
 
       Properties props = System.getProperties();
@@ -31,7 +33,7 @@ public class CheckingMails {
 
       Message[] messages = emailFolder.getMessages();
       System.out.println("You have " + messages.length + " messages.");
-      Map<String, String>[] maps = new HashMap[messages.length];
+      //Map<String, String>[] maps = new HashMap[messages.length];
       for (int i = 0, n = messages.length; i < n; i++) {
         Message message = messages[i];
         System.out.println(" ");
@@ -39,21 +41,19 @@ public class CheckingMails {
         System.out.println("Subject: " + message.getSubject());
         System.out.println("From: " + message.getFrom()[0]);
         System.out.println("Text: " + message.getContent().toString());
-        maps[i] = ReactInterface.makeEmail(message.getFrom()[0].toString(), message.getSubject(),
-            message.getContent().toString());
+        list.add(ReactInterface.makeEmail(message.getFrom()[0].toString(), message.getSubject(),
+            message.getContent().toString()));
       }
       //close the store and folder objects
       emailFolder.close(false);
       store.close();
-      return maps;
     } catch (Exception e) {
       e.printStackTrace();
     }
-    Map<String, String>[] maps = new HashMap[0];
-    return maps;
+    return list;
   }
 
-  public Map<String, String>[] getMailsAsMap() {
+  public ArrayList<Map<String, String>> getMailsAsArrayList() {
     String[] credentials = new String[2];
     int i = 0;
     try {

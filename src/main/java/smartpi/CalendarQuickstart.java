@@ -64,7 +64,7 @@ public class CalendarQuickstart {
     return new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");
   }
 
-  public ArrayList<Map<String, String>> getEventAsArrayList() {
+  public ArrayList<Map<String, String>> getEventsAsArrayList() {
 // Build a new authorized API client service.
     ArrayList<Map<String,String>> list = new ArrayList<>();
     try {

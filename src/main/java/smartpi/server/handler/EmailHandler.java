@@ -16,6 +16,6 @@ public class EmailHandler extends SmartPiHandler implements HttpHandler {
 
   @Override
   public void handle(HttpExchange httpExchange) throws IOException {
-    respondAPI(httpExchange, JSON.toString(email.getMailsAsMap()).getBytes());
+    respondAPI(httpExchange, JSON.toString(email.getMailsAsArrayList()).getBytes());
   }
 }
