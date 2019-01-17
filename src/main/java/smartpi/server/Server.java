@@ -11,13 +11,14 @@ import smartpi.server.handler.EmailHandler;
 import smartpi.server.handler.IndexHandler;
 import smartpi.server.handler.SensorHandler;
 
-public class Server {
+public class Server implements Runnable {
 
   public static final String BASE_PATH = "server";
 
   public static final int PORT = 3001;
 
-  public static void main(String[] args) {
+  @Override
+  public void run() {
     try {
       HttpServer server = HttpServer.create(new InetSocketAddress(PORT), 0);
       try {
@@ -43,5 +44,9 @@ public class Server {
     } catch (Exception e) {
       e.printStackTrace();
     }
+  }
+
+  public static void main(String[] args) {
+    new Server().run();
   }
 }
