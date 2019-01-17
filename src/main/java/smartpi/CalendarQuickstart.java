@@ -25,7 +25,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CalendarQuickstart extends SmartPiRunnable {
+public class CalendarQuickstart {
 
   private static final String APPLICATION_NAME = "Google Calendar API Java Quickstart";
   private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
@@ -63,7 +63,7 @@ public class CalendarQuickstart extends SmartPiRunnable {
     return new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");
   }
 
-  public void runOnce() {
+  public Map<String, String>[] getEventsAsMap() {
 // Build a new authorized API client service.
     try {
       final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
@@ -96,15 +96,17 @@ public class CalendarQuickstart extends SmartPiRunnable {
           maps[i] = ReactInterface.makeEvent(items.get(i).getSummary(), start.toString());
         }
       }
-      ReactInterface.writeCalendar(maps);
+      return maps;
     } catch (Exception e) {
       e.printStackTrace();
     }
+    return null;
   }
 
+  @Deprecated
   public void run() {
     while (true) {
-      runOnce();
+      //runOnce();
       try {
         Thread.sleep(SmartPiMain.FREQUENCY_CALENDAR_MS);
       } catch (Exception e) {
