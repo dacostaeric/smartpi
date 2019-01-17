@@ -45,29 +45,20 @@ public class AlarmClock {
     System.out.println("Ring");
   }
 
-  public boolean checkIfTurnedOff() {
+  public static boolean checkIfTurnedOff() {
     boolean alarmStatus = true;
     try {
       alarmStatus = ReactInterface.alarmStatus();
     } catch (IOException e) {
       e.getStackTrace();
     }
-    if (this.isRinging && !alarmStatus) {
-      return true;
-    } else {
-      return false;
-    }
+    return !alarmStatus;
   }
 
   public boolean checkAlarm() {
     String currentTime = getCurrentTime();
     if (alarmHour.equals(currentTime.substring(0, 2)) && alarmMinute.equals(currentTime.substring(3, 5)) && alarmSecond.equals(currentTime.substring(6))) {
-      setRingingTrue();
-      while (!checkIfTurnedOff()) {
-        if (checkIfTurnedOff()) {
-          System.out.println("You turned it off.");
-        }
-      }
+      //setRingingTrue();
       return true;
     } else {
       System.out.println("Current time: " + currentTime);
@@ -76,18 +67,23 @@ public class AlarmClock {
   }
 
   public static void main(String[] args) {
-    AlarmClock alarm = new AlarmClock("11","10","00", false);
+    AlarmClock alarm = new AlarmClock("09","32","00", false);
     System.out.println("Your alarm was set to: " + alarm.getAlarmTime());
     boolean ringed = false;
     while(!ringed) {
-      try {
-        TimeUnit.SECONDS.sleep(1);
-      } catch (InterruptedException ex) {
-        System.out.println("Won't happen.");
-      }
       ringed = alarm.checkAlarm();
     }
-    System.out.println("You're done now.");
+    if (checkIfTurnedOff()) {
+      System.out.println("TTS.");
+    }
+    while (!checkIfTurnedOff()) {
+      System.out.println("Ring");
+      if (checkIfTurnedOff()) {
+        System.out.println("TTS.");
+        break;
+      }
+    }
+    System.out.println("Cont.");
   }
 
 }
