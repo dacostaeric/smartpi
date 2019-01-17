@@ -4,14 +4,15 @@ import styled from "styled-components"
 
 import theme from "../theme"
 
-import icon from "../graphics/weather/clear.svg"
+import icon from "../graphics/return.svg"
 
 const Wrapper = styled.div`
 float: left;
+margin-right: 1vw;
 `;
 
 const Icon = styled.img`
-height: 50px;
+height: 3vw;
 `;
 
 const BackToHome = props => {

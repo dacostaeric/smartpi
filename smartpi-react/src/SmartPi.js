@@ -9,11 +9,13 @@ import Weather from "./page/Weather";
 import Shop from "./page/Shop";
 import Calendar from "./page/Calendar"
 import Email from "./page/Email"
-import APIKey from "./OpenWeatherMapAPIKey";
+//import APIKey from "./OpenWeatherMapAPIKey";
 
 const DYNAMIC_FETCH_PORT = 3001;
-const DATA_FETCH_INTERVAL_MS = 3600000;
-const WEATHER_FETCH_INTERVAL_MS = 600000;
+const LOCAL_FETCH_BASE_URL = "http://localhost:" + DYNAMIC_FETCH_PORT + "/api";
+const DATA_FETCH_INTERVAL_MS = 360000;
+const WEATHER_FETCH_INTERVAL_MS = 900000;
+const WEATHER = false;
 
 const Container = styled.div`
 box-sizing: border-box;
@@ -22,7 +24,7 @@ padding: ${theme.containerPadding};
 height: 100vh;
 width: 100vw;
 background-color: white;
-filter: invert(100%);
+${theme.invert ? "filter: invert(100%);" : ""}
 `;
 
 export default class SmartPi extends React.Component {
@@ -60,10 +62,12 @@ export default class SmartPi extends React.Component {
       "name": "Basel",
       "cod": 200
     },*/
+    alarm: undefined,
     weather: undefined,
     sensor: undefined,
     shop: undefined,
     calendar: undefined,
+    today: undefined,
     email: undefined
   };
 
@@ -87,24 +91,38 @@ export default class SmartPi extends React.Component {
     })
   }
 
-  setAllLocalState() {
-    this.fetchLocalData("http://localhost:" + DYNAMIC_FETCH_PORT
-        + "/api/sensor.json",
-        sensor => this.setState({sensor}));
-    this.fetchLocalData("http://localhost:" + DYNAMIC_FETCH_PORT
-        + "/api/calendar.json",
-        calendar => this.setState({calendar}));
-    this.fetchLocalData("http://localhost:" + DYNAMIC_FETCH_PORT
-        + "/api/email.json",
-        email => this.setState({email}));
-    this.fetchLocalData("http://localhost:" + DYNAMIC_FETCH_PORT
-        + "/api/shop.json",
-        shop => this.setState({shop}))
+  setCalendarStates(calendar) {
+    let today = [];
+    let now = new Date();
+    let todayDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    let tomorrowDate = new Date(todayDate.getTime() + 86400000);
+    for(let event of calendar) {
+      event.date = new Date(event.date);
+      if(todayDate <= event.date && event.date < tomorrowDate) {
+        today.push(event)
+      }
+    }
+    this.setState({calendar, today})
   }
 
-  fetchWeatherDataSetState() {
-    fetch("http://api.openweathermap.org/data/2.5/weather?id=2661604&APPID="
-        + APIKey, {
+  setAllLocalState() {
+    this.fetchLocalData(LOCAL_FETCH_BASE_URL + "/alarm.json",
+        alarm => this.setState({alarm}));
+    this.fetchLocalData(LOCAL_FETCH_BASE_URL + "/sensor.json",
+        sensor => this.setState({sensor}));
+    this.fetchLocalData(LOCAL_FETCH_BASE_URL + "/shop.json",
+        shop => this.setState({shop}));
+    this.fetchLocalData(LOCAL_FETCH_BASE_URL + "/calendar.json",
+        calendar => this.setCalendarStates(calendar));
+    this.fetchLocalData(LOCAL_FETCH_BASE_URL + "/email.json",
+        email => this.setState({email}));
+  }
+
+  fetchWeatherDataSetState(APIKey) {
+    const url =
+        "http://api.openweathermap.org/data/2.5/weather?id=2661604&APPID="
+        + APIKey;
+    fetch(url, {
       method: "POST"
     }).then(response => {
       if (response.ok) {
@@ -115,19 +133,21 @@ export default class SmartPi extends React.Component {
       this.setState({weather: json});
       return json;
     }).catch((error) => {
-      console.log("Error fetching weather data ("
-          + "http://api.openweathermap.org/data/2.5/weather?id=2661604&APPID="
-          + APIKey + "):", error)
+      console.log("Error fetching weather data (" + url + "):", error)
     })
   }
-
+  
   componentDidMount() {
     this.setAllLocalState();
     setInterval(() => this.setAllLocalState(), DATA_FETCH_INTERVAL_MS);
-    if (false) {
-      this.fetchWeatherDataSetState();
-      setInterval(() => this.fetchWeatherDataSetState(),
-          WEATHER_FETCH_INTERVAL_MS)
+    if (WEATHER) {
+      import("./OpenWeatherMapAPIKey").then(module => {
+        this.fetchWeatherDataSetState(module.default);
+        setInterval(() => this.fetchWeatherDataSetState(module.default),
+            WEATHER_FETCH_INTERVAL_MS)
+      }, error => {
+        console.log(error)
+      })
     }
   }
 
@@ -136,8 +156,9 @@ export default class SmartPi extends React.Component {
       <BrowserRouter>
         <Switch>
           <Route exact path={"/"} render={props =>
-              <Home {...props} weather={this.state.weather}
-                    sensor={this.state.sensor} calendar={this.state.calendar}
+              <Home {...props} alarm={this.state.alarm}
+                    weather={this.state.weather}
+                    sensor={this.state.sensor} today={this.state.today}
                     email={this.state.email} shop={this.state.shop}/>}/>
           <Route path={"/weather"} component={Weather}/>
           <Route path={"/shopping"} component={Shop}/>

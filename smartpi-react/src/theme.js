@@ -10,18 +10,35 @@ const size = {
 
 const theme = {
   fontFamily: "Segoe UI",
+  invert: true,
   /*topRowHeight: scale * 50 + unit,
   bottomRowHeight: scale * 50 + unit,*/
   smallWidth: 45 + unit,
   largeWidth: 55 + unit,
   containerPadding: scale * 3 + unit,
   tilePadding: scale * 2 + unit,
+  dividerHeight: scale * .2 + unit,
+  list: {
+    size: {
+      heading: size.medium + unit,
+      item: size.small + unit
+    },
+    margin: {
+      heading: scale * .5 + unit,
+      item: scale * .15 + unit
+    }
+  },
   time: {
     dateTextSize: scale * 2 + unit,
     clockSize: scale * 7 + unit,
     clockMarginTop: scale * 2 + unit,
     clockMarginBottom: scale * .5 + unit,
-    alarmSize: scale * 1.5 + unit
+    alarm: {
+      iconSize: scale * 2 + unit,
+      textSize: scale * 1.5 + unit,
+      textMargin: scale * 1 + unit,
+
+    }
   },
   weather: {
     margin: scale * 1 + unit,
@@ -32,13 +49,7 @@ const theme = {
     sensorTextMargin: scale * 0 + unit
   },
   shopping: {
-    marginLeft: scale * 2 + unit,
-    size: {
-      heading: size.medium + unit,
-      item: size.small + unit
-    },
-    headingMargin: scale * .5 + unit,
-    itemMargin: scale * .15 + unit
+    marginLeft: scale * 2 + unit
   },
   calendar: {
     size: {

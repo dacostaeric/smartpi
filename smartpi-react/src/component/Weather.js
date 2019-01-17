@@ -2,8 +2,6 @@ import React from "react"
 import styled from "styled-components"
 import theme from "../theme"
 
-import APIKey from "../OpenWeatherMapAPIKey"
-
 import clear from "../graphics/weather/clear.svg"
 import partlyCloudy from "../graphics/weather/partly_cloudy.svg"
 import cloudCover from "../graphics/weather/cloud_cover.svg"
@@ -11,6 +9,7 @@ import rain from "../graphics/weather/rain.svg"
 import thunderstorm from "../graphics/weather/thunderstorm.svg"
 import snow from "../graphics/weather/snow.svg"
 import fog from "../graphics/weather/fog.svg"
+import none from "../graphics/weather/none.svg"
 
 const getIcon = (code) => {
   switch (code) {
@@ -71,10 +70,11 @@ const getIcon = (code) => {
     case 751:
     case 761:
     case 762:
+      return fog;
     default:
       //case 771:
       //case 781:
-      return fog;
+      return none;
   }
 };
 
