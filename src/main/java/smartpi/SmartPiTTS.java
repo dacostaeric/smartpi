@@ -8,8 +8,8 @@ import java.util.Map;
 
 public class SmartPiTTS {
 
-  CalendarQuickstart calendarQuickstart;
-  CheckingMails checkingMails;
+  private CalendarQuickstart calendarQuickstart;
+  private CheckingMails checkingMails;
   private TextToSpeech tts;
 
   public SmartPiTTS(String voice, CalendarQuickstart calendarQuickstart, CheckingMails checkingMails) {
