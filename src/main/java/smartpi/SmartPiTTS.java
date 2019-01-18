@@ -8,9 +8,9 @@ import java.util.Map;
 
 public class SmartPiTTS {
 
-  static CalendarQuickstart calendarQuickstart;
-  static CheckingMails checkingMails;
-  private static TextToSpeech tts;
+  CalendarQuickstart calendarQuickstart;
+  CheckingMails checkingMails;
+  private TextToSpeech tts;
 
   public SmartPiTTS(String voice, CalendarQuickstart calendarQuickstart, CheckingMails checkingMails) {
     tts = new TextToSpeech();
