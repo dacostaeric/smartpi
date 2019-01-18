@@ -52,3 +52,6 @@ tokens/StoredCredential
 # node
 server/*
 !server/server.js
+
+# marytts
+log/
