@@ -20,9 +20,7 @@ public class SmartPiTTS {
   }
 
   public static void speakAlarm() {
-    tts.speak("Good morning! ", 1.0f, false, true); //Why so silent?
-    //speakEvents();
-    tts.speak(speakEmail(), 1.0f, false, false);
+    tts.speak("Good morning " + speakEvents() + speakEmail(), 1.0f, false, false);
   }
 
   public static String speakEmail() {
@@ -85,22 +83,23 @@ public class SmartPiTTS {
     return getNextEvent().toString().subSequence(17, 22).toString();
   }
 
-  public static void speakEvents() {
+  public static String speakEvents() {
+    StringBuilder events = new StringBuilder();
     if (getEvents().size() > 0) {
       if (getEvents().size() == 1) {
-        tts.speak("You have " + getEvents().size() + " upcoming event.", 1.0f, false, true);
+        events.append("You have " + getEvents().size() + " upcoming event.");
       } else {
-        tts.speak("You have " + getEvents().size() + " upcoming events.", 1.0f, false, true);
+        events.append("You have " + getEvents().size() + " upcoming events.");
       }
       if (isNextEventToday()) {
-        tts.speak("Your next appointment today is " + getEventName() + " at " + getEventTime(),
-            1.0f, false, true);
+        events.append("Your next appointment today is " + getEventName() + " at " + getEventTime());
       } else {
-        tts.speak("You have no appointments today.", 1.0f, false, true);
+        events.append("You have no appointments today.");
       }
     } else {
-      tts.speak("You have no appointments in your calendar.", 1.0f, false, true);
+      events.append("You have no appointments in your calendar.");
     }
+    return events.toString();
   }
 
   public static void main(String[] args) {
