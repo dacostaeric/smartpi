@@ -3,9 +3,12 @@ package smartpi.server;
 import com.sun.net.httpserver.HttpServer;
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import smartpi.AlarmSpeak;
 import smartpi.CalendarQuickstart;
 import smartpi.CheckingMails;
+import smartpi.SmartPiTTS;
 import smartpi.Temperature;
+import smartpi.server.handler.AlarmSpeakHandler;
 import smartpi.server.handler.CalendarHandler;
 import smartpi.server.handler.EmailHandler;
 import smartpi.server.handler.IndexHandler;
@@ -19,6 +22,8 @@ public class Server implements Runnable {
 
   @Override
   public void run() {
+    CalendarQuickstart calendarQuickstart = new CalendarQuickstart();
+    CheckingMails checkingMails = new CheckingMails();
     try {
       HttpServer server = HttpServer.create(new InetSocketAddress(PORT), 0);
       try {
@@ -26,11 +31,11 @@ public class Server implements Runnable {
       } catch (IOException e) {
         e.printStackTrace();
       }
-      EmailHandler emailHandler = new EmailHandler(new CheckingMails());
+      EmailHandler emailHandler = new EmailHandler(checkingMails);
       server.createContext("/api/email", emailHandler);
       server.createContext("/api/email.json", emailHandler);
 
-      CalendarHandler calendarHandler = new CalendarHandler(new CalendarQuickstart());
+      CalendarHandler calendarHandler = new CalendarHandler(calendarQuickstart);
       server.createContext("/api/calendar", calendarHandler);
       server.createContext("/api/calendar.json", calendarHandler);
 
@@ -38,6 +43,9 @@ public class Server implements Runnable {
       server.createContext("/api/sensor", sensorHandler);
       server.createContext("/api/sensor.json", sensorHandler);
 
+      AlarmSpeakHandler alarmSpeakHandler = new AlarmSpeakHandler(new SmartPiTTS("cmu-rms-hsmm",
+          calendarQuickstart, checkingMails));
+      server.createContext("/api/alarm/speak", alarmSpeakHandler);
 
       server.start();
       System.out.println("Server running on " + PORT);

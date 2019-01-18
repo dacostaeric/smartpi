@@ -1,5 +1,6 @@
 package smartpi;
 
+@Deprecated
 public class AlarmSpeak implements Runnable {
 
   private void speak() {
