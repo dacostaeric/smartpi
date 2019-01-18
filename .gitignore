@@ -45,3 +45,6 @@ smartpi-react/README.md
 **/report/*
 !**/*.tex
 !**/*.bib
+
+# tokens
+tokens/StoredCredential
