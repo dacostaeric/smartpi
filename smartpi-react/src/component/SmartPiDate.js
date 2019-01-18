@@ -1,7 +1,14 @@
 import React from "react"
+import styled from "styled-components"
+
+import theme from "../theme"
+
+const Text = styled.div`
+font-size: ${theme.time.dateTextSize};
+`;
 
 const SmartPiDate = (props) => {
-  return <div>{props.date ? props.date : "-"}</div>
+  return <Text>{props.date ? props.date : "-"}</Text>
 };
 
 export default SmartPiDate

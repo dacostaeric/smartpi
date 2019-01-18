@@ -3,7 +3,7 @@ import theme from "../theme"
 
 const JustifySmall = styled.div`
 height: 100%;
-width=${theme.smallWidth};
+width: ${theme.smallWidth};
 float: left;
 `;
 

@@ -1,19 +1,26 @@
 import React from "react"
 import styled from "styled-components"
-import alarmIcon from "../graphics/icon_alarm-clock.png"
+import alarmIcon from "../graphics/alarm_clock.svg"
+
+import theme from "../theme"
 
 const Icon = styled.img`
-height: 2vw;
+height: ${theme.time.alarm.iconSize};
 float: left;
 clear: none;
-margin-right: 5px;
-opacity: .3;
+opacity: .8;
+`;
+
+const Text = styled.div`
+float: left;
+font-size: ${theme.time.alarm.textSize};
+margin-left: ${theme.time.alarm.textMargin};
 `;
 
 const Alarm = (props) => {
   return (<div>
     <Icon src={alarmIcon}/>
-    <div>{props.time ? props.time : "-:-"}</div>
+    <Text>{props.time ? props.time : "-:-"}</Text>
   </div>)
 };
 
