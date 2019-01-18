@@ -25,19 +25,26 @@ public class SmartPiTTS {
 
   public static String speakEmail() {
     ArrayList<Map<String, String>> mails = getMails();
+    StringBuilder string = new StringBuilder();
     StringBuilder senders = new StringBuilder();
+    String tmp;
     if (mails.size() > 0) {
-      senders.append("You have " + mails.size() + " messages. ");
-      senders.append(" , Your messages are: ");
+      string.append("You have " + mails.size() + " messages. ");
       for (int i = 0; i < mails.size(); i++) {
-        //System.out.println(getSender(getMail(i).toString()));
-        senders.append(", from: ");
-        senders.append(getSender(getMail(i, mails).toString()));
+        tmp = getSender(getMail(i, mails).toString());
+        if (senders.toString().contains(tmp)) {
+          int index = senders.toString().indexOf(" from:" + tmp)-1;
+          int j = Character.getNumericValue(senders.charAt(index)) + 1;
+          senders.replace(index, index+1, Integer.toString(j));
+        } else {
+          senders.append("  ,1 from:");
+          senders.append(tmp);
+        }
       }
     } else {
-      senders.append("You don't have any new messages.");
+      string.append("You don't have any new messages.");
     }
-    return senders.toString();
+    return string.append(senders).toString();
   }
 
   public static ArrayList<Map<String, String>> getMails() {
