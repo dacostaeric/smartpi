@@ -13,7 +13,7 @@ import smartpi.server.handler.SensorHandler;
 
 public class Server implements Runnable {
 
-  public static final String BASE_PATH = "server";
+  public static final String BASE_PATH = "server/";
 
   public static final int PORT = 3001;
 
@@ -22,7 +22,7 @@ public class Server implements Runnable {
     try {
       HttpServer server = HttpServer.create(new InetSocketAddress(PORT), 0);
       try {
-        server.createContext("/", new IndexHandler(BASE_PATH + "/index.html"));
+        server.createContext("/", new IndexHandler(BASE_PATH + "index.html"));
       } catch (IOException e) {
         e.printStackTrace();
       }
