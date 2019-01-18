@@ -12,18 +12,19 @@ public class SmartPiTTS {
   static CheckingMails checkingMails;
   private static TextToSpeech tts;
 
-  SmartPiTTS(String voice) {
+  public SmartPiTTS(String voice, CalendarQuickstart calendarQuickstart, CheckingMails checkingMails) {
     tts = new TextToSpeech();
     tts.setVoice(voice);
-    calendarQuickstart = new CalendarQuickstart();
-    checkingMails =  new CheckingMails();
+    this.calendarQuickstart = calendarQuickstart;
+    this.checkingMails =  checkingMails;
   }
 
-  public static void speakAlarm() {
+  public boolean speakAlarm() {
     tts.speak("Good morning " + speakEvents() + speakEmail(), 1.0f, false, false);
+    return true;
   }
 
-  public static String speakEmail() {
+  public String speakEmail() {
     ArrayList<Map<String, String>> mails = getMails();
     StringBuilder string = new StringBuilder();
     StringBuilder senders = new StringBuilder();
@@ -47,15 +48,15 @@ public class SmartPiTTS {
     return string.append(senders).toString();
   }
 
-  public static ArrayList<Map<String, String>> getMails() {
+  public ArrayList<Map<String, String>> getMails() {
     return checkingMails.getMailsAsArrayList();
   }
 
-  public static Map<String, String> getMail(int index, ArrayList<Map<String, String>> mailList) {
+  public Map<String, String> getMail(int index, ArrayList<Map<String, String>> mailList) {
     return mailList.get(index);
   }
 
-  public static String getSender(String mail) {
+  public String getSender(String mail) {
     String[] newArray = new String[3];
     String[] array = mail.split("=");
     newArray[0] = array[1].subSequence(0, array[1].length()-9).toString();//Sender
@@ -64,33 +65,33 @@ public class SmartPiTTS {
     return newArray[0].split("<")[0];
   }
 
-  public static ArrayList<Map<String, String>> getEvents() {
+  public ArrayList<Map<String, String>> getEvents() {
     return calendarQuickstart.getEventsAsArrayList();
   }
 
-  public static Map<String, String> getNextEvent() {
+  public Map<String, String> getNextEvent() {
     ArrayList<Map<String, String>> list;
     list = getEvents();
     return list.get(0);
   }
 
-  public static boolean isNextEventToday() {
+  public boolean isNextEventToday() {
     String date = getNextEvent().toString().subSequence(6, 16).toString();
     Calendar today = Calendar.getInstance();
     DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     return date.equals(dateFormat.format(today.getTime()));
   }
 
-  public static String getEventName() {
+  public String getEventName() {
     return getNextEvent().toString().subSequence(43, getNextEvent().toString().length() - 1)
         .toString();
   }
 
-  public static String getEventTime() {
+  public String getEventTime() {
     return getNextEvent().toString().subSequence(17, 22).toString();
   }
 
-  public static String speakEvents() {
+  public String speakEvents() {
     StringBuilder events = new StringBuilder();
     if (getEvents().size() > 0) {
       if (getEvents().size() == 1) {
@@ -110,7 +111,7 @@ public class SmartPiTTS {
   }
 
   public static void main(String[] args) {
-    SmartPiTTS smartPiTTS = new SmartPiTTS("cmu-rms-hsmm");
-    speakAlarm();
+    //SmartPiTTS smartPiTTS = new SmartPiTTS("cmu-rms-hsmm");
+    //smartPiTTS.speakAlarm();
   }
 }
