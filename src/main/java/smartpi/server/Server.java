@@ -16,14 +16,26 @@ import smartpi.server.handler.SensorHandler;
 
 public class Server implements Runnable {
 
-  public static final String BASE_PATH = "server/";
-
+  private static final String BASE_PATH = "server/";
   public static final int PORT = 3001;
+
+  private CalendarQuickstart calendarQuickstart;
+  private CheckingMails checkingMails;
+  private Temperature temperature;
+
+  public Server() {
+    this(new CalendarQuickstart(), new CheckingMails(), new Temperature());
+  }
+
+  public Server(CalendarQuickstart calendarQuickstart, CheckingMails checkingMails,
+      Temperature temperature) {
+    this.calendarQuickstart = calendarQuickstart;
+    this.checkingMails = checkingMails;
+    this.temperature = temperature;
+  }
 
   @Override
   public void run() {
-    CalendarQuickstart calendarQuickstart = new CalendarQuickstart();
-    CheckingMails checkingMails = new CheckingMails();
     try {
       HttpServer server = HttpServer.create(new InetSocketAddress(PORT), 0);
       try {
@@ -39,7 +51,7 @@ public class Server implements Runnable {
       server.createContext("/api/calendar", calendarHandler);
       server.createContext("/api/calendar.json", calendarHandler);
 
-      SensorHandler sensorHandler = new SensorHandler(new Temperature());
+      SensorHandler sensorHandler = new SensorHandler(temperature);
       server.createContext("/api/sensor", sensorHandler);
       server.createContext("/api/sensor.json", sensorHandler);
 
