@@ -17,12 +17,10 @@ public class IndexHandler extends SmartPiHandler implements HttpHandler {
 
   @Override
   public void handle(HttpExchange httpExchange) throws IOException {
-    System.out.println(httpExchange.getRequestURI().toString());
     String requestedPath = httpExchange.getRequestURI().toString();
     switch (requestedPath) {
       case "/":
-//        respond(httpExchange, index);
-        respond(httpExchange, Files.readAllBytes(Paths.get(Server.BASE_PATH + "index.html")));
+        respond(httpExchange, index);
         break;
       default:
         respond(httpExchange, Files.readAllBytes(Paths.get(Server.BASE_PATH + requestedPath)));

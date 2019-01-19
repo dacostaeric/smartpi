@@ -3,7 +3,6 @@ package smartpi.server;
 import com.sun.net.httpserver.HttpServer;
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import smartpi.AlarmSpeak;
 import smartpi.CalendarQuickstart;
 import smartpi.CheckingMails;
 import smartpi.SmartPiTTS;
@@ -16,7 +15,7 @@ import smartpi.server.handler.SensorHandler;
 
 public class Server implements Runnable {
 
-  public static final String BASE_PATH = "server/";
+  public static final String BASE_PATH = "smartpi-react/build/";
   public static final int PORT = 3001;
 
   private CalendarQuickstart calendarQuickstart;
