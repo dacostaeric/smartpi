@@ -22,7 +22,7 @@ public class IndexHandler extends SmartPiHandler implements HttpHandler {
     switch (requestedPath) {
       case "/":
 //        respond(httpExchange, index);
-        respond(httpExchange, Files.readAllBytes(Paths.get(Server.BASE_PATH + "/index.html")));
+        respond(httpExchange, Files.readAllBytes(Paths.get(Server.BASE_PATH + "index.html")));
         break;
       default:
         respond(httpExchange, Files.readAllBytes(Paths.get(Server.BASE_PATH + requestedPath)));

@@ -16,7 +16,7 @@ import smartpi.server.handler.SensorHandler;
 
 public class Server implements Runnable {
 
-  private static final String BASE_PATH = "server/";
+  public static final String BASE_PATH = "server/";
   public static final int PORT = 3001;
 
   private CalendarQuickstart calendarQuickstart;
