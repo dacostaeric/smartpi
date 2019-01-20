@@ -22,7 +22,6 @@ import java.io.InputStreamReader;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -64,44 +63,45 @@ public class CalendarQuickstart {
     return new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");
   }
 
-  public ArrayList<Map<String, String>> getEventsAsArrayList() {
+  public ArrayList<Map<String, String>> getEventsAsArrayList()
+      throws IOException, GeneralSecurityException {
 // Build a new authorized API client service.
-    ArrayList<Map<String,String>> list = new ArrayList<>();
-    try {
-      final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
-      Calendar service = new Calendar.Builder(HTTP_TRANSPORT, JSON_FACTORY,
-          getCredentials(HTTP_TRANSPORT))
-          .setApplicationName(APPLICATION_NAME)
-          .build();
+    ArrayList<Map<String, String>> list = new ArrayList<>();
+    //  try {
+    final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
+    Calendar service = new Calendar.Builder(HTTP_TRANSPORT, JSON_FACTORY,
+        getCredentials(HTTP_TRANSPORT))
+        .setApplicationName(APPLICATION_NAME)
+        .build();
 
-      // List the next 10 events from the primary calendar.
-      DateTime now = new DateTime(System.currentTimeMillis());
-      Events events = service.events().list("primary")
-          .setMaxResults(10)
-          .setTimeMin(now)
-          .setOrderBy("startTime")
-          .setSingleEvents(true)
-          .execute();
-      List<Event> items = events.getItems();
-      //Map<String, String>[] maps = new HashMap[items.size()];
-      if (items.isEmpty()) {
-        System.out.println("No upcoming events found.");
-      } else {
-        System.out.println("Upcoming events");
-        for (int i = 0; i < items.size(); i++) {
-          DateTime start = items.get(i).getStart().getDateTime();
-          if (start == null) {
-            start = items.get(i).getStart().getDate();
-          }
-          System.out.printf("%s (%s)\n", items.get(i).getSummary(), start);
-
-          list.add(ReactInterface.makeEvent(items.get(i).getSummary(), start.toString()));
+    // List the next 10 events from the primary calendar.
+    DateTime now = new DateTime(System.currentTimeMillis());
+    Events events = service.events().list("primary")
+        .setMaxResults(10)
+        .setTimeMin(now)
+        .setOrderBy("startTime")
+        .setSingleEvents(true)
+        .execute();
+    List<Event> items = events.getItems();
+    //Map<String, String>[] maps = new HashMap[items.size()];
+    if (items.isEmpty()) {
+      System.out.println("No upcoming events found.");
+    } else {
+      System.out.println("Upcoming events");
+      for (int i = 0; i < items.size(); i++) {
+        DateTime start = items.get(i).getStart().getDateTime();
+        if (start == null) {
+          start = items.get(i).getStart().getDate();
         }
+        System.out.printf("%s (%s)\n", items.get(i).getSummary(), start);
+
+        list.add(ReactInterface.makeEvent(items.get(i).getSummary(), start.toString()));
       }
-      //return maps;
-    } catch (Exception e) {
-      e.printStackTrace();
     }
+    //return maps;
+//    } catch (Exception e) {
+//      e.printStackTrace();
+//    }
     //Map<String, String>[] maps = new HashMap[0];
     return list;
   }
