@@ -11,8 +11,8 @@ import Calendar from "./page/Calendar"
 import Email from "./page/Email"
 //import APIKey from "./OpenWeatherMapAPIKey";
 
-const DYNAMIC_FETCH_PORT = 3001;
-const LOCAL_FETCH_BASE_URL = "http://localhost:" + DYNAMIC_FETCH_PORT + "/api";
+const API_PORT = 3001;
+const API_BASE_URL = "http://" + window.location.hostname + ":" + API_PORT + "/api/";
 const DATA_FETCH_INTERVAL_MS = 360000;
 const WEATHER_FETCH_INTERVAL_MS = 900000;
 const WEATHER = false;
@@ -71,7 +71,7 @@ export default class SmartPi extends React.Component {
     email: undefined
   };
 
-  fetchLocalData(uri, handler) {
+  fetchAPIData(uri, handler) {
     fetch(uri, {
       method: "POST",
       mode: "cors",
@@ -106,15 +106,15 @@ export default class SmartPi extends React.Component {
   }
 
   setAllLocalState() {
-    this.fetchLocalData(LOCAL_FETCH_BASE_URL + "/alarm.json",
+    this.fetchAPIData(API_BASE_URL + "alarm",
         alarm => this.setState({alarm}));
-    this.fetchLocalData(LOCAL_FETCH_BASE_URL + "/sensor.json",
+    this.fetchAPIData(API_BASE_URL + "sensor",
         sensor => this.setState({sensor}));
-    this.fetchLocalData(LOCAL_FETCH_BASE_URL + "/shop.json",
+    this.fetchAPIData(API_BASE_URL + "shop",
         shop => this.setState({shop}));
-    this.fetchLocalData(LOCAL_FETCH_BASE_URL + "/calendar.json",
+    this.fetchAPIData(API_BASE_URL + "calendar",
         calendar => this.setCalendarStates(calendar));
-    this.fetchLocalData(LOCAL_FETCH_BASE_URL + "/email.json",
+    this.fetchAPIData(API_BASE_URL + "email",
         email => this.setState({email}));
   }
 
