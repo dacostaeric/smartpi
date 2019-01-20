@@ -12,7 +12,7 @@ margin-right: 1vw;
 `;
 
 const Icon = styled.img`
-height: 3vw;
+height: 2.5vw;
 `;
 
 const BackToHome = props => {

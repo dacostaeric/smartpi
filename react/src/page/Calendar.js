@@ -2,9 +2,10 @@ import React from "react"
 import styled from "styled-components"
 
 import theme from "../theme"
+import PageTitle from "../component/PageTitle";
 
 const Calendar = (props) => {
-  return <h1>Calendar</h1>
+  return <PageTitle>calendar</PageTitle>
 };
 
 export default Calendar

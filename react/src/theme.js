@@ -11,13 +11,16 @@ const size = {
 const theme = {
   fontFamily: "Segoe UI",
   invert: true,
-  /*topRowHeight: scale * 50 + unit,
-  bottomRowHeight: scale * 50 + unit,*/
   smallWidth: 45 + unit,
   largeWidth: 55 + unit,
   containerPadding: scale * 3 + unit,
   tilePadding: scale * 2 + unit,
   dividerHeight: scale * .2 + unit,
+  page: {
+    size: {
+      heading: size.medium + unit,
+    }
+  },
   list: {
     size: {
       heading: size.medium + unit,
