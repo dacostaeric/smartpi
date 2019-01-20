@@ -12,6 +12,7 @@ import smartpi.server.handler.CalendarHandler;
 import smartpi.server.handler.EmailHandler;
 import smartpi.server.handler.IndexHandler;
 import smartpi.server.handler.SensorHandler;
+import smartpi.server.handler.ShoppingListHandler;
 
 public class Server implements Runnable {
 
@@ -42,17 +43,21 @@ public class Server implements Runnable {
       } catch (IOException e) {
         e.printStackTrace();
       }
-      EmailHandler emailHandler = new EmailHandler(checkingMails);
-      server.createContext("/api/email", emailHandler);
-      server.createContext("/api/email.json", emailHandler);
+
+      SensorHandler sensorHandler = new SensorHandler(temperature);
+      server.createContext("/api/sensor", sensorHandler);
+      server.createContext("/api/sensor.json", sensorHandler);
+
+      ShoppingListHandler shoppingListHandler = new ShoppingListHandler();
+      server.createContext("/api/shop", shoppingListHandler);
 
       CalendarHandler calendarHandler = new CalendarHandler(calendarQuickstart);
       server.createContext("/api/calendar", calendarHandler);
       server.createContext("/api/calendar.json", calendarHandler);
 
-      SensorHandler sensorHandler = new SensorHandler(temperature);
-      server.createContext("/api/sensor", sensorHandler);
-      server.createContext("/api/sensor.json", sensorHandler);
+      EmailHandler emailHandler = new EmailHandler(checkingMails);
+      server.createContext("/api/email", emailHandler);
+      server.createContext("/api/email.json", emailHandler);
 
       AlarmSpeakHandler alarmSpeakHandler = new AlarmSpeakHandler(new SmartPiTTS("cmu-rms-hsmm",
           calendarQuickstart, checkingMails));
