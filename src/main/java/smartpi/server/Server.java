@@ -15,7 +15,7 @@ import smartpi.server.handler.SensorHandler;
 
 public class Server implements Runnable {
 
-  public static final String BASE_PATH = "smartpi-react/build/";
+  public static final String BASE_PATH = "react/build/";
   public static final int PORT = 3001;
 
   private CalendarQuickstart calendarQuickstart;
