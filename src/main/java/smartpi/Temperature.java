@@ -12,7 +12,7 @@ public class Temperature {
   static float temperature = 0;
   static boolean lightOn = false;
 
-  public Map<String, Object> getSensorData() throws ,  {
+  public Map<String, Object> getSensorData() throws IOException, InterruptedException {
     // try {
     Runtime runtime = Runtime.getRuntime();
     Process process = runtime.exec("python3 /home/pi/Desktop/dht11.py");
