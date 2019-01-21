@@ -32,5 +32,6 @@ dependencies {
     compile 'com.google.api-client:google-api-client:1.23.0'
     compile 'com.google.oauth-client:google-oauth-client-jetty:1.23.0'
     compile 'com.google.apis:google-api-services-calendar:v3-rev305-1.23.0'
+    compile group: 'org.json', name: 'json', version: '20180813'
     compile fileTree(include: ['*.jar'], dir: 'src/main/resources/libraries')
 }
