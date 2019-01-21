@@ -4,10 +4,10 @@ import styled from "styled-components"
 import theme from "../theme"
 import PageTitle from "../component/PageTitle";
 
-const Weather = (props) => {
+const Alarm = (props) => {
   return (<div>
-    <PageTitle>weather</PageTitle>
+    <PageTitle>alarms</PageTitle>
   </div>)
 };
 
-export default Weather
+export default Alarm

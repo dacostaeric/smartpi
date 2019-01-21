@@ -9,10 +9,12 @@ import Weather from "./page/Weather";
 import Shop from "./page/Shop";
 import Calendar from "./page/Calendar"
 import Email from "./page/Email"
+import Alarm from "./page/Alarm";
 //import APIKey from "./OpenWeatherMapAPIKey";
 
 const API_PORT = 3001;
-const API_BASE_URL = "http://" + window.location.hostname + ":" + API_PORT + "/api/";
+const API_BASE_URL = "http://" + window.location.hostname + ":" + API_PORT
+    + "/api/";
 const DATA_FETCH_INTERVAL_MS = 360000;
 const WEATHER_FETCH_INTERVAL_MS = 900000;
 const WEATHER = false;
@@ -96,9 +98,9 @@ export default class SmartPi extends React.Component {
     let now = new Date();
     let todayDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
     let tomorrowDate = new Date(todayDate.getTime() + 86400000);
-    for(let event of calendar) {
+    for (let event of calendar) {
       event.date = new Date(event.date);
-      if(todayDate <= event.date && event.date < tomorrowDate) {
+      if (todayDate <= event.date && event.date < tomorrowDate) {
         today.push(event)
       }
     }
@@ -136,7 +138,7 @@ export default class SmartPi extends React.Component {
       console.log("Error fetching weather data (" + url + "):", error)
     })
   }
-  
+
   componentDidMount() {
     this.setAllLocalState();
     setInterval(() => this.setAllLocalState(), DATA_FETCH_INTERVAL_MS);
@@ -160,6 +162,8 @@ export default class SmartPi extends React.Component {
                     weather={this.state.weather}
                     sensor={this.state.sensor} today={this.state.today}
                     email={this.state.email} shop={this.state.shop}/>}/>
+          <Route path={"/alarm"} render={props => <Alarm {...props}
+                                                         alarm={this.state.alarm}/>}/>
           <Route path={"/weather"} component={Weather}/>
           <Route path={"/shopping"} component={Shop}/>
           <Route path={"/calendar"} component={Calendar}/>
