@@ -1,4 +1,5 @@
 import React from "react"
+import {Link} from "react-router-dom"
 
 import SmartPiDate from "./SmartPiDate"
 import Clock from "./Clock"
@@ -58,17 +59,20 @@ class Time extends React.Component {
     return this.timeFormat.format(dateObject)
   }
 
-  formatAlarmTime(hour, minute) {
-    return this.formatTime(new Date(1970, 1, 1, hour - 1, minute));
+  formatAlarmTime(alarm) {
+    return this.formatTime(new Date(1970, 1, 1, alarm.hour - 1, alarm.minute))
+        + " - " + alarm.name;
   }
 
   render() {
     return (<div>
       <SmartPiDate date={this.state.formattedDate}/>
       <Clock time={this.state.formattedTime}/>
-      <Alarm time={this.props.alarm
-          ? this.formatAlarmTime(this.props.alarm.hour, this.props.alarm.minute)
+      <Link to={"/alarm"}>
+      <Alarm time={this.props.alarm && this.props.alarm[0]
+          ? this.formatAlarmTime(this.props.alarm[0])
           : "-:-"}/>
+      </Link>
     </div>)
   }
 }

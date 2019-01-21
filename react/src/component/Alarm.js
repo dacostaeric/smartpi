@@ -15,6 +15,7 @@ const Text = styled.div`
 float: left;
 font-size: ${theme.time.alarm.textSize};
 margin-left: ${theme.time.alarm.textMargin};
+color: black;
 `;
 
 const Alarm = (props) => {
