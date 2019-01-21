@@ -69,9 +69,9 @@ class Time extends React.Component {
       <SmartPiDate date={this.state.formattedDate}/>
       <Clock time={this.state.formattedTime}/>
       <Link to={"/alarm"}>
-      <Alarm time={this.props.alarm && this.props.alarm[0]
-          ? this.formatAlarmTime(this.props.alarm[0])
-          : "-:-"}/>
+        <Alarm time={this.props.alarm
+            ? this.formatAlarmTime(this.props.alarm)
+            : "-:-"}/>
       </Link>
     </div>)
   }
