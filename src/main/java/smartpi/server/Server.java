@@ -48,24 +48,21 @@ public class Server implements Runnable {
       AlarmHandler alarmHandler = new AlarmHandler();
       server.createContext("/api/alarm", alarmHandler);
 
+      AlarmSpeakHandler alarmSpeakHandler = new AlarmSpeakHandler(new SmartPiTTS("cmu-rms-hsmm",
+          calendarQuickstart, checkingMails));
+      server.createContext("/api/alarm/speak", alarmSpeakHandler);
+
       SensorHandler sensorHandler = new SensorHandler(temperature);
       server.createContext("/api/sensor", sensorHandler);
-      server.createContext("/api/sensor.json", sensorHandler);
 
       ShoppingListHandler shoppingListHandler = new ShoppingListHandler();
       server.createContext("/api/shop", shoppingListHandler);
 
       CalendarHandler calendarHandler = new CalendarHandler(calendarQuickstart);
       server.createContext("/api/calendar", calendarHandler);
-      server.createContext("/api/calendar.json", calendarHandler);
 
       EmailHandler emailHandler = new EmailHandler(checkingMails);
       server.createContext("/api/email", emailHandler);
-      server.createContext("/api/email.json", emailHandler);
-
-      AlarmSpeakHandler alarmSpeakHandler = new AlarmSpeakHandler(new SmartPiTTS("cmu-rms-hsmm",
-          calendarQuickstart, checkingMails));
-      server.createContext("/api/alarm/speak", alarmSpeakHandler);
 
       server.start();
       System.out.println("Server running on " + PORT);
