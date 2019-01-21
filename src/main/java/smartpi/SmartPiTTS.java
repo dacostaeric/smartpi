@@ -1,10 +1,13 @@
 package smartpi;
 
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Map;
+import javax.mail.MessagingException;
 
 public class SmartPiTTS {
 
@@ -25,30 +28,35 @@ public class SmartPiTTS {
   }
 
   public String speakEmail() {
-    ArrayList<Map<String, String>> mails = getMails();
     StringBuilder string = new StringBuilder();
-    StringBuilder senders = new StringBuilder();
-    String tmp;
-    if (mails.size() > 0) {
-      string.append("You have " + mails.size() + " messages. ");
-      for (int i = 0; i < mails.size(); i++) {
-        tmp = getSender(getMail(i, mails).toString());
-        if (senders.toString().contains(tmp)) {
-          int index = senders.toString().indexOf(" from:" + tmp)-1;
-          int j = Character.getNumericValue(senders.charAt(index)) + 1;
-          senders.replace(index, index+1, Integer.toString(j));
-        } else {
-          senders.append("  ,1 from:");
-          senders.append(tmp);
+    try {
+      ArrayList<Map<String, String>> mails = getMails();
+      StringBuilder senders = new StringBuilder();
+      String tmp;
+      if (mails.size() > 0) {
+        string.append("You have " + mails.size() + " messages. ");
+        for (int i = 0; i < mails.size(); i++) {
+          tmp = getSender(getMail(i, mails).toString());
+          if (senders.toString().contains(tmp)) {
+            int index = senders.toString().indexOf(" from:" + tmp) - 1;
+            int j = Character.getNumericValue(senders.charAt(index)) + 1;
+            senders.replace(index, index + 1, Integer.toString(j));
+          } else {
+            senders.append("  ,1 from:");
+            senders.append(tmp);
+          }
         }
+        string.append(senders);
+      } else {
+        string.append("You don't have any new messages.");
       }
-    } else {
-      string.append("You don't have any new messages.");
+    } catch (Exception e) {
+      string.append("Couldn't get messages.");
     }
-    return string.append(senders).toString();
+    return string.toString();
   }
 
-  public ArrayList<Map<String, String>> getMails() {
+  public ArrayList<Map<String, String>> getMails() throws IOException, MessagingException {
     return checkingMails.getMailsAsArrayList();
   }
 
@@ -65,47 +73,52 @@ public class SmartPiTTS {
     return newArray[0].split("<")[0];
   }
 
-  public ArrayList<Map<String, String>> getEvents() {
+  public ArrayList<Map<String, String>> getEvents() throws IOException, GeneralSecurityException {
     return calendarQuickstart.getEventsAsArrayList();
   }
 
-  public Map<String, String> getNextEvent() {
+  public Map<String, String> getNextEvent() throws IOException, GeneralSecurityException {
     ArrayList<Map<String, String>> list;
     list = getEvents();
     return list.get(0);
   }
 
-  public boolean isNextEventToday() {
+  public boolean isNextEventToday() throws IOException, GeneralSecurityException {
     String date = getNextEvent().toString().subSequence(6, 16).toString();
     Calendar today = Calendar.getInstance();
     DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     return date.equals(dateFormat.format(today.getTime()));
   }
 
-  public String getEventName() {
+  public String getEventName() throws IOException, GeneralSecurityException {
     return getNextEvent().toString().subSequence(43, getNextEvent().toString().length() - 1)
         .toString();
   }
 
-  public String getEventTime() {
+  public String getEventTime() throws IOException, GeneralSecurityException {
     return getNextEvent().toString().subSequence(17, 22).toString();
   }
 
   public String speakEvents() {
     StringBuilder events = new StringBuilder();
-    if (getEvents().size() > 0) {
-      if (getEvents().size() == 1) {
-        events.append("You have " + getEvents().size() + " upcoming event.");
+    try {
+      if (getEvents().size() > 0) {
+        if (getEvents().size() == 1) {
+          events.append("You have " + getEvents().size() + " upcoming event.");
+        } else {
+          events.append("You have " + getEvents().size() + " upcoming events.");
+        }
+        if (isNextEventToday()) {
+          events
+              .append("Your next appointment today is " + getEventName() + " at " + getEventTime());
+        } else {
+          events.append("You have no appointments today.");
+        }
       } else {
-        events.append("You have " + getEvents().size() + " upcoming events.");
+        events.append("You have no appointments in your calendar.");
       }
-      if (isNextEventToday()) {
-        events.append("Your next appointment today is " + getEventName() + " at " + getEventTime());
-      } else {
-        events.append("You have no appointments today.");
-      }
-    } else {
-      events.append("You have no appointments in your calendar.");
+    } catch (Exception e) {
+      events.append("Couldn't get events.");
     }
     return events.toString();
   }
