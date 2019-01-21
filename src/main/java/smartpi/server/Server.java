@@ -7,6 +7,7 @@ import smartpi.CalendarQuickstart;
 import smartpi.CheckingMails;
 import smartpi.SmartPiTTS;
 import smartpi.Temperature;
+import smartpi.server.handler.AlarmHandler;
 import smartpi.server.handler.AlarmSpeakHandler;
 import smartpi.server.handler.CalendarHandler;
 import smartpi.server.handler.EmailHandler;
@@ -43,6 +44,9 @@ public class Server implements Runnable {
       } catch (IOException e) {
         e.printStackTrace();
       }
+
+      AlarmHandler alarmHandler = new AlarmHandler();
+      server.createContext("/api/alarm", alarmHandler);
 
       SensorHandler sensorHandler = new SensorHandler(temperature);
       server.createContext("/api/sensor", sensorHandler);
