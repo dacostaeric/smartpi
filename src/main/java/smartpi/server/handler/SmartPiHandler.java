@@ -26,5 +26,9 @@ abstract class SmartPiHandler {
 
   void respondError(HttpExchange exchange, byte[] message) throws IOException {
     exchange.sendResponseHeaders(500, message.length);
+    OutputStream outputStream = exchange.getResponseBody();
+    outputStream.write(message);
+    outputStream.close();
+    exchange.close();
   }
 }
