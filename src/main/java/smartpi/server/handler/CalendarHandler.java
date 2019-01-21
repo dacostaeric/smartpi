@@ -19,10 +19,8 @@ public class CalendarHandler extends SmartPiHandler implements HttpHandler {
   public void handle(HttpExchange httpExchange) throws IOException {
     try {
       respondAPI(httpExchange, JSON.toString(calendar.getEventsAsArrayList()).getBytes());
-    } catch (UnknownHostException e) {
+    } catch (Exception e) {
       respondError(httpExchange, e.getMessage().getBytes());
-    } catch (IOException e) {
-      e.printStackTrace();
     }
   }
 }
