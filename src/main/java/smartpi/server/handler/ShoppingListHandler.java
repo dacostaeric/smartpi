@@ -22,8 +22,9 @@ public class ShoppingListHandler extends SmartPiHandler implements HttpHandler {
     switch (httpExchange.getRequestURI().getPath()) {
       case "/api/shop/add":
         String query = httpExchange.getRequestURI().getQuery();
-        shoppingList.addAll(Arrays.asList(query.split(",")));
-        respondAPI(httpExchange, ("{\"success\":true,\"query\":\"" + query + "\"}").getBytes());
+        List<String> list = Arrays.asList(query.split(","));
+        shoppingList.addAll(list);
+        respondAPI(httpExchange, ("{\"success\":true,\"items\":\"" + list + "\"}").getBytes());
         break;
       case "/api/shop/clear":
         shoppingList.clear();

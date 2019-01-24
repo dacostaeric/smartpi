@@ -4,6 +4,7 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.json.JSONArray;
@@ -33,6 +34,16 @@ public class AlarmHandler extends SmartPiHandler implements HttpHandler {
               ("{\"success\":false,\"message\":\"" + e.getMessage() + "\",\"query\":\"" + query
                   + "\"}").getBytes());
         }
+        break;
+      case "/api/alarm/remove":
+        String remove = httpExchange.getRequestURI().getQuery();
+        for(Map<String,Object> alarm : alarms) {
+          if(alarm.get("name").equals(remove)) {
+            alarms.remove(alarm);
+            break;
+          }
+        }
+        respondAPI(httpExchange, "{\"success\":true}".getBytes());
         break;
       default:
         respondAPI(httpExchange, new JSONArray(alarms).toString().getBytes());
