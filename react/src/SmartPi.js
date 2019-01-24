@@ -10,13 +10,26 @@ import Shop from "./page/Shop";
 import Calendar from "./page/Calendar"
 import Email from "./page/Email"
 import Alarm from "./page/Alarm";
-//import APIKey from "./OpenWeatherMapAPIKey";
+import APIKey from "./OpenWeatherMapAPIKey";
 
 const API_PORT = 3001;
 const API_BASE_URL = "http://" + window.location.hostname + ":" + API_PORT
     + "/api/";
-const DATA_FETCH_INTERVAL_MS = 360000;
-const WEATHER_FETCH_INTERVAL_MS = 900000;
+const API_URL = {
+  alarm: API_BASE_URL + "alarm",
+  sensor: API_BASE_URL + "sensor",
+  shop: API_BASE_URL + "shop",
+  calendar: API_BASE_URL + "calendar",
+  email: API_BASE_URL + "email"
+};
+const FETCH_INTERVAL = {
+  alarm: 5000,
+  weather: 15 * 60000,
+  sensor: 5000,
+  shop: 5000,
+  calendar: 10 * 60000,
+  email: 10 * 60000
+};
 const WEATHER = false;
 
 const Container = styled.div`
@@ -98,6 +111,35 @@ export default class SmartPi extends React.Component {
     })
   }
 
+  setUpcomingAlarmState(alarms, now) {
+    let upcoming = alarms[0];
+    for (let alarm of alarms) {
+      if (alarm.hour > now.getHours() + 1
+          && alarm.minute > now.getMinutes()) {
+        upcoming = alarm;
+        break;
+      }
+    }
+    this.setState({alarm: {upcoming}});
+  }
+
+  setAlarmRingingState(alarms, now) {
+    for (let alarm of alarms) {
+      if (alarm.hour === now.getHours() + 1
+          && alarm.minute === now.getMinutes()) {
+        this.setState({alarm: {ringing: true}});
+      }
+    }
+  }
+
+  setAlarmStates(alarms) {
+    if (alarms) {
+      let now = new Date();
+      this.setUpcomingAlarmState(alarms, now);
+      this.setAlarmRingingState(alarms, now);
+    }
+  }
+
   setCalendarStates(calendar) {
     let today = [];
     let now = new Date();
@@ -110,19 +152,6 @@ export default class SmartPi extends React.Component {
       }
     }
     this.setState({calendar, today})
-  }
-
-  setAllLocalState() {
-    this.fetchAPIData(API_BASE_URL + "alarm",
-        alarms => this.setState({alarms}));
-    this.fetchAPIData(API_BASE_URL + "sensor",
-        sensor => this.setState({sensor}));
-    this.fetchAPIData(API_BASE_URL + "shop",
-        shop => this.setState({shop}));
-    this.fetchAPIData(API_BASE_URL + "calendar",
-        calendar => this.setCalendarStates(calendar));
-    this.fetchAPIData(API_BASE_URL + "email",
-        email => this.setState({email}));
   }
 
   fetchWeatherDataSetState(APIKey) {
@@ -144,17 +173,54 @@ export default class SmartPi extends React.Component {
     })
   }
 
+  fetchSetAlarm() {
+    this.fetchAPIData(API_URL.alarm,
+        alarms => {
+          this.setState({alarms});
+          let now = new Date();
+          this.setUpcomingAlarmState(alarms, now);
+          this.setAlarmRingingState(alarms, now);
+        });
+  }
+
+  fetchSetSensor() {
+    this.fetchAPIData(API_URL.sensor,
+        sensor => this.setState({sensor}));
+  }
+
+  fetchSetShop() {
+    this.fetchAPIData(API_URL.shop,
+        shop => this.setState({shop}));
+  }
+
+  fetchSetCalendar() {
+    this.fetchAPIData(API_URL.calendar,
+        calendar => this.setCalendarStates(calendar));
+  }
+
+  fetchSetEmail() {
+    this.fetchAPIData(API_URL.email,
+        email => this.setState({email}));
+  }
+
   componentDidMount() {
-    this.setAllLocalState();
-    setInterval(() => this.setAllLocalState(), DATA_FETCH_INTERVAL_MS);
+    this.fetchSetAlarm();
+    this.fetchSetSensor();
+    this.fetchSetShop();
+    this.fetchSetCalendar();
+    this.fetchSetEmail();
+    this.setAlarmStates(this.state.alarms);
+
+    setInterval(() => this.fetchSetAlarm(), FETCH_INTERVAL.alarm);
+    setInterval(() => this.fetchSetSensor(), FETCH_INTERVAL.sensor);
+    setInterval(() => this.fetchSetShop(), FETCH_INTERVAL.shop);
+    setInterval(() => this.fetchSetCalendar(), FETCH_INTERVAL.calendar);
+    setInterval(() => this.fetchSetEmail(), FETCH_INTERVAL.email);
+    setInterval(() => this.setAlarmStates(this.state.alarms), 1000);
     if (WEATHER) {
-      import("./OpenWeatherMapAPIKey").then(module => {
-        this.fetchWeatherDataSetState(module.default);
-        setInterval(() => this.fetchWeatherDataSetState(module.default),
-            WEATHER_FETCH_INTERVAL_MS)
-      }, error => {
-        console.log(error)
-      })
+      this.fetchWeatherDataSetState(APIKey);
+      setInterval(() => this.fetchWeatherDataSetState(APIKey),
+          FETCH_INTERVAL.weather);
     }
   }
 
