@@ -13,11 +13,11 @@ margin-right: ${theme.time.alarm.textMargin};
 opacity: .8;
 `;
 
-const Alarm = (props) => {
+const HomeAlarm = (props) => {
   return (<div>
     <Icon src={alarmIcon}/>
     <AlarmText alarm={props.alarm}/>
   </div>)
 };
 
-export default Alarm
+export default HomeAlarm

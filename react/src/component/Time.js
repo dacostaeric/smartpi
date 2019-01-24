@@ -3,7 +3,7 @@ import {Link} from "react-router-dom"
 
 import SmartPiDate from "./SmartPiDate"
 import Clock from "./Clock"
-import Alarm from "./Alarm"
+import HomeAlarm from "./HomeAlarm"
 
 import settings from "../settings"
 
@@ -69,7 +69,7 @@ class Time extends React.Component {
       <SmartPiDate date={this.state.formattedDate}/>
       <Clock time={this.state.formattedTime}/>
       <Link to={"/alarm"}>
-        <Alarm alarm={this.props.alarm}/>
+        <HomeAlarm alarm={this.props.alarm}/>
       </Link>
     </div>)
   }
