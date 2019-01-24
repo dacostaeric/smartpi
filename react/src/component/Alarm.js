@@ -3,25 +3,20 @@ import styled from "styled-components"
 import alarmIcon from "../graphics/alarm_clock.svg"
 
 import theme from "../theme"
+import AlarmText from "./AlarmText";
 
 const Icon = styled.img`
 height: ${theme.time.alarm.iconSize};
 float: left;
 clear: none;
+margin-right: ${theme.time.alarm.textMargin};
 opacity: .8;
-`;
-
-const Text = styled.div`
-float: left;
-font-size: ${theme.time.alarm.textSize};
-margin-left: ${theme.time.alarm.textMargin};
-color: black;
 `;
 
 const Alarm = (props) => {
   return (<div>
     <Icon src={alarmIcon}/>
-    <Text>{props.time ? props.time : "-:-"}</Text>
+    <AlarmText alarm={props.alarm}/>
   </div>)
 };
 
