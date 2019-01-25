@@ -57,7 +57,7 @@ public class SmartPiTTS {
   }
 
   public ArrayList<Map<String, String>> getMails() throws IOException, MessagingException {
-    return checkingMails.getMailsAsArrayList();
+    return checkingMails.getNewMails();
   }
 
   public Map<String, String> getMail(int index, ArrayList<Map<String, String>> mailList) {
@@ -74,7 +74,7 @@ public class SmartPiTTS {
   }
 
   public ArrayList<Map<String, String>> getEvents() throws IOException, GeneralSecurityException {
-    return calendarQuickstart.getEventsAsArrayList();
+    return calendarQuickstart.getNewEvents();
   }
 
   public Map<String, String> getNextEvent() throws IOException, GeneralSecurityException {
