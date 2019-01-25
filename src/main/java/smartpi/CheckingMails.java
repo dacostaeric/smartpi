@@ -1,11 +1,8 @@
 package smartpi;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Scanner;
@@ -16,10 +13,12 @@ import javax.mail.Session;
 import javax.mail.Store;
 
 public class CheckingMails {
+  private ArrayList<Map<String, String>> mails = new ArrayList<>();
 
-  public static ArrayList<Map<String, String>> check(String host, String user,
+  public ArrayList<Map<String, String>> check(String host, String user,
       String password) throws IOException, MessagingException {
-    ArrayList<Map<String, String>> list = new ArrayList<>();
+
+    mails.clear();
 //    try {
 
     Properties props = System.getProperties();
@@ -44,7 +43,7 @@ public class CheckingMails {
       System.out.println("Subject: " + message.getSubject());
       System.out.println("From: " + message.getFrom()[0]);
       System.out.println("Text: " + message.getContent().toString());
-      list.add(ReactInterface.makeEmail(message.getFrom()[0].toString(), message.getSubject(),
+      mails.add(ReactInterface.makeEmail(message.getFrom()[0].toString(), message.getSubject(),
           message.getContent().toString()));
     }
     //close the store and folder objects
@@ -53,10 +52,14 @@ public class CheckingMails {
 //    } catch (Exception e) {
 //      e.printStackTrace();
 //    }
-    return list;
+    return mails;
   }
 
-  public ArrayList<Map<String, String>> getMailsAsArrayList() throws IOException, MessagingException{
+  public ArrayList<Map<String, String>> getAlreadyLoadedMails() {
+    return mails;
+  }
+
+  public ArrayList<Map<String, String>> getNewMails() throws IOException, MessagingException{
     String[] credentials = new String[2];
     int i = 0;
     //try {

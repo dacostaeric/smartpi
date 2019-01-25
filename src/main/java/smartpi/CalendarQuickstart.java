@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Map;
 
 public class CalendarQuickstart {
+  private ArrayList<Map<String, String>> eventsList = new ArrayList<>();
 
   private static final String APPLICATION_NAME = "Google Calendar API Java Quickstart";
   private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
@@ -63,10 +64,10 @@ public class CalendarQuickstart {
     return new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");
   }
 
-  public ArrayList<Map<String, String>> getEventsAsArrayList()
+  public ArrayList<Map<String, String>> getNewEvents()
       throws IOException, GeneralSecurityException {
 // Build a new authorized API client service.
-    ArrayList<Map<String, String>> list = new ArrayList<>();
+    eventsList.clear();
     //  try {
     final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
     Calendar service = new Calendar.Builder(HTTP_TRANSPORT, JSON_FACTORY,
@@ -95,7 +96,7 @@ public class CalendarQuickstart {
         }
         System.out.printf("%s (%s)\n", items.get(i).getSummary(), start);
 
-        list.add(ReactInterface.makeEvent(items.get(i).getSummary(), start.toString()));
+        eventsList.add(ReactInterface.makeEvent(items.get(i).getSummary(), start.toString()));
       }
     }
     //return maps;
@@ -103,7 +104,11 @@ public class CalendarQuickstart {
 //      e.printStackTrace();
 //    }
     //Map<String, String>[] maps = new HashMap[0];
-    return list;
+    return eventsList;
+  }
+
+  public ArrayList<Map<String, String>> getAlreadLoadedEvents() {
+    return eventsList;
   }
 
   @Deprecated
