@@ -51,13 +51,8 @@ Alessandro hat das Design und die Implementierung der Webapp übernommen. Dazuge
 Eric hat bei dem Projekt die Java Programme für das Empfangen der E-Mails und der Kalenderdaten geschrieben. Die Interaktion mit den Sensoren, welche in Python programmiert wurde und die Kommunikation zwischen Python und Java wurden auch von ihm \"ubernommen. Zusätzlich hat er sich auch um die Text-to-Speech Funtkionalit\"at vom Projekt gek\"ummert. Die Daten werden dem Webserver über Methoden zur Verfügung gestellt.
 
 \section{Implementierung}
-\subsection{Architektur} % ale
-- node server
-- react front end
-- makeshift database using json files
-- java und node server schreiben json
-- java im hintergrund für komplexere protokolle (email, calendar api)
-- python sensoren auslesen
+\subsection{Architektur}
+Als Webfrontend wird eine React App von einem Java HTTP Server gehostet. Die Pfadanfragen werden von verschiedenen Handlern verarbeitet. Es existiert ein Handler, der die React App und alle anderen benötigten Dateien serviert. Die restlichen Handler kommunizieren direkt mit den Klassen, die die E-Mails und die Kalenderdaten abrufen und die Sensordaten auslesen. Diese Daten werden im JSON Format als Antwort gesendet. So setzt sich die API zusammen, die E-Mails, den Kalender und die Sensordaten bereitstellt. Die Sensordaten werden von einem Python Script ausgelesen, das von einer Java Klasse ausgeführt wird.
 
 \subsection{Wecker}
 
