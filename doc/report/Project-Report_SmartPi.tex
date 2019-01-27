@@ -26,7 +26,7 @@
 \section{Inspiration}
 Die Idee eines Webserver basierten Smart Homes kam uns erstmals, als die Beispielprojekte vorgestellt wurden. Unter diesen war eine Wetterstation, auf die man über einen Webserver zugreifen konnte. Wir hatten beide schon zuvor Erfahrung mit Webdesign und Alessandro zudem einen Überblick über das Webhosting, den Raspberry Pi und die Kombination der beiden. Er hat ein Smart Home Kit mit diversen Sensoren, das er bei einem Online Kurs des Hasso Platter Instituts /REF/HPI gekauft hat. Weitere Inspiration kam von einem Smart Mirror Projekt des YouTube Kanals \textit{Hacker House} /REF/HACKER HOUSE.
 
-Es existieren viele Produkte auf dem Markt mit Smart Home Einbindung, das wohl bekannteste darunter ist die Philips Hue Glühbirne. Auch alle Smart Speaker, wie das Amazon Echo, bieten Smart Home Funktionen wie das Verbinden einer solchen Glühbirne über das Drahtlose Netzwerk. Das Projekt soll uns einen Überblick über die Welt des Smart Homes geben und uns den Umgang damit aufzeigen.
+Es existieren viele Produkte auf dem Markt mit Smart Home Einbindung, das wohl bekannteste darunter ist die \textit{Philips Hue} Glühbirne. Auch alle Smart Speaker, wie das Amazon Echo, bieten Smart Home Funktionen wie das Verbinden einer solchen Glühbirne über das Drahtlose Netzwerk. Das Projekt soll uns einen Überblick über die Welt des Smart Homes geben und uns den Umgang damit aufzeigen.
 
 \subsection{Umfang}
 Das Produkt soll eine kompakte Kombination verschiedener Funktionalität sein. Es soll eine einfache Übersicht auf den Tag geben und den Haushalt unterstützen.
@@ -55,6 +55,7 @@ Eric hat bei dem Projekt die Java Programme für das Empfangen der E-Mails und d
 Als Webfrontend wird eine React App von einem Java HTTP Server gehostet. Die Pfadanfragen werden von verschiedenen Handlern verarbeitet. Es existiert ein Handler, der die React App und alle anderen benötigten Dateien serviert. Die restlichen Handler kommunizieren direkt mit den Klassen, die die E-Mails und die Kalenderdaten abrufen und die Sensordaten auslesen. Diese Daten werden im JSON Format als Antwort gesendet. So setzt sich die API zusammen, die E-Mails, den Kalender und die Sensordaten bereitstellt. Die Sensordaten werden von einem Python Script ausgelesen, das von einer Java Klasse ausgeführt wird.
 
 \subsection{Wecker}
+Alle Wecker sind als List in der React App verfügbar. Jede Sekunde wird überprüft, ob ein Wecker klingeln soll. Ist dies der Fall, wird eine Benutzeroberfläche angezeigt und ein Ton abgespielt. Die Benutzeroberfläche zeigt ein Weckersymbol, die Zeit und den Namen des Weckers und einen Knopf, der den Wecker abstellt.
 
 \subsection{E-Mail}
 Das Ziel bei der E-Mail war, dass man nur Nachrichten empfangen kann, da f\"ur das Projekt nicht geplant war auf E-Mails zu antworten. Um dies zu implementieren wurde, wie bereits erwähnt, die Java Mail API verwendet. Die E-Mail Adresse und das dazugehörige Passwort werden in einer Textdatei gespeichert und von Java geparsed. Es existiert eine Klasse, worin die Nachrichten geladen und gespeichert werden. Der Server greift anschliessend auf diese Klasse zu und bekommt die E-Mails als Liste von Maps. Diese Liste beinhaltet den Sender, den Betreff und die Nachricht selber.
@@ -69,11 +70,13 @@ Die verwendeten Sensoren wurden mit einem Python Skript ausgelesen und entsprech
 Nach dem der Wecker vom Benutzer ausgeschaltet wurde, wird von der Text-to-Speech Funktionalit\"at zuerst das n\"achste Event vorgelesen und anschliessend alle neuen Nachrichten. MaryTTS bietet eine grosse Auswahl an Effekte und Stimmen, jedoch haben wir beschlossen es bei der normalen Stimme zu lassen. Falls keine neuen Ereignisse oder Nachrichten existieren, wird dies natürlich so wiedergegeben.
 
 \subsection{React}
+Die React App ist aus mehreren Seiten zusammengesetzt. Es existiert eine Homepage, auf der eine Zusammenfassung dargestellt ist. Auf ihr findet man eine Uhr, das Datum und den kommenden Wecker. Weitere Seiten, die Details zu allen Kalender Events, E-Mails, Weckern und der Wettervorhersage sind über Links zugänglich.
 
 \subsection{Webserver}
+Der Webserver ist ein \textit{HttpServer} der \textit{org.sun.net} Library. Dieser hört auf Port 80 anfragen ab. Für die verschiedenen Anfragepfade existieren Handler, die mit Pfaden verknüpft werden und so zu einem Kontext werden. Wenn ein Pfad von einem Webbrowser angefragt wird, wird der Handler ausgeführt. Es existiert ein Handler, der die React App und alle benötigten Dateien serviert. Der Rest der Handler ist für die API zuständig.
 
 \subsection{Gehäuse und Zusammenbau}
-- blender sketch
+Das Gehäuse besteht aus zugeschnittenem Sperrholz. Es ist sowohl aussen als auch innen mit schwarzer Acrylfarbe bemalt. Die Front hat einen Ausschnitt für das Display, wodurch es Flach mit der Aussenseite liegt. Zwei Löcher für die Lautsprecher sind an der Unterseite ausgeschnitten. Oben ist ein kleines Loch für den Lichtsensor. Der Raspberry Pi ist auf einer Brücke über der Rückseite des Displays montiert. Das Sensorarray ist an einem Stück Holz, das auf die Grundplatte geklebt ist, montiert. Die Sensoren sind über ein selbstgelötetes Verlängerungskabel verbunden.
 
 \section{Abschliessend}
 \subsection{Resultat}
