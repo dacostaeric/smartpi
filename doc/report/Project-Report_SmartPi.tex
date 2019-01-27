@@ -76,13 +76,15 @@ zentrale steuereinheit mit schnittstelle (server) im netzwerk verfügbar
 - icons sophia
 
 \subsection{Eric}
-- java
-- python
-- email
-- wecker
-- kalender
-- sensoren
-- tts
+Eric hat bei dem Projekt die Java Programme für das Empfangen der E-Mails und der Kalenderdaten geschrieben. Die Interaktion mit den Sensoren, welche in Python programmiert wurde und die Kommunikation zwischen Python und Java wurden auch von ihm \"ubernommen. Zusätzlich hat er sich auch um die Text-to-Speech Funtkionalit\"at vom Projekt gek\"ummert. Die Daten wurden dann an React weitergeschickt, um dort verarbeitet zu werden. 
+ 
+-java -
+- python  -
+- email - 
+- wecker ALE
+- kalender -
+- sensoren -
+- tts -
 
 \section{Implementierung}
 \subsection{Architektur} % ale
@@ -96,11 +98,19 @@ zentrale steuereinheit mit schnittstelle (server) im netzwerk verfügbar
 \subsection{Wecker}
 
 \subsection{E-Mail}
+Das Ziel bei der E-Mail war, dass man nur Nachrichten empfangen kann, da f\"ur das Projekt nicht geplant war auf E-Mails zu antworten. Wie bereits erw\"ahnt haben wir uns f\"ur die Java Mail API entschieden, da wir eine M\"oglichkeit haben wollten, jegliche Adressen zu verwenden und uns nicht auf eine, wie z.B. Gmail, zu beschr\"anken.
 
 \subsection{Kalender}
+Im Gegensatz zur Verwaltung der E-Mails haben wir uns hier beschlossen \textit{Google Calendar} zu verwenden. Diese Wahl haben wir getroffen, weil wir beide privat selbst \textit{Google Calendar} ben\"utzen.
 
 \subsection{Sensoren}
+Die verwendeten Sensoren wurden mit einem Python Skript ausgelesen und entsprechend ausgewertet. Die Daten werden bei jedem Aufruf des Skripts \textit{geprintet}.
 
+\subsection{Java}
+Die Kalender Events und die empfangenen Mails werden anschliessend als \textit{ArrayList<Map<String, String>>} weitergegeben \textbf{WEM?} um dort weiterverwendet zu werden. Die Sensordaten werden als \textit{Map<String, Object>} weitergegeben.
+
+\subsection{Text-to-Speech}
+Nach dem der Wecker vom Benutzer ausgeschaltet wurde, wird von der Text-to-Speech Funktionalit\"at zuersts das n\"achste Event vorgelesen und anschliessend alle neuen Nachrichten.
 \subsection{React}
 
 \subsection{Webserver}
