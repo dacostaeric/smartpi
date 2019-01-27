@@ -20,71 +20,35 @@
 \begin{document}
 \maketitle
 
+\newpage
+
 %\tableofcontents
 \section{Inspiration}
-automatisierung des heims, neubauten teilweise schon integriert
-smarthome integrierte produkte (glühbirnen, smart assistants) -> idee bekommen, was so dahintersteckt
-Die Idee eines Webserver basierten Smart Homes kam uns erstmals, als die Beispielprojekte vorgestellt wurden. Unter diesen war eine Wetterstation, auf die man über einen Webserver zugreifen konnte. Wir hatten beide schon zuvor Erfahrung mit Webdesign und Alessandro zudem /SYN/Erfahrung mit Webhosting, dem Raspberry Pi und der Kombination der beiden. Des weiteren hatte er einen Online Kurs des Hasso Platter Instituts /SRC/openhpi
-\cite{smartmirror}
+Die Idee eines Webserver basierten Smart Homes kam uns erstmals, als die Beispielprojekte vorgestellt wurden. Unter diesen war eine Wetterstation, auf die man über einen Webserver zugreifen konnte. Wir hatten beide schon zuvor Erfahrung mit Webdesign und Alessandro zudem einen Überblick über das Webhosting, den Raspberry Pi und die Kombination der beiden. Er hat ein Smart Home Kit mit diversen Sensoren, das er bei einem Online Kurs des Hasso Platter Instituts /REF/HPI gekauft hat. Weitere Inspiration kam von einem Smart Mirror Projekt des YouTube Kanals \textit{Hacker House} /REF/HACKER HOUSE.
 
-- am morgen aufstehen -> up to date mit termine email etc
-- ohne handy
+Es existieren viele Produkte auf dem Markt mit Smart Home Einbindung, das wohl bekannteste darunter ist die Philips Hue Glühbirne. Auch alle Smart Speaker, wie das Amazon Echo, bieten Smart Home Funktionen wie das Verbinden einer solchen Glühbirne über das Drahtlose Netzwerk. Das Projekt soll uns einen Überblick über die Welt des Smart Homes geben und uns den Umgang damit aufzeigen.
 
-- hackerhouse smart mirror
-- webserver, "remote" access im netzwerk
-- tts, smart assistant-like
+\subsection{Umfang}
+Das Produkt soll eine kompakte Kombination verschiedener Funktionalität sein. Es soll eine einfache Übersicht auf den Tag geben und den Haushalt unterstützen.
+Dazu soll es einen Wecker beinhalten, der nach Ausschalten mittels Text-to-Speech über Lautsprecher den kommenden Tag beschreibt. Es soll ein Display besitzen, das neben Zeit und Wetter Kommende Kalenderevents und ungelesene E-Mail Nachrichten anzeigt. Zuletzt soll es die Temperatur und Luftfeuchtigkeit der Wohnung angeben und anzeigen, ob das Licht im Raum eingeschaltet ist. Als extra soll es eine Einkaufsliste zur Verfügung stellen, der man schnell und einfach Dinge hinzufügen kann, mit dem Gedanken, dass die Küche oft das Zentrum des Haushalts ist. Um das Produkt nicht an einen einzigen Raum zu binden, soll es alle Funktionalität über einen Webserver im Netzwerk zur Verfügung stellen, auf den man mit einem Computer oder Smartphone jederzeit zugreifen kann. Es soll so eine Zentrale Steuereinheit sein, die einfach erweitert werden kann.
 
-questions to examine
-verbinden verschiedener technologien
-java <-> react
-java <-> python
-zentrale steuereinheit mit schnittstelle (server) im netzwerk verfügbar
-
+Das Verbinden verschiedener Technologien steht hier im Zentrum. Das auslesen der Temperatur und Feuchtigkeitssensoren ist über Python sehr einfach. Die Programmiersprache, die wir am besten beherrschen ist Java. Ein Webbasiertes Interface /REPLACE/geschieht über HTML oder ECMAScript (JavaScript). Wie können wir diese komplett unterschiedlichen Technologien miteinander verbinden? Wie kann dies \textbf{effizient} geschehen? Wie können alle Daten über verschiedene Webbrowser synchronisiert werden?
 
 \section{Technologien}
-- rpi, schon zuvor verwendet mit webserver
-- java, kennen uns am besten aus
-- python, auslesen der sensoren
-- javascript
-	moderne herangehensweise an webdesign und server
-	- react für frontend
-		- npm
-		- fetch api um daten zu beschaffen
-	- nodejs server für backend
-- http
-- google api
-- java mail
+Als Basis für das Projekt dient der Raspberry Pi. Als kleiner aber vollständiger Computer bietet er die Möglichkeit, jedes Programm auszuführen und besitzt zusätzlich eine einfache Stromschnittstelle für das auslesen der Sensoren. Er hostet einen Webserver, der alle Daten verwaltet. Dieser stellt die Rohdaten in einer API und eine Webapp als grafische Benutzeroberfläche zur Verfügung. Der Server und das Backend basieren auf Java. Das Web-Frontend ist eine React App, die die Daten über die SmartPi API mit \textit{fetch} abruft. /REACT/
 
 \subsection{APIs}
-- openweathermap
-- goolgle calendar
-- javax.mail imaps, smtp
-- marytts
+Die Abfrage nach neuen E-Mail geschieht über die Java Mail API. Wir haben diese generelle API gewählt um jegliche Adressen verwenden zu können und uns nicht auf einen Anbieter, wie z.B. Gmail, zu beschr\"anken. Im Gegensatz zur Verwaltung der E-Mails haben wir uns beim Kalender beschlossen \textit{Google Calendar} zu verwenden. Diese Wahl haben wir getroffen, weil wir es beide privat selbst  ben\"utzen und im Voraus wussten, dass es eine gut dokumentierte API dafür gibt. Für die Text-to-Speech Funktion haben wir uns für die Open Source Sprachsynthese Library MaryTTS entschieden. Es gibt viele kostenlose TTS Pakete, doch wir haben uns aufgrund der Vielfalt von Sprachen, Stimmen und Einstellungen für MaryTTS entschieden. Um die Wetterdaten abzurufen nutzen wir die API von OpenWeatherMap. Sie bietet kostenlos aktuelle Wetterdaten alle zehn Minuten und Fünftagesvorhersagen mit Datenpunkten alle drei Stunden.
+
 \subsection{Hardware}
-- 7in lcd von smart home kit
-- sensoren von smart home kit
-- lautsprecher von früher
-- rpi 2b
-- sperrholz + acryl
+Die Hardware ist wegen der Budgetbeschränkung schlicht. Sie beinhaltet ein LCD Touchscreen für die Darstellung und Navigation der Webapp, einen Temperatur und Feuchtigkeitssensor und einen Lichtsensor. Für die Wiederhabe des Tons sind ein Set Stereolautsprecher verantwortlich. Das Gehäuse ist aus mit schwarzer Acrylfarbe bemaltem Holz. Das Herzstück ist ein Raspberry Pi 3B+.
 
 \section{Aufteilung}
 \subsection{Alessandro}
-- react
-- webserver
-- wetter
-- gui/ux
-- icons sophia
+Alessandro hat das Design und die Implementierung der Webapp übernommen. Dazugehörig hat er sich um den Webserver und die API gekümmert. Die Wetterdaten werden direkt über die Webapp geladen. Ursprünglich war die Implementierung des Weckers in Java geplant und sollte von Eric übernommen werden, doch es hat sich im Laufe des Projekts herausgestellt, dass aus Effizienzgründen auch der Wecker direkt in der Webapp implementiert werden soll.
 
 \subsection{Eric}
-Eric hat bei dem Projekt die Java Programme für das Empfangen der E-Mails und der Kalenderdaten geschrieben. Die Interaktion mit den Sensoren, welche in Python programmiert wurde und die Kommunikation zwischen Python und Java wurden auch von ihm \"ubernommen. Zusätzlich hat er sich auch um die Text-to-Speech Funtkionalit\"at vom Projekt gek\"ummert. Die Daten wurden dann an React weitergeschickt, um dort verarbeitet zu werden. 
- 
--java -
-- python  -
-- email - 
-- wecker ALE
-- kalender -
-- sensoren -
-- tts -
+Eric hat bei dem Projekt die Java Programme für das Empfangen der E-Mails und der Kalenderdaten geschrieben. Die Interaktion mit den Sensoren, welche in Python programmiert wurde und die Kommunikation zwischen Python und Java wurden auch von ihm \"ubernommen. Zusätzlich hat er sich auch um die Text-to-Speech Funtkionalit\"at vom Projekt gek\"ummert. Die Daten werden dem Webserver über Methoden zur Verfügung gestellt.
 
 \section{Implementierung}
 \subsection{Architektur} % ale
@@ -98,10 +62,10 @@ Eric hat bei dem Projekt die Java Programme für das Empfangen der E-Mails und d
 \subsection{Wecker}
 
 \subsection{E-Mail}
-Das Ziel bei der E-Mail war, dass man nur Nachrichten empfangen kann, da f\"ur das Projekt nicht geplant war auf E-Mails zu antworten. Wie bereits erw\"ahnt haben wir uns f\"ur die Java Mail API entschieden, da wir eine M\"oglichkeit haben wollten, jegliche Adressen zu verwenden und uns nicht auf eine, wie z.B. Gmail, zu beschr\"anken.
+Das Ziel bei der E-Mail war, dass man nur Nachrichten empfangen kann, da f\"ur das Projekt nicht geplant war auf E-Mails zu antworten.
 
 \subsection{Kalender}
-Im Gegensatz zur Verwaltung der E-Mails haben wir uns hier beschlossen \textit{Google Calendar} zu verwenden. Diese Wahl haben wir getroffen, weil wir beide privat selbst \textit{Google Calendar} ben\"utzen.
+
 
 \subsection{Sensoren}
 Die verwendeten Sensoren wurden mit einem Python Skript ausgelesen und entsprechend ausgewertet. Die Daten werden bei jedem Aufruf des Skripts \textit{geprintet}.
@@ -115,12 +79,16 @@ Nach dem der Wecker vom Benutzer ausgeschaltet wurde, wird von der Text-to-Speec
 
 \subsection{Webserver}
 
-\subsection{Gerhäuse und Zusammenbau}
+\subsection{Gehäuse und Zusammenbau}
 - blender sketch
 
 \section{Abschliessend}
 \subsection{Resultat}
+Wir haben das Erreicht, was wir uns vorgenommen haben. Neben unseren Mindestanforderungen, einem Display, Webserver und Webapp, dem Wecker, des Temperatursensors und der Wettervorhersage, haben wir Text-to-Speech, Feuchtigkeits und Lichtsensor und eine ansprechende Benutzeroberfläche auf die man von jedem Webbrowser im Netzwerk zugreifen kann.
+
 \subsection{Fazit}
+Wir sind von der Inspiration der Wetterstation im Lauf des Projekts auf den Fokus der Kommunikation der verschiedenen Technologien gekommen. Wir haben viel Erfahrung mit dem Verbinden der Technologien gesammelt, u.A. den Webserver direkt in Java zu implementieren. In der Vorlesung Software Engineering haben wir parallel zu diesem Projekt ein streng strukturiertes Verfahren kennengelernt, was auf dieses Projekt abgefärbt hat. Trotzdem hätten wir uns zeitlich besser strukturieren und unsere Ideen besser planen und durchdenken können.
+Wir sind mit dem Resultat sehr zufrieden und haben vor, es weiter auszubauen. Eines unserer Designziele war Anpassbarkeit und Erweiterbarkeit, welches wir sehr gut erreicht haben.
 
 \bibliographystyle{plain}
 \bibliography{CAOS-Project-Report_SmartPi_Eric_da_Costa_Alessandro_Pittori}
