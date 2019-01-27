@@ -57,19 +57,17 @@ Als Webfrontend wird eine React App von einem Java HTTP Server gehostet. Die Pfa
 \subsection{Wecker}
 
 \subsection{E-Mail}
-Das Ziel bei der E-Mail war, dass man nur Nachrichten empfangen kann, da f\"ur das Projekt nicht geplant war auf E-Mails zu antworten.
+Das Ziel bei der E-Mail war, dass man nur Nachrichten empfangen kann, da f\"ur das Projekt nicht geplant war auf E-Mails zu antworten. Um dies zu implementieren wurde, wie bereits erwähnt, die Java Mail API verwendet. Die E-Mail Adresse und das dazugehörige Passwort werden in einer Textdatei gespeichert und von Java geparsed. Es existiert eine Klasse, worin die Nachrichten geladen und gespeichert werden. Der Server greift anschliessend auf diese Klasse zu und bekommt die E-Mails als Liste von Maps. Diese Liste beinhaltet den Sender, den Betreff und die Nachricht selber.
 
 \subsection{Kalender}
-
+Mit Hilfe der ausführlichen Dokumentation von Google ist die Implementierung vom Kalender ohne Probleme geschehen. In einer Kalender Klasse mit einer Methode um die zukünftigen Termine zu laden und speichern. Der Server kann dann im gleichen Stil wie bei den E-Mails auf diese Methode aufrufen und bekommt eine Liste von Maps mit den Namen und den Zeiten. Um auf den Kalender zugreifen zu können, muss eine JSON-Datei von Google heruntergeladen werden mit den nötigen Anmeldedaten.
 
 \subsection{Sensoren}
-Die verwendeten Sensoren wurden mit einem Python Skript ausgelesen und entsprechend ausgewertet. Die Daten werden bei jedem Aufruf des Skripts \textit{geprintet}.
-
-\subsection{Java}
-Die Kalender Events und die empfangenen Mails werden anschliessend als \textit{ArrayList<Map<String, String>>} weitergegeben \textbf{WEM?} um dort weiterverwendet zu werden. Die Sensordaten werden als \textit{Map<String, Object>} weitergegeben.
+Die verwendeten Sensoren wurden mit einem Python Skript ausgelesen und entsprechend ausgewertet. Die Daten werden bei jedem Aufruf des Skripts \textit{geprintet}. Die Python Skript wird in einer Java Klasse ausgeführt und die geprinteten Daten dort geparsed. Der Server ruft indirekt das Python Skript auf und bekommt die Daten, um diese dann weiterzuverwenden.
 
 \subsection{Text-to-Speech}
-Nach dem der Wecker vom Benutzer ausgeschaltet wurde, wird von der Text-to-Speech Funktionalit\"at zuersts das n\"achste Event vorgelesen und anschliessend alle neuen Nachrichten.
+Nach dem der Wecker vom Benutzer ausgeschaltet wurde, wird von der Text-to-Speech Funktionalit\"at zuerst das n\"achste Event vorgelesen und anschliessend alle neuen Nachrichten. MaryTTS bietet eine grosse Auswahl an Effekte und Stimmen, jedoch haben wir beschlossen es bei der normalen Stimme zu lassen. Falls keine neuen Ereignisse oder Nachrichten existieren, wird dies natürlich so wiedergegeben.
+
 \subsection{React}
 
 \subsection{Webserver}
