@@ -1,6 +1,8 @@
 plugins {
     id 'java'
     id 'application'
+
+    id 'com.github.johnrengelman.shadow' version '1.2.3'
 }
 
 //mainClassName = 'CalendarQuickstart'
@@ -8,22 +10,11 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 version = '1.0'
 
-jar {
-    //jar file name base name
-    baseName = "SmartPi"
-    //jar file name version
-    version = "0.0.1"
-    from {
-        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
-        // a) Adding dependencies to jar
-    }
-    manifest {
-        attributes 'Main-Class': 'smartpi.SmartPiMain' // b) Set main class
-    }
-}
-
 repositories {
     mavenCentral()
+    flatDir {
+        dirs 'libs'
+    }
 }
 
 dependencies {
@@ -33,5 +24,32 @@ dependencies {
     compile 'com.google.oauth-client:google-oauth-client-jetty:1.23.0'
     compile 'com.google.apis:google-api-services-calendar:v3-rev305-1.23.0'
     compile group: 'org.json', name: 'json', version: '20180813'
-    compile fileTree(include: ['*.jar'], dir: 'src/main/resources/libraries')
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+
+    compile group: 'commons-cli', name: 'commons-cli', version: '1.3.1'
+    compile group: 'de.dfki.mary', name: 'voice-cmu-rms-hsmm', version: '5.2'
+}
+
+jar {
+    //jar file name base name
+    baseName = "SmartPi"
+    //jar file name version
+    version = "1.0.0"
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+        // a) Adding dependencies to jar
+    }
+    manifest {
+        attributes 'Main-Class': 'smartpi.SmartPiMain' // b) Set main class
+    }
+}
+
+mainClassName = 'smartpi.SmartPiMain'
+
+shadowJar {
+    manifest {
+        attributes 'Main-Class': 'smartpi.SmartPiMain' // b) Set main class
+    }
+    classifier = ''
+    mergeServiceFiles()
 }

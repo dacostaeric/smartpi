@@ -14,6 +14,6 @@ public class SmartPiMain {
   public static final int FREQUENCY_CALENDAR_MS = 300000;
 
   public static void main(String[] args) {
-    new Thread(new Server(new CalendarQuickstart(), new CheckingMails(), new Temperature()));
+    new Server(new CalendarQuickstart(), new CheckingMails(), new Temperature()).run();
   }
 }
