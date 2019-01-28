@@ -13,7 +13,7 @@ align-items: center;
 const Heading = styled.h1`
 float: left;
 font-size: ${theme.page.size.heading};
-margin: 0;
+margin: 0 0 1vw 0;
 `;
 
 const PageTitle = props => {

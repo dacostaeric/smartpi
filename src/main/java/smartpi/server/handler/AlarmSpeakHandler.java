@@ -15,6 +15,10 @@ public class AlarmSpeakHandler extends SmartPiHandler implements HttpHandler {
 
   @Override
   public void handle(HttpExchange httpExchange) throws IOException {
-    respondAPI(httpExchange, ("{\"speak\":" + speak.speakAlarm() + "}").getBytes());
+    if (speak.speakAlarm()) {
+      respondAPI(httpExchange, ("{\"success\":true}").getBytes());
+    } else {
+      respondAPI(httpExchange, ("{\"success\":false,\"message\":\"Couldn't speak.\"}").getBytes());
+    }
   }
 }

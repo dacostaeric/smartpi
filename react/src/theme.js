@@ -2,7 +2,8 @@ const scale = 1.2;
 const unit = "vw";
 
 const size = {
-  large: scale * 7,
+  massive: scale * 7,
+  large: scale * 4,
   sub: scale * 3,
   medium: scale * 2,
   small: scale * 1.5
@@ -16,9 +17,16 @@ const theme = {
   containerPadding: scale * 3 + unit,
   tilePadding: scale * 2 + unit,
   dividerHeight: scale * .2 + unit,
+  size: {
+    massive: size.massive + unit,
+    large: size.large + unit,
+    sub: size.sub + unit,
+    medium: size.medium + unit,
+    small: size.small + unit
+  },
   page: {
     size: {
-      heading: size.medium + unit,
+      heading: size.large + unit,
     }
   },
   list: {
@@ -34,8 +42,8 @@ const theme = {
   time: {
     dateTextSize: scale * 2 + unit,
     clockSize: scale * 7 + unit,
-    clockMarginTop: scale * 2 + unit,
-    clockMarginBottom: scale * .5 + unit,
+    clockMarginTop: scale * .7 + unit,
+    clockMarginBottom: scale * .2 + unit,
     alarm: {
       iconSize: scale * 2 + unit,
       textSize: scale * 1.5 + unit,
@@ -43,10 +51,18 @@ const theme = {
 
     }
   },
+  alarms: {
+    alarm: {
+      size: {
+        heading: size.medium + unit,
+        text: size.small + unit
+      }
+    }
+  },
   weather: {
     margin: scale * 1 + unit,
     iconHeight: scale * 10 + unit,
-    temperatureSize: size.large + unit,
+    temperatureSize: size.massive + unit,
     weatherTextSize: size.sub + unit,
     sensorTextSize: size.small + unit,
     sensorTextMargin: scale * 0 + unit

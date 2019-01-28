@@ -1,5 +1,4 @@
 import React from "react"
-import {Link} from "react-router-dom"
 
 import SmartPiDate from "./SmartPiDate"
 import Clock from "./Clock"
@@ -68,9 +67,8 @@ class Time extends React.Component {
     return (<div>
       <SmartPiDate date={this.state.formattedDate}/>
       <Clock time={this.state.formattedTime}/>
-      <Link to={"/alarm"}>
-        <HomeAlarm alarm={this.props.alarm}/>
-      </Link>
+      <HomeAlarm alarm={this.props.alarm}
+                 showAlarmPopup={this.props.showAlarmPopup}/>
     </div>)
   }
 }

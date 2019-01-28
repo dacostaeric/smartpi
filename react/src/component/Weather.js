@@ -2,6 +2,8 @@ import React from "react"
 import styled from "styled-components"
 import theme from "../theme"
 
+import SmallIcon from "./SmallIcon"
+
 import clear from "../graphics/weather/clear.svg"
 import partlyCloudy from "../graphics/weather/partly_cloudy.svg"
 import cloudCover from "../graphics/weather/cloud_cover.svg"
@@ -10,6 +12,7 @@ import thunderstorm from "../graphics/weather/thunderstorm.svg"
 import snow from "../graphics/weather/snow.svg"
 import fog from "../graphics/weather/fog.svg"
 import none from "../graphics/weather/none.svg"
+import off from "../graphics/lights_off.svg"
 
 const getIcon = (code) => {
   switch (code) {
@@ -36,6 +39,7 @@ const getIcon = (code) => {
     case 503:
     case 504:
     case 511:
+    case 520:
     case 521:
     case 522:
     case 531:
@@ -93,6 +97,8 @@ font-size: ${theme.weather.weatherTextSize};
 `;
 
 const SensorText = styled.div`
+display: flex;
+align-items: center;
 float: right;
 font-size: ${theme.weather.sensorTextSize};
 `;
@@ -105,48 +111,48 @@ margin-left: ${theme.weather.margin}
 const ZERO_CELSIUS_IN_KELVIN = 273.15;
 
 const Weather = (props) => {
-    return (<div>
-      <div>
-        <WeatherIcon src={getIcon(props.weather && props.weather.weather[0].id
-            ? props.weather.weather[0].id
-            : "")}/>
-        <WeatherTextWrapper>
-          <WeatherText>
-            {props.weather && props.weather.weather[0].main
-                  ? props.weather.weather[0].main.toLowerCase()
-                  : "-"}
-          </WeatherText>
-          <WeatherTemperature>
-            {
-              props.weather && props.weather.main.temp
-                  ? Math.floor(
-                  (props.weather.main.temp - ZERO_CELSIUS_IN_KELVIN))
-                  : "-"
-            }&#8451;
-          </WeatherTemperature>
-        </WeatherTextWrapper>
-      </div>
-      <SensorText>
-        {(props.sensor && props.sensor.temperature
-            ? props.sensor.temperature + "\u2103"
-            : "")
-        + (props.sensor && props.sensor.temperature
-        && props.sensor.humidity
-            ? " \u2027 "
-            : "")
-        + (props.sensor && props.sensor.humidity
-            ? props.sensor.humidity
-            + "% humidity" : "")
-        + (props.sensor && (props.sensor.temperature
-            || props.sensor.humidity)
-            ? " indoors"
-            : "-")}
-      </SensorText>
-    </div>)
+  console.log(props.weather);
+  return (<div>
+    <div>
+      <WeatherIcon src={getIcon(props.weather && props.weather.weather[0].id
+          ? props.weather.weather[0].id
+          : "")}/>
+      <WeatherTextWrapper>
+        <WeatherText>
+          {props.weather && props.weather.weather[0].main
+              ? props.weather.weather[0].main.toLowerCase()
+              : "-"}
+        </WeatherText>
+        <WeatherTemperature>
+          {
+            props.weather && props.weather.main.temp
+                ? Math.floor(
+                (props.weather.main.temp - ZERO_CELSIUS_IN_KELVIN))
+                : "-"
+          }&#8451;
+        </WeatherTemperature>
+      </WeatherTextWrapper>
+    </div>
+    <SensorText>
+      {props.sensor !== undefined && props.sensor.lights === true
+          ? <SmallIcon src={clear}/>
+          : <SmallIcon src={off}/>}
+      {(props.sensor !== undefined && props.sensor.temperature !== undefined
+          ? props.sensor.temperature + "\u2103"
+          : "")
+      + (props.sensor !== undefined && props.sensor.temperature !== undefined
+      && props.sensor.humidity !== undefined
+          ? " \u2027 "
+          : "")
+      + (props.sensor !== undefined && props.sensor.humidity !== undefined
+          ? props.sensor.humidity
+          + "% humidity" : "")
+      + (props.sensor !== undefined && (props.sensor.temperature !== undefined
+          || props.sensor.humidity !== undefined)
+          ? " indoors"
+          : "-")}
+    </SensorText>
+  </div>)
 };
-
-// const Weather = (props) => {
-//
-// };
 
 export default Weather

@@ -9,7 +9,7 @@ const Messages = (props) => {
     {props.email
         ? props.email.map((email, index) => (
             <Message key={index}>{email.sender}: {email.subject}</Message>))
-        : "-"}
+        : <Message>-</Message>}
   </div>)
 };
 

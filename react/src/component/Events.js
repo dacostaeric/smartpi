@@ -17,7 +17,7 @@ const Events = props => {
             <Event key={index}>
               {timeFormat.format(event.date)} - {event.title}
             </Event>))
-        : "-"}
+        : <Event>-</Event>}
   </div>)
 };
 

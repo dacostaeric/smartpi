@@ -1,8 +1,10 @@
 import React from "react"
 import styled from "styled-components"
 
+import PlainLink from "./PlainLink"
 import ListHeading from "./ListHeading"
 import ListItem from "./ListItem"
+import AddButton from "./AddButton"
 
 import theme from "../theme"
 
@@ -10,12 +12,16 @@ const List = styled.div`
 margin-left: ${theme.shopping.marginLeft}
 `;
 
-const ShoppingList = (props) => {
+const ShoppingList = props => {
   return (<List>
-    <ListHeading>shop</ListHeading>
+    <PlainLink to={"/shopping"}>
+      <ListHeading>shop</ListHeading>
+    </PlainLink>
+    <AddButton onClick={props.showShopPopup}>+</AddButton>
     {props.list
-        ? props.list.map((item, index) => (<ListItem key={index}>{item}</ListItem>))
-        : "-"}
+        ? props.list.map(
+            (item, index) => (<ListItem key={index}>{item}</ListItem>))
+        : <ListItem>-</ListItem>}
   </List>)
 };
 

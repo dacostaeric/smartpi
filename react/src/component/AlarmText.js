@@ -6,7 +6,8 @@ import theme from "../theme";
 
 const Text = styled.p`
 float: left;
-font-size: ${theme.time.alarm.textSize};
+font-size: ${props => props.fontSize ? props.fontSize
+    : theme.time.alarm.textSize};
 margin: 0;
 color: black;
 `;

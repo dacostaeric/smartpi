@@ -13,14 +13,14 @@ import ShoppingList from "../component/ShoppingList";
 import HorizontalDivider from "../component/HorizontalDivider";
 import Events from "../component/Events";
 import Messages from "../component/Messages";
+import AddAlarmPopup from "../component/popup/AddAlarmPopup";
 
 const Home = (props) => {
   return (<div>
-    {false ? <MockupUnderlay/> : ""}
     <TopBar>
       <JustifySmall>
         <Tile>
-          <Time alarm={props.alarm}/>
+          <Time alarm={props.alarm} showAlarmPopup={props.showAlarmPopup}/>
         </Tile>
       </JustifySmall>
       <JustifyLarge>
@@ -29,12 +29,9 @@ const Home = (props) => {
             <Weather weather={props.weather} sensor={props.sensor}/>
           </Tile>
         </Link>
-        <Link to={"/shopping"}>
-          <Tile>
-            <ShoppingList
-                list={props.shop}/>
-          </Tile>
-        </Link>
+        <Tile>
+          <ShoppingList list={props.shop} showShopPopup={props.showShopPopup}/>
+        </Tile>
       </JustifyLarge>
     </TopBar>
     <HorizontalDivider/>
