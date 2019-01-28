@@ -25,6 +25,8 @@ public class Temperature {
     humidity = Float.parseFloat(data[1]);
     if (Integer.parseInt(data[2]) == 1) {
       lightOn = true;
+    } else {
+      lightOn = false;
     }
     bufferedReader.close();
     process.waitFor();
