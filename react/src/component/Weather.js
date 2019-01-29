@@ -134,9 +134,10 @@ const Weather = (props) => {
       </WeatherTextWrapper>
     </div>
     <SensorText>
-      {props.sensor !== undefined && props.sensor.lights === true
-          ? <SmallIcon src={clear}/>
-          : <SmallIcon src={off}/>}
+      {props.sensor !== undefined && props.sensor.lights !== undefined
+          ? props.sensor.lights === true ? <SmallIcon src={clear}/> : <SmallIcon
+              src={off}/>
+          : ""}
       {(props.sensor !== undefined && props.sensor.temperature !== undefined
           ? props.sensor.temperature + "\u2103"
           : "")

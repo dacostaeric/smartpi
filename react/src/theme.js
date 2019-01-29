@@ -10,7 +10,7 @@ const size = {
 };
 
 const theme = {
-  fontFamily: "Segoe UI",
+  fontFamily: "Segoe UI, Lato, sans-serif",
   invert: true,
   smallWidth: 45 + unit,
   largeWidth: 55 + unit,
