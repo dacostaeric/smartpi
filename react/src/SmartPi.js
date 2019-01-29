@@ -17,6 +17,7 @@ import DetailEmail from "./component/detail/DetailEmail";
 import AlarmRinging from "./component/popup/AlarmRinging";
 import DetailForecast from "./component/detail/DetailForecast";
 import {TimeFormat} from "./DateTimeFormat";
+import Splash from "./component/Splash";
 
 const API_PORT = 80;
 const API_BASE_URL = "http://" + window.location.hostname + ":" + API_PORT
@@ -102,7 +103,8 @@ export default class SmartPi extends React.Component {
       success: false,
       message: undefined,
       timestamp: 0
-    }
+    },
+    splash: true
   };
 
   fetchAPIData(uri, handler) {
@@ -265,6 +267,7 @@ export default class SmartPi extends React.Component {
       setInterval(() => this.fetchForecastDataSetState(APIKey),
           FETCH_INTERVAL.forecast);
     }
+    setTimeout(() => this.setState({splash: false}), 2000);
   }
 
   test(alarms, adding) {
@@ -400,6 +403,9 @@ export default class SmartPi extends React.Component {
 
   render() {
     return (<Container>
+      {this.state.splash
+          ? <Splash/>
+          : ""}
       {this.state.error.error
           ? <ErrorPopup>{this.state.error.message}</ErrorPopup>
           : ""}
