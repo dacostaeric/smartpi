@@ -30,11 +30,7 @@ public class Temperature {
     }
     bufferedReader.close();
     process.waitFor();
-    System.out.println("Temperature is : " + temperature + " °C.");
-    System.out.println("Humidity is :" + humidity + " %.");
-//    } catch (Exception e) {
-//      e.getStackTrace();
-//    }
+    Logger.debug("T" + temperature + " H" + humidity + " L" + lightOn);
     return ReactInterface.makeSensor(temperature, humidity, lightOn);
   }
 

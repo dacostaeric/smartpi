@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import smartpi.CalendarQuickstart;
 import smartpi.CheckingMails;
+import smartpi.Logger;
 import smartpi.SmartPiTTS;
 import smartpi.Temperature;
 import smartpi.server.handler.AlarmHandler;
@@ -20,16 +21,23 @@ public class Server implements Runnable {
   public static final String BASE_PATH = "react/build/";
   public static final int PORT = 3001;
 
+  private int port;
   private CalendarQuickstart calendarQuickstart;
   private CheckingMails checkingMails;
   private Temperature temperature;
 
   public Server() {
-    this(new CalendarQuickstart(), new CheckingMails(), new Temperature());
+    this(80, new CalendarQuickstart(), new CheckingMails(), new Temperature());
   }
 
   public Server(CalendarQuickstart calendarQuickstart, CheckingMails checkingMails,
       Temperature temperature) {
+    this(80, calendarQuickstart, checkingMails, temperature);
+  }
+
+  public Server(int port, CalendarQuickstart calendarQuickstart, CheckingMails checkingMails,
+      Temperature temperature) {
+    this.port = port;
     this.calendarQuickstart = calendarQuickstart;
     this.checkingMails = checkingMails;
     this.temperature = temperature;
@@ -38,7 +46,7 @@ public class Server implements Runnable {
   @Override
   public void run() {
     try {
-      HttpServer server = HttpServer.create(new InetSocketAddress(PORT), 0);
+      HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
       try {
         server.createContext("/", new IndexHandler(BASE_PATH + "index.html"));
       } catch (IOException e) {
@@ -65,7 +73,7 @@ public class Server implements Runnable {
       server.createContext("/api/email", emailHandler);
 
       server.start();
-      System.out.println("Server running on " + PORT);
+      Logger.info("Server running on " + port);
     } catch (Exception e) {
       e.printStackTrace();
     }

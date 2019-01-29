@@ -86,15 +86,15 @@ public class CalendarQuickstart {
     List<Event> items = events.getItems();
     //Map<String, String>[] maps = new HashMap[items.size()];
     if (items.isEmpty()) {
-      System.out.println("No upcoming events found.");
+      Logger.debug("No upcoming events found.");
     } else {
-      System.out.println("Upcoming events");
+      Logger.debug("Upcoming events");
       for (int i = 0; i < items.size(); i++) {
         DateTime start = items.get(i).getStart().getDateTime();
         if (start == null) {
           start = items.get(i).getStart().getDate();
         }
-        System.out.printf("%s (%s)\n", items.get(i).getSummary(), start);
+        Logger.debug(items.get(i).getSummary() + " (" + start + ")");
 
         eventsList.add(ReactInterface.makeEvent(items.get(i).getSummary(), start.toString()));
       }

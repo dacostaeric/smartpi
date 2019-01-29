@@ -13,6 +13,7 @@ import javax.mail.Session;
 import javax.mail.Store;
 
 public class CheckingMails {
+
   private ArrayList<Map<String, String>> mails = new ArrayList<>();
 
   public ArrayList<Map<String, String>> check(String host, String user,
@@ -34,15 +35,14 @@ public class CheckingMails {
     emailFolder.open(Folder.READ_ONLY);
 
     Message[] messages = emailFolder.getMessages();
-    System.out.println("You have " + messages.length + " messages.");
+    Logger.debug("You have " + messages.length + " messages.");
     //Map<String, String>[] maps = new HashMap[messages.length];
     for (int i = 0, n = messages.length; i < n; i++) {
       Message message = messages[i];
-      System.out.println(" ");
-      System.out.println("Email Number " + (i + 1));
-      System.out.println("Subject: " + message.getSubject());
-      System.out.println("From: " + message.getFrom()[0]);
-      System.out.println("Text: " + message.getContent().toString());
+      Logger.debug("Email Number " + (i + 1));
+      Logger.debug("Subject: " + message.getSubject());
+      Logger.debug("From: " + message.getFrom()[0]);
+      Logger.debug("Text: " + message.getContent().toString());
       mails.add(ReactInterface.makeEmail(message.getFrom()[0].toString(), message.getSubject(),
           message.getContent().toString()));
     }
@@ -59,17 +59,17 @@ public class CheckingMails {
     return mails;
   }
 
-  public ArrayList<Map<String, String>> getNewMails() throws IOException, MessagingException{
+  public ArrayList<Map<String, String>> getNewMails() throws IOException, MessagingException {
     String[] credentials = new String[2];
     int i = 0;
     //try {
-      Scanner scanner = new Scanner(new File("credentials.txt"));
-      while (scanner.hasNext()) {
-        String[] tokens = scanner.nextLine().split(" ");
-        credentials[i++] = tokens[tokens.length - 1];
-      }
-   // } catch (FileNotFoundException e) {
-   ////  }
+    Scanner scanner = new Scanner(new File("credentials.txt"));
+    while (scanner.hasNext()) {
+      String[] tokens = scanner.nextLine().split(" ");
+      credentials[i++] = tokens[tokens.length - 1];
+    }
+    // } catch (FileNotFoundException e) {
+    ////  }
     //System.out.println(credentials[0]);
     //System.out.println(credentials[1]);
     String host = "imap.gmail.com";
