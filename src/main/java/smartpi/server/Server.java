@@ -18,8 +18,7 @@ import smartpi.server.handler.ShoppingListHandler;
 
 public class Server implements Runnable {
 
-  public static final String BASE_PATH = "react/build/";
-  public static final int PORT = 3001;
+  public static final String BASE_PATH = "server/";
 
   private int port;
   private CalendarQuickstart calendarQuickstart;

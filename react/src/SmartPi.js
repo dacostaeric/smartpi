@@ -18,7 +18,7 @@ import AlarmRinging from "./component/popup/AlarmRinging";
 import DetailForecast from "./component/detail/DetailForecast";
 import {TimeFormat} from "./DateTimeFormat";
 
-const API_PORT = 3001;
+const API_PORT = 80;
 const API_BASE_URL = "http://" + window.location.hostname + ":" + API_PORT
     + "/api/";
 const API_URL = {
