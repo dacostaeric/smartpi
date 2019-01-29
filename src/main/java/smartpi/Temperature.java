@@ -15,7 +15,7 @@ public class Temperature {
   public Map<String, Object> getSensorData() throws IOException, InterruptedException {
     // try {
     Runtime runtime = Runtime.getRuntime();
-    Process process = runtime.exec("python3 /home/pi/Desktop/dht11.py");
+    Process process = runtime.exec("python3 dht11.py");
     BufferedReader bufferedReader = new BufferedReader(
         new InputStreamReader(process.getInputStream()));
     line = bufferedReader.readLine();
