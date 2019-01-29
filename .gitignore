@@ -37,6 +37,9 @@ gradle-app.setting
 gradlew
 gradlew.bat
 
+# email
+credentials.txt
+
 # react
 smartpi-react/node_modules/
 smartpi-react/README.md

@@ -1,6 +1,8 @@
 package smartpi;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
@@ -60,21 +62,23 @@ public class CheckingMails {
   }
 
   public ArrayList<Map<String, String>> getNewMails() throws IOException, MessagingException {
-    String[] credentials = new String[2];
-    int i = 0;
+//    String[] credentials = new String[2];
+//    int i = 0;
     //try {
-    Scanner scanner = new Scanner(new File("credentials.txt"));
-    while (scanner.hasNext()) {
-      String[] tokens = scanner.nextLine().split(" ");
-      credentials[i++] = tokens[tokens.length - 1];
-    }
+//    Scanner scanner = new Scanner(new File("credentials.txt"));
+//    while (scanner.hasNext()) {
+//      String[] tokens = scanner.nextLine().split(" ");
+//      credentials[i++] = tokens[tokens.length - 1];
+//    }
+    BufferedReader reader = new BufferedReader(new FileReader(new File("credentials.txt")));
+    String username = reader.readLine();
+    String password = reader.readLine();
+    reader.close();
     // } catch (FileNotFoundException e) {
     ////  }
     //System.out.println(credentials[0]);
     //System.out.println(credentials[1]);
     String host = "imap.gmail.com";
-    String username = credentials[0];
-    String password = credentials[1];
 
     return check(host, username, password);
   }
