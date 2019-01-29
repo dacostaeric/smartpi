@@ -3,12 +3,15 @@ package smartpi.server.handler;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import java.io.IOException;
-import org.mortbay.util.ajax.JSON;
+import org.json.JSONArray;
 import smartpi.CheckingMails;
 
 public class EmailHandler extends SmartPiHandler implements HttpHandler {
 
-  CheckingMails email;
+  private static final long FREQUENCY = 300000000000L;
+
+  private CheckingMails email;
+  private long timestamp = 0;
 
   public EmailHandler(CheckingMails email) {
     this.email = email;
@@ -17,7 +20,13 @@ public class EmailHandler extends SmartPiHandler implements HttpHandler {
   @Override
   public void handle(HttpExchange httpExchange) throws IOException {
     try {
-      respondAPI(httpExchange, JSON.toString(email.getNewMails()).getBytes());
+      if (timestamp == 0 || System.nanoTime() - timestamp > FREQUENCY) {
+        respondAPI(httpExchange, new JSONArray(email.getNewMails()).toString().getBytes());
+        timestamp = System.nanoTime();
+      } else {
+        respondAPI(httpExchange,
+            new JSONArray(email.getAlreadyLoadedMails()).toString().getBytes());
+      }
     } catch (Exception e) {
       respondError(httpExchange, e.getMessage().getBytes());
     }

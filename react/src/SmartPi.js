@@ -46,8 +46,8 @@ const FETCH_INTERVAL = {
   forecast: 60 * 60000,
   sensor: 5000,
   shop: 5000,
-  calendar: 10 * 60000,
-  email: 10 * 60000
+  calendar: 5 * 60000,
+  email: 5 * 60000
 };
 const POPUP_TIMEOUT_MS = {
   error: 5000,
